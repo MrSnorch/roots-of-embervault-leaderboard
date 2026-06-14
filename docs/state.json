@@ -1,8 +1,8 @@
 {
   "snapshots": {
     "2026-06-14": {
-      "ts": "2026-06-14T01:37:19.831Z",
-      "online": 6,
+      "ts": "2026-06-14T01:42:29.003Z",
+      "online": 5,
       "players": {
         "677": {
           "rank": 382,
@@ -388,7 +388,7 @@
           "rank": 36,
           "level": 57,
           "score": 59954,
-          "runeCount": 0,
+          "runeCount": 611,
           "multiplier": 1.0518328157299974,
           "ruyuiNftCount": 5,
           "isOnline": true,
@@ -911,7 +911,7 @@
           "runeCount": 10157,
           "multiplier": 1.049,
           "ruyuiNftCount": 4,
-          "isOnline": true,
+          "isOnline": false,
           "guildPassHolder": true
         },
         "rummo": {
@@ -10064,7 +10064,14 @@
           "isOnline": false,
           "guildPassHolder": false
         }
-      }
+      },
+      "topFarmers": [
+        {
+          "username": "bossface",
+          "runesGained": 611,
+          "runeCount": 611
+        }
+      ]
     }
   },
   "players": {
