@@ -19,6 +19,11 @@ if (fs.existsSync(STATE_PATH)) {
   state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
 }
 
+// Find yesterday's snapshot for delta calculation
+const prevKeys = Object.keys(state.snapshots).sort();
+const prevKey = prevKeys.length > 0 ? prevKeys[prevKeys.length - 1] : null;
+const prevSnapshot = prevKey ? state.snapshots[prevKey] : null;
+
 // Build today's snapshot
 const snapshot = {
   ts: new Date().toISOString(),
@@ -46,6 +51,27 @@ for (const p of raw.data) {
       activeSince: p.activeSince,
     };
   }
+}
+
+// Compute top farmers (rune delta vs previous snapshot)
+if (prevSnapshot) {
+  const deltas = [];
+  for (const [username, data] of Object.entries(snapshot.players)) {
+    const prev = prevSnapshot.players[username];
+    if (!prev) continue;
+    const delta = data.runeCount - prev.runeCount;
+    if (delta > 0) deltas.push({ username, delta, runeCount: data.runeCount });
+  }
+  deltas.sort((a, b) => b.delta - a.delta);
+  snapshot.topFarmers = deltas.slice(0, 10).map(d => ({
+    username: d.username,
+    runesGained: d.delta,
+    runeCount: d.runeCount,
+  }));
+  console.log(`Top farmer: ${snapshot.topFarmers[0]?.username} +${snapshot.topFarmers[0]?.runesGained?.toLocaleString()} runes`);
+} else {
+  snapshot.topFarmers = [];
+  console.log('No previous snapshot, skipping top farmers');
 }
 
 state.snapshots[today] = snapshot;
