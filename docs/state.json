@@ -1,0 +1,334 @@
+{
+  "snapshots": {
+    "2026-06-14": {
+      "ts": "2026-06-14T12:00:00.000Z",
+      "online": 4,
+      "players": {
+        "ethos": {
+          "rank": 1,
+          "level": 100,
+          "score": 108394,
+          "runeCount": 116883,
+          "multiplier": 1.08394112549695,
+          "ruyuiNftCount": 8,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "tong": {
+          "rank": 2,
+          "level": 100,
+          "score": 108600,
+          "runeCount": 2933928,
+          "multiplier": 1.086,
+          "ruyuiNftCount": 9,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "mrsnorch": {
+          "rank": 3,
+          "level": 100,
+          "score": 108795,
+          "runeCount": 2455061,
+          "multiplier": 1.08794733192202,
+          "ruyuiNftCount": 10,
+          "isOnline": true,
+          "guildPassHolder": true
+        },
+        "darcy": {
+          "rank": 4,
+          "level": 90,
+          "score": 90000,
+          "runeCount": 247873,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "danceboy": {
+          "rank": 5,
+          "level": 89,
+          "score": 96276,
+          "runeCount": 249914,
+          "multiplier": 1.08174901573278,
+          "ruyuiNftCount": 7,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "dazz": {
+          "rank": 6,
+          "level": 89,
+          "score": 97446,
+          "runeCount": 272123,
+          "multiplier": 1.09489988864129,
+          "ruyuiNftCount": 14,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "lord cyberr": {
+          "rank": 7,
+          "level": 89,
+          "score": 89000,
+          "runeCount": 112991,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "alex": {
+          "rank": 8,
+          "level": 88,
+          "score": 88000,
+          "runeCount": 286165,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "joobs": {
+          "rank": 9,
+          "level": 85,
+          "score": 85000,
+          "runeCount": 317576,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "count": {
+          "rank": 10,
+          "level": 84,
+          "score": 96263,
+          "runeCount": 66379,
+          "multiplier": 1.1459929573972,
+          "ruyuiNftCount": 35,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "delicioushulake": {
+          "rank": 11,
+          "level": 82,
+          "score": 88703,
+          "runeCount": 156600,
+          "multiplier": 1.08174901573278,
+          "ruyuiNftCount": 7,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "web3.d4da": {
+          "rank": 12,
+          "level": 81,
+          "score": 83997,
+          "runeCount": 12335,
+          "multiplier": 1.037,
+          "ruyuiNftCount": 1,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "ryosaki": {
+          "rank": 13,
+          "level": 81,
+          "score": 87622,
+          "runeCount": 101911,
+          "multiplier": 1.08174901573278,
+          "ruyuiNftCount": 7,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "chunibro": {
+          "rank": 14,
+          "level": 79,
+          "score": 90533,
+          "runeCount": 188179,
+          "multiplier": 1.1459929573972,
+          "ruyuiNftCount": 35,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "vanyoz": {
+          "rank": 15,
+          "level": 79,
+          "score": 89372,
+          "runeCount": 466750,
+          "multiplier": 1.13128498911788,
+          "ruyuiNftCount": 22,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "sik094": {
+          "rank": 16,
+          "level": 79,
+          "score": 86094,
+          "runeCount": 74242,
+          "multiplier": 1.08979949748426,
+          "ruyuiNftCount": 11,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "melynik": {
+          "rank": 17,
+          "level": 77,
+          "score": 79849,
+          "runeCount": 1043099,
+          "multiplier": 1.037,
+          "ruyuiNftCount": 1,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "surka": {
+          "rank": 18,
+          "level": 76,
+          "score": 87680,
+          "runeCount": 183168,
+          "multiplier": 1.15368926229162,
+          "ruyuiNftCount": 43,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "crabboy": {
+          "rank": 19,
+          "level": 76,
+          "score": 76000,
+          "runeCount": 129648,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "gander": {
+          "rank": 20,
+          "level": 73,
+          "score": 73000,
+          "runeCount": 225732,
+          "multiplier": 1,
+          "ruyuiNftCount": 0,
+          "isOnline": false,
+          "guildPassHolder": true
+        },
+        "atzhura": {
+          "rank": 21,
+          "level": 73,
+          "score": 83027,
+          "runeCount": 181141,
+          "multiplier": 1.13735382907248,
+          "ruyuiNftCount": 27,
+          "isOnline": true,
+          "guildPassHolder": true
+        },
+        "bossface": {
+          "rank": 36,
+          "level": 57,
+          "score": 59954,
+          "runeCount": 32598,
+          "multiplier": 1.05183281573,
+          "ruyuiNftCount": 5,
+          "isOnline": true,
+          "guildPassHolder": true
+        },
+        "nammari": {
+          "rank": 88,
+          "level": 38,
+          "score": 39862,
+          "runeCount": 10157,
+          "multiplier": 1.049,
+          "ruyuiNftCount": 4,
+          "isOnline": true,
+          "guildPassHolder": true
+        }
+      }
+    }
+  },
+  "players": {
+    "ethos": {
+      "wallet": "0x04584c4f59b8b14dae1c4acd7f784edef2de4ab0",
+      "activeSince": "2026-01-29T19:39:33.942+00:00"
+    },
+    "tong": {
+      "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
+      "activeSince": "2026-01-29T23:38:14.589+00:00"
+    },
+    "mrsnorch": {
+      "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
+      "activeSince": "2026-01-29T21:16:13.418+00:00"
+    },
+    "darcy": {
+      "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
+      "activeSince": "2026-01-30T04:18:37.588+00:00"
+    },
+    "danceboy": {
+      "wallet": "0x0fbabcc900ae4a66e2960fd9a2df555e99670ef0",
+      "activeSince": "2026-01-29T22:14:13.295+00:00"
+    },
+    "dazz": {
+      "wallet": "0xaff7ae986b1de9d5ffbe9062434366b8f242cd2a",
+      "activeSince": "2026-01-30T10:26:08.569+00:00"
+    },
+    "lord cyberr": {
+      "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
+      "activeSince": "2026-01-30T09:16:15.299+00:00"
+    },
+    "alex": {
+      "wallet": "0x8c04be14e35eef3e248128d2cfd08b343c91c4e9",
+      "activeSince": "2026-01-29T19:01:43.73+00:00"
+    },
+    "joobs": {
+      "wallet": "0xa447589a3c015eb74272fc1f604d9e07c7a74738",
+      "activeSince": "2026-01-29T18:45:39.152+00:00"
+    },
+    "count": {
+      "wallet": "0x096cc529f5afd71f99f320374d163a2483a4c844",
+      "activeSince": "2026-01-29T21:18:00.416+00:00"
+    },
+    "delicioushulake": {
+      "wallet": "0x166c8dc860319200c296311dcd3827d97c2a1b1a",
+      "activeSince": "2026-03-04T12:54:34.153+00:00"
+    },
+    "web3.d4da": {
+      "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
+      "activeSince": "2026-01-30T03:51:08.267+00:00"
+    },
+    "ryosaki": {
+      "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
+      "activeSince": "2026-01-29T22:59:03.159+00:00"
+    },
+    "chunibro": {
+      "wallet": "0x8004d65ae1470ce83a432e5a5c67204ae03f12f7",
+      "activeSince": "2026-01-29T21:57:29.039+00:00"
+    },
+    "vanyoz": {
+      "wallet": "0xf492ac6a052386972f4cc54218d61f4cf2e3b36c",
+      "activeSince": "2026-01-29T21:24:26.553+00:00"
+    },
+    "sik094": {
+      "wallet": "0x7c89f0fddb3b216ebc03a64b26563c0fad5fe14b",
+      "activeSince": "2026-01-29T19:48:52.478+00:00"
+    },
+    "melynik": {
+      "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
+      "activeSince": "2026-01-29T20:37:03.001+00:00"
+    },
+    "surka": {
+      "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
+      "activeSince": "2026-01-29T20:56:39.327+00:00"
+    },
+    "crabboy": {
+      "wallet": "0x96d50f5507b5da87e2ad568228e158c464627965",
+      "activeSince": "2026-01-30T08:42:21.448+00:00"
+    },
+    "gander": {
+      "wallet": "0xa1584d899255b928d4e6161e126c6d54fc4e07aa",
+      "activeSince": "2026-01-29T21:30:37.311+00:00"
+    },
+    "atzhura": {
+      "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
+      "activeSince": "2026-01-29T21:53:02.737+00:00"
+    },
+    "bossface": {
+      "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
+      "activeSince": "2026-01-30T07:02:21.421+00:00"
+    },
+    "nammari": {
+      "wallet": "0x08b8f26102599b802082a9dfb432b00f0a9093e8",
+      "activeSince": "2026-01-29T21:16:15.134+00:00"
+    }
+  }
+}

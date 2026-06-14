@@ -1,0 +1,33 @@
+name: Fetch Leaderboard
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Every day at 12:00 UTC
+  workflow_dispatch:        # Manual trigger
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch leaderboard data
+        run: |
+          curl -s "https://roe-prod-20fe6d199715.herokuapp.com/api/leaderboard/global?page=1&limit=100" \
+            -o /tmp/leaderboard_raw.json
+
+      - name: Update state
+        run: |
+          node scripts/update-state.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/state.json
+          git diff --cached --quiet || git commit -m "chore: leaderboard snapshot $(date -u +'%Y-%m-%d')"
+          git push

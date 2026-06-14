@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROE Leaderboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:       #0a0c10;
+    --surface:  #10141c;
+    --border:   #1e2535;
+    --accent:   #4f9cf9;
+    --accent2:  #a259ff;
+    --green:    #3dd68c;
+    --red:      #ff5e5e;
+    --gold:     #f7c948;
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    --font-ui:   'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--accent2); }
+  .header-meta {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+  .pulse {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── Layout ── */
+  main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── Stats bar ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .stat-card .value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.gold  { color: var(--gold); }
+  .stat-card .value.blue  { color: var(--accent); }
+
+  /* ── Charts row ── */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .chart-card h3 {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .chart-wrap { position: relative; height: 180px; }
+
+  /* ── Player chart ── */
+  .player-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .player-section h3 {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .player-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .player-controls label { font-size: 12px; color: var(--muted); }
+  select, input[type=text] {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    outline: none;
+  }
+  select:focus, input:focus { border-color: var(--accent); }
+  .metric-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .metric-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .player-chart-wrap { position: relative; height: 200px; }
+
+  /* ── Table ── */
+  .table-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .table-header h3 {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .search-input {
+    margin-left: auto;
+    width: 200px;
+  }
+  .snapshot-select { font-size: 12px; }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--bg);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th.sorted { color: var(--accent); }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(79,156,249,0.04); }
+  tbody tr.is-online { background: rgba(61,214,140,0.04); }
+  tbody tr.is-me { background: rgba(162,89,255,0.08); }
+  td {
+    padding: 9px 12px;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+  .rank-cell { color: var(--muted); font-size: 12px; width: 40px; }
+  .rank-cell.top3 { color: var(--gold); font-weight: 700; }
+  .user-cell { font-weight: 600; color: var(--text); }
+  .user-cell .me-badge {
+    display: inline-block;
+    background: var(--accent2);
+    color: #fff;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-family: var(--font-ui);
+    letter-spacing: 0.5px;
+  }
+  .online-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 4px;
+    animation: pulse 2s infinite;
+  }
+  .score-cell { color: var(--accent); }
+  .rune-cell  { color: var(--text); }
+  .mult-cell  { color: var(--gold); }
+  .level-cell { color: var(--text); }
+  .delta-pos  { color: var(--green); }
+  .delta-neg  { color: var(--red); }
+  .delta-neu  { color: var(--muted); }
+  .guild-yes  { color: var(--green); font-size: 11px; }
+  .guild-no   { color: var(--muted); font-size: 11px; }
+  .nft-cell   { color: var(--accent2); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Loading ── */
+  #loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    font-size: 14px;
+  }
+  #app { display: none; }
+</style>
+</head>
+<body>
+
+<div id="loading">loading state.json…</div>
+<div id="app">
+
+<header>
+  <div class="logo">ROE<span>·</span>LB</div>
+  <div class="header-meta" id="header-meta"></div>
+</header>
+
+<main>
+  <!-- Stats bar -->
+  <div class="stats-bar" id="stats-bar"></div>
+
+  <!-- Charts row -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Online players / day</h3>
+      <div class="chart-wrap"><canvas id="chart-online"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Top-10 score distribution (latest)</h3>
+      <div class="chart-wrap"><canvas id="chart-top-score"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Per-player chart -->
+  <div class="player-section">
+    <h3>Player history</h3>
+    <div class="player-controls">
+      <label>Player:</label>
+      <select id="player-select"></select>
+      <label>Metric:</label>
+      <button class="metric-btn active" data-metric="score">Score</button>
+      <button class="metric-btn" data-metric="rank">Rank</button>
+      <button class="metric-btn" data-metric="runeCount">Runes</button>
+      <button class="metric-btn" data-metric="level">Level</button>
+    </div>
+    <div class="player-chart-wrap"><canvas id="chart-player"></canvas></div>
+  </div>
+
+  <!-- Leaderboard table -->
+  <div class="table-section">
+    <div class="table-header">
+      <h3>Leaderboard</h3>
+      <label style="font-size:12px;color:var(--muted);margin-left:12px;">Snapshot:</label>
+      <select id="snapshot-select" class="snapshot-select"></select>
+      <input type="text" id="search-input" class="search-input" placeholder="search player…">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-col="rank">#</th>
+            <th data-col="username">Player</th>
+            <th data-col="level">Lvl</th>
+            <th data-col="score">Score</th>
+            <th data-col="runeCount">Runes</th>
+            <th data-col="multiplier">Mult</th>
+            <th data-col="ruyuiNftCount">NFTs</th>
+            <th data-col="guildPassHolder">Guild</th>
+            <th title="Rank change vs previous snapshot">Δ Rank</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer id="footer">roe-leaderboard · data updated daily via GitHub Actions</footer>
+
+</div><!-- #app -->
+
+<script>
+const ME = 'mrsnorch';
+const CHART_DEFAULTS = {
+  color: '#e2e8f0',
+  borderColor: '#1e2535',
+};
+
+Chart.defaults.color = CHART_DEFAULTS.color;
+Chart.defaults.borderColor = CHART_DEFAULTS.borderColor;
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+
+const COLORS = {
+  accent: '#4f9cf9',
+  accent2: '#a259ff',
+  green: '#3dd68c',
+  gold: '#f7c948',
+  red: '#ff5e5e',
+  muted: '#64748b',
+};
+
+let STATE = null;
+let sortCol = 'rank';
+let sortAsc = true;
+let playerChart = null;
+let currentMetric = 'score';
+let currentPlayer = null;
+
+// ── Load state ──
+async function loadState() {
+  const r = await fetch('state.json?_=' + Date.now());
+  STATE = await r.json();
+}
+
+function getDates() {
+  return Object.keys(STATE.snapshots).sort();
+}
+
+function getLatestDate() {
+  const d = getDates();
+  return d[d.length - 1];
+}
+
+function getLatestSnapshot() {
+  return STATE.snapshots[getLatestDate()];
+}
+
+// ── Init ──
+async function init() {
+  try {
+    await loadState();
+  } catch(e) {
+    document.getElementById('loading').textContent = 'Error loading state.json: ' + e.message;
+    return;
+  }
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  renderHeader();
+  renderStats();
+  renderOnlineChart();
+  renderTopScoreChart();
+  initPlayerSelect();
+  initSnapshotSelect();
+  initTable();
+  initSortHeaders();
+  initSearch();
+}
+
+function renderHeader() {
+  const latest = getLatestDate();
+  const snap = STATE.snapshots[latest];
+  const online = snap.online;
+  document.getElementById('header-meta').innerHTML =
+    `<span class="pulse"></span>${online} online · snapshot ${latest}`;
+}
+
+function renderStats() {
+  const dates = getDates();
+  const latest = getLatestSnapshot();
+  const players = Object.values(latest.players);
+  const totalPlayers = players.length;
+  const onlineNow = latest.online;
+  const maxScore = Math.max(...players.map(p => p.score));
+  const totalRunes = players.reduce((a,p) => a + p.runeCount, 0);
+  const avgLevel = (players.reduce((a,p) => a + p.level, 0) / totalPlayers).toFixed(1);
+  const snapshotCount = dates.length;
+
+  const bar = document.getElementById('stats-bar');
+  bar.innerHTML = `
+    <div class="stat-card"><div class="label">Players tracked</div><div class="value blue">${totalPlayers}</div></div>
+    <div class="stat-card"><div class="label">Online now</div><div class="value green">${onlineNow}</div></div>
+    <div class="stat-card"><div class="label">Top score</div><div class="value gold">${maxScore.toLocaleString()}</div></div>
+    <div class="stat-card"><div class="label">Total runes</div><div class="value">${(totalRunes/1e6).toFixed(2)}M</div></div>
+    <div class="stat-card"><div class="label">Avg level</div><div class="value">${avgLevel}</div></div>
+    <div class="stat-card"><div class="label">Days tracked</div><div class="value">${snapshotCount}</div></div>
+  `;
+}
+
+function renderOnlineChart() {
+  const dates = getDates();
+  const values = dates.map(d => STATE.snapshots[d].online);
+
+  new Chart(document.getElementById('chart-online'), {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        data: values,
+        borderColor: COLORS.green,
+        backgroundColor: 'rgba(61,214,140,0.08)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: dates.length > 30 ? 0 : 3,
+        pointHoverRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 10 } },
+        y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } }
+      }
+    }
+  });
+}
+
+function renderTopScoreChart() {
+  const snap = getLatestSnapshot();
+  const top10 = Object.entries(snap.players)
+    .sort((a,b) => a[1].rank - b[1].rank)
+    .slice(0, 10);
+
+  new Chart(document.getElementById('chart-top-score'), {
+    type: 'bar',
+    data: {
+      labels: top10.map(([u]) => u),
+      datasets: [{
+        data: top10.map(([,p]) => p.score),
+        backgroundColor: top10.map(([u]) =>
+          u === ME ? COLORS.accent2 : COLORS.accent + 'bb'),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#1e2535' }, ticks: { callback: v => (v/1000).toFixed(0)+'k' } }
+      }
+    }
+  });
+}
+
+function initPlayerSelect() {
+  const snap = getLatestSnapshot();
+  const players = Object.keys(snap.players).sort();
+  const sel = document.getElementById('player-select');
+  players.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u;
+    opt.textContent = u;
+    if (u === ME) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  currentPlayer = ME;
+  renderPlayerChart();
+
+  sel.addEventListener('change', () => {
+    currentPlayer = sel.value;
+    renderPlayerChart();
+  });
+
+  document.querySelectorAll('.metric-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.metric-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMetric = btn.dataset.metric;
+      renderPlayerChart();
+    });
+  });
+}
+
+const METRIC_LABELS = { score: 'Score', rank: 'Rank', runeCount: 'Runes', level: 'Level' };
+const METRIC_COLORS = { score: COLORS.accent, rank: COLORS.red, runeCount: COLORS.gold, level: COLORS.green };
+
+function renderPlayerChart() {
+  const dates = getDates();
+  const values = dates.map(d => {
+    const p = STATE.snapshots[d].players[currentPlayer];
+    return p ? p[currentMetric] : null;
+  });
+
+  const ctx = document.getElementById('chart-player');
+  if (playerChart) playerChart.destroy();
+
+  const reversed = currentMetric === 'rank'; // lower rank = better
+
+  playerChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: METRIC_LABELS[currentMetric],
+        data: values,
+        borderColor: METRIC_COLORS[currentMetric],
+        backgroundColor: METRIC_COLORS[currentMetric] + '18',
+        fill: true,
+        tension: 0.3,
+        pointRadius: dates.length > 30 ? 0 : 3,
+        pointHoverRadius: 5,
+        spanGaps: true,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => `${METRIC_LABELS[currentMetric]}: ${ctx.raw?.toLocaleString()}`
+        }}
+      },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 12 } },
+        y: {
+          grid: { color: '#1e2535' },
+          reverse: reversed,
+          ticks: { callback: v => currentMetric === 'runeCount' ? (v/1000).toFixed(0)+'k' : v }
+        }
+      }
+    }
+  });
+}
+
+// ── Table ──
+let currentSnapshot = null;
+let prevSnapshot = null;
+let tableData = [];
+let filterText = '';
+
+function initSnapshotSelect() {
+  const dates = getDates().reverse();
+  const sel = document.getElementById('snapshot-select');
+  dates.forEach((d, i) => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d;
+    if (i === 0) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  currentSnapshot = dates[0];
+  prevSnapshot = dates[1] || null;
+  buildTableData();
+
+  sel.addEventListener('change', () => {
+    const allDates = getDates();
+    currentSnapshot = sel.value;
+    const idx = allDates.indexOf(currentSnapshot);
+    prevSnapshot = idx > 0 ? allDates[idx - 1] : null;
+    buildTableData();
+    renderTable();
+  });
+}
+
+function buildTableData() {
+  const snap = STATE.snapshots[currentSnapshot];
+  const prev = prevSnapshot ? STATE.snapshots[prevSnapshot] : null;
+  tableData = Object.entries(snap.players).map(([username, p]) => {
+    const prevRank = prev && prev.players[username] ? prev.players[username].rank : null;
+    const delta = prevRank !== null ? prevRank - p.rank : null;
+    return { username, ...p, delta };
+  });
+}
+
+function initTable() {
+  buildTableData();
+  renderTable();
+}
+
+function initSortHeaders() {
+  document.querySelectorAll('thead th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) sortAsc = !sortAsc;
+      else { sortCol = col; sortAsc = col === 'rank'; }
+      document.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted'));
+      th.classList.add('sorted');
+      renderTable();
+    });
+  });
+}
+
+function initSearch() {
+  document.getElementById('search-input').addEventListener('input', e => {
+    filterText = e.target.value.toLowerCase().trim();
+    renderTable();
+  });
+}
+
+function renderTable() {
+  let rows = [...tableData];
+  if (filterText) rows = rows.filter(r => r.username.toLowerCase().includes(filterText));
+
+  rows.sort((a, b) => {
+    let av = a[sortCol], bv = b[sortCol];
+    if (typeof av === 'string') return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return sortAsc ? av - bv : bv - av;
+  });
+
+  const snap = STATE.snapshots[currentSnapshot];
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = rows.map(r => {
+    const isMe = r.username === ME;
+    const rankClass = r.rank <= 3 ? 'rank-cell top3' : 'rank-cell';
+    const meBadge = isMe ? '<span class="me-badge">YOU</span>' : '';
+    const onlineDot = r.isOnline ? '<span class="online-dot"></span>' : '';
+    let deltaHtml = '<span class="delta-neu">—</span>';
+    if (r.delta !== null) {
+      if (r.delta > 0) deltaHtml = `<span class="delta-pos">▲${r.delta}</span>`;
+      else if (r.delta < 0) deltaHtml = `<span class="delta-neg">▼${Math.abs(r.delta)}</span>`;
+      else deltaHtml = `<span class="delta-neu">0</span>`;
+    }
+    const guildHtml = r.guildPassHolder
+      ? '<span class="guild-yes">✓</span>'
+      : '<span class="guild-no">✗</span>';
+
+    return `<tr class="${r.isOnline ? 'is-online' : ''} ${isMe ? 'is-me' : ''}">
+      <td class="${rankClass}">${r.rank}</td>
+      <td class="user-cell">${onlineDot}${r.username}${meBadge}</td>
+      <td class="level-cell">${r.level}</td>
+      <td class="score-cell">${r.score.toLocaleString()}</td>
+      <td class="rune-cell">${r.runeCount.toLocaleString()}</td>
+      <td class="mult-cell">${r.multiplier.toFixed(3)}×</td>
+      <td class="nft-cell">${r.ruyuiNftCount}</td>
+      <td>${guildHtml}</td>
+      <td>${deltaHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+init();
+</script>
+</body>
+</html>
