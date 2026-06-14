@@ -1,7 +1,7 @@
 {
   "snapshots": {
     "2026-06-14": {
-      "ts": "2026-06-14T01:23:37.919Z",
+      "ts": "2026-06-14T01:33:34.501Z",
       "online": 4,
       "players": {
         "ethos": {
@@ -28,7 +28,7 @@
           "rank": 3,
           "level": 100,
           "score": 108795,
-          "runeCount": 2454810,
+          "runeCount": 2454980,
           "multiplier": 1.0879473319220205,
           "ruyuiNftCount": 10,
           "isOnline": true,
@@ -358,7 +358,7 @@
           "rank": 36,
           "level": 57,
           "score": 59954,
-          "runeCount": 34183,
+          "runeCount": 0,
           "multiplier": 1.0518328157299974,
           "ruyuiNftCount": 5,
           "isOnline": true,
