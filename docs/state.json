@@ -1,8 +1,8 @@
 {
   "snapshots": {
     "2026-06-14": {
-      "ts": "2026-06-14T01:17:50.572Z",
-      "online": 5,
+      "ts": "2026-06-14T01:23:37.919Z",
+      "online": 4,
       "players": {
         "ethos": {
           "rank": 1,
@@ -358,7 +358,7 @@
           "rank": 36,
           "level": 57,
           "score": 59954,
-          "runeCount": 33815,
+          "runeCount": 34183,
           "multiplier": 1.0518328157299974,
           "ruyuiNftCount": 5,
           "isOnline": true,
@@ -731,7 +731,7 @@
           "runeCount": 21435,
           "multiplier": 1.0457846096908265,
           "ruyuiNftCount": 3,
-          "isOnline": true,
+          "isOnline": false,
           "guildPassHolder": true
         },
         "thereaper": {
