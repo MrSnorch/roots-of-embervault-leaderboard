@@ -15,14 +15,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch leaderboard data
-        run: |
-          curl -s "https://roe-prod-20fe6d199715.herokuapp.com/api/leaderboard/global?page=1&limit=100" \
-            -o /tmp/leaderboard_raw.json
+      - name: Fetch all leaderboard pages
+        run: python3 scripts/fetch-all-pages.py
 
       - name: Update state
-        run: |
-          node scripts/update-state.js
+        run: node scripts/update-state.js
 
       - name: Commit and push
         run: |
