@@ -44,13 +44,12 @@ for (const p of raw.data) {
     guildPassHolder: p.guildPassHolder,
   };
 
-  // Upsert player meta (static info that rarely changes)
+  // Upsert player meta
   if (!state.players[p.username]) {
-    state.players[p.username] = {
-      wallet: p.wallet,
-      activeSince: p.activeSince,
-    };
+    state.players[p.username] = { wallet: p.wallet, activeSince: p.activeSince };
   }
+  // Always update lastActive (changes frequently)
+  state.players[p.username].lastActive = p.lastActive;
 }
 
 // Compute top farmers (rune delta vs previous snapshot)
