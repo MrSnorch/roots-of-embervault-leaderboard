@@ -160,7 +160,11 @@
   .nft-cell   { color: var(--accent2); }
   .lastseen-cell { color: var(--muted); font-size: 11px; }
   .lastseen-cell.recent { color: var(--green); }
-
+  .wallet-cell {
+    font-family: monospace; font-size: 11px; color: var(--muted);
+    cursor: pointer; border-bottom: 1px dashed currentColor; transition: color .15s;
+  }
+  .wallet-cell:hover { color: var(--accent); }
   /* ── Footer ── */
   footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
 
@@ -265,6 +269,7 @@
             <th data-col="guildPassHolder">Guild</th>
             <th data-col="delta" title="Rank change vs previous snapshot">Δ Rank</th>
             <th data-col="lastActive">Last seen</th>
+            <th data-col="wallet">Wallet</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -784,6 +789,12 @@ function renderTable() {
     const lsClass = d !== null && d <= 3 ? 'lastseen-cell recent' : 'lastseen-cell';
     const lsHtml = `<span class="${lsClass}">${fmtLastSeen(r.lastActive)}</span>`;
 
+    const walletFull = r.wallet || STATE.players[r.username]?.wallet || '';
+    const walletShort = walletFull ? walletFull.slice(0, 6) + '…' + walletFull.slice(-4) : '—';
+    const walletHtml = walletFull
+      ? `<span class="wallet-cell" title="${walletFull}" onclick="navigator.clipboard.writeText('${walletFull}');this.textContent='✓ copied';setTimeout(()=>this.textContent='${walletShort}',1200)">${walletShort}</span>`
+      : '—';
+
     return `<tr class="${r.isOnline ? 'is-online' : ''} ${isMe ? 'is-me' : ''}">
       <td class="${rankClass}">${r.rank}</td>
       <td class="user-cell">${onlineDot}${r.username}${meBadge}</td>
@@ -796,6 +807,7 @@ function renderTable() {
       <td>${r.guildPassHolder ? '<span class="guild-yes">✓</span>' : '<span class="guild-no">✗</span>'}</td>
       <td>${deltaHtml}</td>
       <td>${lsHtml}</td>
+      <td>${walletHtml}</td>
     </tr>`;
   }).join('');
 }
