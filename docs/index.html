@@ -200,6 +200,12 @@
     </div>
   </div>
 
+  <!-- Active players by last seen -->
+  <div class="chart-card section-gap">
+    <h3>Total players by last seen day <span style="color:var(--muted);font-size:11px;font-weight:400;">— unique players whose Last seen falls on each day</span></h3>
+    <div style="position:relative;height:200px;"><canvas id="chart-active-per-day"></canvas></div>
+  </div>
+
   <!-- Top farmers + rune trends -->
   <div class="charts-row section-gap">
     <div class="chart-card">
@@ -349,6 +355,7 @@ async function init() {
   renderHeader();
   renderStats();
   renderOnlineChart();
+  renderActivePerDayChart();
   renderTopScoreChart();
   renderFarmers();
   renderRuneTrends();
@@ -410,6 +417,61 @@ function renderStats() {
     <div class="stat-card"><div class="label">Days tracked</div><div class="value">${dates.length}</div></div>
     <div class="stat-card"><div class="label">My rank</div><div class="value${meData ? ' gold' : ''}">${meRank}</div></div>
   `;
+}
+
+// ── Active players per day (from snapshot.activeToday) ──
+function renderActivePerDayChart() {
+  const dates = getDates();
+  const days = [], values = [];
+  for (const d of dates) {
+    const v = STATE.snapshots[d].activeToday;
+    if (v != null) { days.push(d); values.push(v); }
+  }
+
+  // fallback: if no snapshots have activeToday yet, derive from STATE.players lastActive
+  if (!days.length) {
+    const dayCounts = {};
+    for (const meta of Object.values(STATE.players || {})) {
+      const la = meta.lastActive;
+      if (!la) continue;
+      const day = la.slice(0, 10);
+      dayCounts[day] = (dayCounts[day] || 0) + 1;
+    }
+    for (const d of Object.keys(dayCounts).sort()) { days.push(d); values.push(dayCounts[d]); }
+  }
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const bgColors = days.map(d => d === todayStr ? COLORS.green + 'dd' : COLORS.accent + 'aa');
+
+  new Chart(document.getElementById('chart-active-per-day'), {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'Players',
+        data: values,
+        backgroundColor: bgColors,
+        borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: ctx => ctx[0].label,
+            label: ctx => `${ctx.raw} player${ctx.raw !== 1 ? 's' : ''} last seen this day`,
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 20 } },
+        y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } }
+      }
+    }
+  });
 }
 
 // ── Online chart ──
@@ -628,13 +690,13 @@ function initSnapshotSelect() {
 function buildTableData() {
   const snap = STATE.snapshots[currentSnapshot];
   const prev = prevSnapshot ? STATE.snapshots[prevSnapshot] : null;
-  // pull lastActive from raw players meta
   tableData = Object.entries(snap.players).map(([username, p]) => {
     const prevP = prev?.players[username];
     const delta = prevP != null ? prevP.rank - p.rank : null;
     const runeDelta = prevP != null ? p.runeCount - prevP.runeCount : null;
-    const meta = STATE.players[username];
-    return { username, ...p, delta, runeDelta, lastActive: meta?.lastActive || null };
+    // lastActive now stored in snapshot; fall back to players meta for old snapshots
+    const lastActive = p.lastActive ?? STATE.players[username]?.lastActive ?? null;
+    return { username, ...p, delta, runeDelta, lastActive };
   });
 }
 
