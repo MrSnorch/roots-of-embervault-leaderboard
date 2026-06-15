@@ -295,7 +295,8 @@ const PALETTE = [
   '#38bdf8','#fb923c','#e879f9','#4ade80','#facc15',
 ];
 
-let STATE = null;
+let STATE = null;        // state.json: { snapshots: [...dates], players: {...} }
+let SNAPS = {};          // cache: date -> snapshot object
 let sortCol = 'rank';
 let sortAsc = true;
 let playerChart = null;
@@ -309,11 +310,24 @@ let filterOnline = false;
 async function loadState() {
   const r = await fetch('state.json?_=' + Date.now());
   STATE = await r.json();
+  // migrate old format where snapshots was an object
+  if (!Array.isArray(STATE.snapshots)) STATE.snapshots = Object.keys(STATE.snapshots).sort();
 }
 
-function getDates() { return Object.keys(STATE.snapshots).sort(); }
+async function loadSnap(date) {
+  if (SNAPS[date]) return SNAPS[date];
+  const r = await fetch(`snapshots/${date}.json?_=` + Date.now());
+  SNAPS[date] = await r.json();
+  return SNAPS[date];
+}
+
+async function loadSnaps(dates) {
+  await Promise.all(dates.map(d => loadSnap(d)));
+}
+
+function getDates() { return [...STATE.snapshots].sort(); }
 function getLatestDate() { const d = getDates(); return d[d.length - 1]; }
-function getLatestSnapshot() { return STATE.snapshots[getLatestDate()]; }
+function getLatestSnapshot() { return SNAPS[getLatestDate()]; }
 
 // ── Helpers ──
 function daysAgo(isoStr) {
@@ -339,15 +353,18 @@ function runeRate(username, days = 7) {
   if (n < 1) return 0;
   const recent = dates[dates.length - 1];
   const old = dates[dates.length - 1 - n];
-  const r = STATE.snapshots[recent].players[username];
-  const o = STATE.snapshots[old].players[username];
+  const r = SNAPS[recent].players[username];
+  const o = SNAPS[old].players[username];
   if (!r || !o) return 0;
   return (r.runeCount - o.runeCount) / n;
 }
 
 // ── Init ──
 async function init() {
-  try { await loadState(); }
+  try {
+    await loadState();
+    await loadSnaps(getDates()); // fetch all per-day snapshot files
+  }
   catch(e) { document.getElementById('loading').textContent = 'Error: ' + e.message; return; }
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -371,7 +388,7 @@ async function init() {
 // ── Header ──
 function renderHeader() {
   const latest = getLatestDate();
-  const snap = STATE.snapshots[latest];
+  const snap = SNAPS[latest];
   document.getElementById('header-online').innerHTML =
     `<span class="pulse"></span>${snap.online} online · ${latest}`;
 
@@ -379,7 +396,7 @@ function renderHeader() {
   const dates = getDates();
   const meNow = snap.players[ME];
   if (meNow && dates.length >= 2) {
-    const prev = STATE.snapshots[dates[dates.length - 2]].players[ME];
+    const prev = SNAPS[dates[dates.length - 2]].players[ME];
     if (prev) {
       const delta = prev.rank - meNow.rank; // positive = improved
       const el = document.getElementById('my-rank-alert');
@@ -424,7 +441,7 @@ function renderActivePerDayChart() {
   const dates = getDates();
   const days = [], values = [];
   for (const d of dates) {
-    const v = STATE.snapshots[d].activeToday;
+    const v = SNAPS[d].activeToday;
     if (v != null) { days.push(d); values.push(v); }
   }
 
@@ -477,7 +494,7 @@ function renderActivePerDayChart() {
 // ── Online chart ──
 function renderOnlineChart() {
   const dates = getDates();
-  const values = dates.map(d => STATE.snapshots[d].online);
+  const values = dates.map(d => SNAPS[d].online);
   new Chart(document.getElementById('chart-online'), {
     type: 'line',
     data: { labels: dates, datasets: [{ data: values, borderColor: COLORS.green, backgroundColor: 'rgba(61,214,140,0.08)', fill: true, tension: 0.3, pointRadius: dates.length > 30 ? 0 : 3, pointHoverRadius: 5 }] },
@@ -501,7 +518,7 @@ function renderFarmers() {
   const dates = getDates();
   let farmersDate = null, farmers = [];
   for (let i = dates.length - 1; i >= 0; i--) {
-    const snap = STATE.snapshots[dates[i]];
+    const snap = SNAPS[dates[i]];
     if (snap.topFarmers && snap.topFarmers.length > 0) { farmersDate = dates[i]; farmers = snap.topFarmers; break; }
   }
   document.getElementById('farmers-date').textContent = farmersDate || '';
@@ -532,7 +549,7 @@ function renderRuneTrends() {
   // pick top farmers from latest snapshot that has them
   let topUsernames = [];
   for (let i = dates.length - 1; i >= 0; i--) {
-    const snap = STATE.snapshots[dates[i]];
+    const snap = SNAPS[dates[i]];
     if (snap.topFarmers && snap.topFarmers.length > 0) {
       topUsernames = snap.topFarmers.slice(0, 7).map(f => f.username);
       break;
@@ -548,7 +565,7 @@ function renderRuneTrends() {
 
   const datasets = topUsernames.map((u, idx) => ({
     label: u,
-    data: last7.map(d => STATE.snapshots[d].players[u]?.runeCount ?? null),
+    data: last7.map(d => SNAPS[d].players[u]?.runeCount ?? null),
     borderColor: u === ME ? COLORS.accent2 : PALETTE[idx % PALETTE.length],
     backgroundColor: 'transparent',
     tension: 0.3,
@@ -647,7 +664,7 @@ const METRIC_COLORS = { score: COLORS.accent, rank: COLORS.red, runeCount: COLOR
 
 function renderPlayerChart() {
   const dates = getDates();
-  const values = dates.map(d => { const p = STATE.snapshots[d].players[currentPlayer]; return p ? p[currentMetric] : null; });
+  const values = dates.map(d => { const p = SNAPS[d].players[currentPlayer]; return p ? p[currentMetric] : null; });
   const ctx = document.getElementById('chart-player');
   if (playerChart) playerChart.destroy();
   playerChart = new Chart(ctx, {
@@ -678,18 +695,21 @@ function initSnapshotSelect() {
   });
   currentSnapshot = dates[0]; prevSnapshot = dates[1] || null;
   buildTableData();
-  sel.addEventListener('change', () => {
+  sel.addEventListener('change', async () => {
     const allDates = getDates();
     currentSnapshot = sel.value;
     const idx = allDates.indexOf(currentSnapshot);
     prevSnapshot = idx > 0 ? allDates[idx - 1] : null;
+    // ensure both snapshots are loaded
+    const toLoad = [currentSnapshot, prevSnapshot].filter(Boolean);
+    await loadSnaps(toLoad);
     buildTableData(); renderTable();
   });
 }
 
 function buildTableData() {
-  const snap = STATE.snapshots[currentSnapshot];
-  const prev = prevSnapshot ? STATE.snapshots[prevSnapshot] : null;
+  const snap = SNAPS[currentSnapshot];
+  const prev = prevSnapshot ? SNAPS[prevSnapshot] : null;
   tableData = Object.entries(snap.players).map(([username, p]) => {
     const prevP = prev?.players[username];
     const delta = prevP != null ? prevP.rank - p.rank : null;
