@@ -450,6 +450,7 @@ function renderStats() {
   document.getElementById('stats-bar').innerHTML = `
     <div class="stat-card"><div class="label">Players tracked</div><div class="value blue">${totalPlayers}</div></div>
     <div class="stat-card"><div class="label">Online now</div><div class="value green">${onlineNow}</div></div>
+    <div class="stat-card"><div class="label">Active today</div><div class="value green">${latest.activeToday ?? '—'}</div></div>
     <div class="stat-card"><div class="label">Top score</div><div class="value gold">${maxScore.toLocaleString()}</div></div>
     <div class="stat-card"><div class="label">Total runes</div><div class="value">${(totalRunes/1e6).toFixed(2)}M</div></div>
     <div class="stat-card"><div class="label">Avg level</div><div class="value">${avgLevel}</div></div>
