@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const RAW_PATH = '/tmp/leaderboard_raw.json';
-const STATE_PATH = path.join(__dirname, '../docs/state.json');
+const RAW_PATH    = '/tmp/leaderboard_raw.json';
+const STATE_PATH  = path.join(__dirname, '../docs/state.json');
+const SNAPS_DIR   = path.join(__dirname, '../docs/snapshots');
 
 const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
@@ -13,19 +14,28 @@ if (!raw.success || !Array.isArray(raw.data)) {
   process.exit(1);
 }
 
-// Load existing state or init
-let state = { snapshots: {}, players: {} };
+// Ensure snapshots dir exists
+if (!fs.existsSync(SNAPS_DIR)) fs.mkdirSync(SNAPS_DIR, { recursive: true });
+
+// Load state.json (players meta + index of snapshot dates)
+let state = { snapshots: [], players: {} };
 if (fs.existsSync(STATE_PATH)) {
   state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  // migrate old format (snapshots was an object)
+  if (!Array.isArray(state.snapshots)) state.snapshots = Object.keys(state.snapshots).sort();
 }
 
-// Find previous snapshot for delta calculation
-const prevKeys = Object.keys(state.snapshots).sort();
-const prevKey = prevKeys.length > 0 ? prevKeys[prevKeys.length - 1] : null;
-const prevSnapshot = prevKey ? state.snapshots[prevKey] : null;
+// Load previous snapshot file for delta calculation
+const prevDate = state.snapshots.length > 0 ? state.snapshots[state.snapshots.length - 1] : null;
+let prevSnapshot = null;
+if (prevDate) {
+  const prevPath = path.join(SNAPS_DIR, `${prevDate}.json`);
+  if (fs.existsSync(prevPath)) prevSnapshot = JSON.parse(fs.readFileSync(prevPath, 'utf8'));
+}
 
-// Build today's snapshot — store ALL fields from API
+// Build today's snapshot
 const snapshot = {
+  date: today,
   ts: new Date().toISOString(),
   online: 0,
   activeToday: 0,
@@ -34,13 +44,8 @@ const snapshot = {
 
 for (const p of raw.data) {
   if (p.isOnline) snapshot.online++;
+  if (p.lastActive && p.lastActive.slice(0, 10) === today) snapshot.activeToday++;
 
-  // Count players whose lastActive falls on today's date
-  if (p.lastActive && p.lastActive.slice(0, 10) === today) {
-    snapshot.activeToday++;
-  }
-
-  // Store every field the API returns
   snapshot.players[p.username] = {
     rank:            p.rank,
     level:           p.level,
@@ -50,21 +55,19 @@ for (const p of raw.data) {
     ruyuiNftCount:   p.ruyuiNftCount,
     isOnline:        p.isOnline,
     guildPassHolder: p.guildPassHolder,
-    // previously only stored in players meta — now in every snapshot
     wallet:          p.wallet,
     activeSince:     p.activeSince,
     lastActive:      p.lastActive,
   };
 
-  // Keep players meta for quick lookup (wallet, activeSince never change)
+  // Keep players meta (wallet/activeSince never change; lastActive = latest known)
   if (!state.players[p.username]) {
     state.players[p.username] = { wallet: p.wallet, activeSince: p.activeSince };
   }
-  // lastActive in meta = latest known value (for fallback / current-state queries)
   state.players[p.username].lastActive = p.lastActive;
 }
 
-// Compute top farmers (rune delta vs previous snapshot)
+// Top farmers vs previous snapshot
 if (prevSnapshot) {
   const deltas = [];
   for (const [username, data] of Object.entries(snapshot.players)) {
@@ -75,9 +78,7 @@ if (prevSnapshot) {
   }
   deltas.sort((a, b) => b.delta - a.delta);
   snapshot.topFarmers = deltas.slice(0, 10).map(d => ({
-    username:    d.username,
-    runesGained: d.delta,
-    runeCount:   d.runeCount,
+    username: d.username, runesGained: d.delta, runeCount: d.runeCount,
   }));
   console.log(`Top farmer: ${snapshot.topFarmers[0]?.username} +${snapshot.topFarmers[0]?.runesGained?.toLocaleString()} runes`);
 } else {
@@ -85,15 +86,17 @@ if (prevSnapshot) {
   console.log('No previous snapshot, skipping top farmers');
 }
 
-state.snapshots[today] = snapshot;
+// Write individual snapshot file
+fs.writeFileSync(path.join(SNAPS_DIR, `${today}.json`), JSON.stringify(snapshot));
+console.log(`Written docs/snapshots/${today}.json`);
 
-// Keep last 365 days only
-const keys = Object.keys(state.snapshots).sort();
-if (keys.length > 365) {
-  for (const old of keys.slice(0, keys.length - 365)) {
-    delete state.snapshots[old];
-  }
+// Update state.json index (add today if not already present, keep sorted)
+if (!state.snapshots.includes(today)) {
+  state.snapshots.push(today);
+  state.snapshots.sort();
 }
+// Keep index to last 365 entries
+if (state.snapshots.length > 365) state.snapshots = state.snapshots.slice(-365);
 
 fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
-console.log(`Snapshot saved for ${today}, online: ${snapshot.online}, activeToday: ${snapshot.activeToday}`);
+console.log(`state.json updated — ${state.snapshots.length} snapshots indexed, online: ${snapshot.online}, activeToday: ${snapshot.activeToday}`);
