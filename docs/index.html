@@ -315,19 +315,36 @@ let filterOnline = false;
 async function loadState() {
   const r = await fetch('state.json?_=' + Date.now());
   STATE = await r.json();
-  // migrate old format where snapshots was an object
-  if (!Array.isArray(STATE.snapshots)) STATE.snapshots = Object.keys(STATE.snapshots).sort();
+
+  // migrate old format: snapshots was an object { "2026-06-14": { players... } }
+  if (!Array.isArray(STATE.snapshots)) {
+    const embedded = STATE.snapshots; // save old data
+    STATE.snapshots = Object.keys(embedded).sort();
+    // pre-populate SNAPS cache from embedded data so loadSnap doesn't 404
+    for (const [date, snap] of Object.entries(embedded)) {
+      SNAPS[date] = snap;
+    }
+  }
 }
 
 async function loadSnap(date) {
   if (SNAPS[date]) return SNAPS[date];
-  const r = await fetch(`snapshots/${date}.json?_=` + Date.now());
-  SNAPS[date] = await r.json();
-  return SNAPS[date];
+  try {
+    const r = await fetch(`snapshots/${date}.json?_=` + Date.now());
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    SNAPS[date] = await r.json();
+  } catch(e) {
+    console.warn(`Snapshot ${date} not found, skipping:`, e.message);
+    // remove from index so it doesn't break rendering
+    STATE.snapshots = STATE.snapshots.filter(d => d !== date);
+  }
+  return SNAPS[date] || null;
 }
 
 async function loadSnaps(dates) {
   await Promise.all(dates.map(d => loadSnap(d)));
+  // filter out any dates that failed to load
+  STATE.snapshots = STATE.snapshots.filter(d => SNAPS[d]);
 }
 
 function getDates() { return [...STATE.snapshots].sort(); }
