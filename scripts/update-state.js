@@ -19,36 +19,48 @@ if (fs.existsSync(STATE_PATH)) {
   state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
 }
 
-// Find yesterday's snapshot for delta calculation
+// Find previous snapshot for delta calculation
 const prevKeys = Object.keys(state.snapshots).sort();
 const prevKey = prevKeys.length > 0 ? prevKeys[prevKeys.length - 1] : null;
 const prevSnapshot = prevKey ? state.snapshots[prevKey] : null;
 
-// Build today's snapshot
+// Build today's snapshot — store ALL fields from API
 const snapshot = {
   ts: new Date().toISOString(),
   online: 0,
+  activeToday: 0,
   players: {}
 };
 
 for (const p of raw.data) {
   if (p.isOnline) snapshot.online++;
+
+  // Count players whose lastActive falls on today's date
+  if (p.lastActive && p.lastActive.slice(0, 10) === today) {
+    snapshot.activeToday++;
+  }
+
+  // Store every field the API returns
   snapshot.players[p.username] = {
-    rank: p.rank,
-    level: p.level,
-    score: p.score,
-    runeCount: p.runeCount,
-    multiplier: p.multiplier,
-    ruyuiNftCount: p.ruyuiNftCount,
-    isOnline: p.isOnline,
+    rank:            p.rank,
+    level:           p.level,
+    score:           p.score,
+    runeCount:       p.runeCount,
+    multiplier:      p.multiplier,
+    ruyuiNftCount:   p.ruyuiNftCount,
+    isOnline:        p.isOnline,
     guildPassHolder: p.guildPassHolder,
+    // previously only stored in players meta — now in every snapshot
+    wallet:          p.wallet,
+    activeSince:     p.activeSince,
+    lastActive:      p.lastActive,
   };
 
-  // Upsert player meta
+  // Keep players meta for quick lookup (wallet, activeSince never change)
   if (!state.players[p.username]) {
     state.players[p.username] = { wallet: p.wallet, activeSince: p.activeSince };
   }
-  // Always update lastActive (changes frequently)
+  // lastActive in meta = latest known value (for fallback / current-state queries)
   state.players[p.username].lastActive = p.lastActive;
 }
 
@@ -63,9 +75,9 @@ if (prevSnapshot) {
   }
   deltas.sort((a, b) => b.delta - a.delta);
   snapshot.topFarmers = deltas.slice(0, 10).map(d => ({
-    username: d.username,
+    username:    d.username,
     runesGained: d.delta,
-    runeCount: d.runeCount,
+    runeCount:   d.runeCount,
   }));
   console.log(`Top farmer: ${snapshot.topFarmers[0]?.username} +${snapshot.topFarmers[0]?.runesGained?.toLocaleString()} runes`);
 } else {
@@ -84,4 +96,4 @@ if (keys.length > 365) {
 }
 
 fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
-console.log(`Snapshot saved for ${today}, online: ${snapshot.online}`);
+console.log(`Snapshot saved for ${today}, online: ${snapshot.online}, activeToday: ${snapshot.activeToday}`);
