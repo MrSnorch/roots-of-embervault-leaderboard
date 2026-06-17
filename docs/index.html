@@ -204,6 +204,12 @@
     </div>
   </div>
 
+  <!-- Hourly online (last 7 days) -->
+  <div class="chart-card section-gap">
+    <h3>Online players — last 30 days <span style="color:var(--muted);font-size:11px;font-weight:400;">— hourly</span></h3>
+    <div style="position:relative;height:200px;"><canvas id="chart-hourly-online"></canvas></div>
+  </div>
+
   <!-- Active players by last seen -->
   <div class="chart-card section-gap">
     <h3>Total players by last seen day <span style="color:var(--muted);font-size:11px;font-weight:400;">— unique players whose Last seen falls on each day</span></h3>
@@ -278,7 +284,7 @@
   </div>
 </main>
 
-<footer>roe-leaderboard · data updated daily via GitHub Actions</footer>
+<footer>roe-leaderboard · data updated hourly via GitHub Actions</footer>
 
 </div>
 
@@ -394,6 +400,7 @@ async function init() {
   renderHeader();
   renderStats();
   renderOnlineChart();
+  renderHourlyOnlineChart(await loadHourlyRecent());
   renderActivePerDayChart();
   renderTopScoreChart();
   renderFarmers();
@@ -522,6 +529,30 @@ function renderOnlineChart() {
     type: 'line',
     data: { labels: dates, datasets: [{ data: values, borderColor: COLORS.green, backgroundColor: 'rgba(61,214,140,0.08)', fill: true, tension: 0.3, pointRadius: dates.length > 30 ? 0 : 3, pointHoverRadius: 5 }] },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 10 } }, y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+}
+
+// ── Hourly online chart (last 7 days, from docs/hourly/recent.json) ──
+async function loadHourlyRecent() {
+  try {
+    const r = await fetch('hourly/recent.json?_=' + Date.now());
+    if (!r.ok) return [];
+    return await r.json();
+  } catch (e) {
+    console.warn('hourly/recent.json not available yet:', e.message);
+    return [];
+  }
+}
+
+function renderHourlyOnlineChart(recent) {
+  const card = document.getElementById('chart-hourly-online').closest('.chart-card');
+  if (!recent.length) { card.style.display = 'none'; return; }
+  const labels = recent.map(e => e.hour.replace('T', ' ') + ':00');
+  const values = recent.map(e => e.online);
+  new Chart(document.getElementById('chart-hourly-online'), {
+    type: 'line',
+    data: { labels, datasets: [{ data: values, borderColor: COLORS.accent, backgroundColor: 'rgba(79,156,249,0.08)', fill: true, tension: 0.3, pointRadius: 0, pointHoverRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 12 } }, y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } } } }
   });
 }
 
