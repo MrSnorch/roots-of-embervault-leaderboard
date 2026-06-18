@@ -3,7 +3,8 @@
     "2026-06-14",
     "2026-06-15",
     "2026-06-16",
-    "2026-06-17"
+    "2026-06-17",
+    "2026-06-18"
   ],
   "players": {
     "677": {
@@ -49,7 +50,7 @@
     "dazz": {
       "wallet": "0xaff7ae986b1de9d5ffbe9062434366b8f242cd2a",
       "activeSince": "2026-01-30T10:26:08.569+00:00",
-      "lastActive": "2026-06-17T21:22:33.741+00:00"
+      "lastActive": "2026-06-17T22:14:26.036+00:00"
     },
     "lord cyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
@@ -179,12 +180,12 @@
     "stallion": {
       "wallet": "0xd5deb3bcb3cc092c1fd972e62b1af9d99dae7f3f",
       "activeSince": "2026-01-30T23:38:45.973+00:00",
-      "lastActive": "2026-06-17T21:53:45.816+00:00"
+      "lastActive": "2026-06-17T22:25:42.927+00:00"
     },
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-06-17T20:13:46.011+00:00"
+      "lastActive": "2026-06-17T23:37:58.783+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -284,7 +285,7 @@
     "affy": {
       "wallet": "0xf28506e6bf73b15ee0cf9e800c60cef4af96bab9",
       "activeSince": "2026-02-21T12:07:06.604+00:00",
-      "lastActive": "2026-06-17T20:20:30.88+00:00"
+      "lastActive": "2026-06-17T22:58:32.738+00:00"
     },
     "stefan2212": {
       "wallet": "0x90b75a9ea3604553b70cee1f9c213c6bee213b09",
@@ -709,7 +710,7 @@
     "tang": {
       "wallet": "0x8bfdc43b6faeaa55c3eb773d95091e05d930893f",
       "activeSince": "2026-03-12T21:33:55.675+00:00",
-      "lastActive": "2026-05-13T21:38:03.092+00:00"
+      "lastActive": "2026-06-17T22:59:42.802+00:00"
     },
     "mk5455": {
       "wallet": "0xdb2c8036819f378c6ea0400f809b1a844bb78916",
@@ -1424,7 +1425,7 @@
     "bronze": {
       "wallet": "0x933414d6d4d25c18fa45eb51dc98d76474759f5f",
       "activeSince": "2026-01-29T20:48:00.448+00:00",
-      "lastActive": "2026-06-16T22:23:55.724+00:00"
+      "lastActive": "2026-06-17T22:40:09.834+00:00"
     },
     "idedj": {
       "wallet": "0xed225909be84c5fe11493219d9e2e1a02dcd5cab",
@@ -1704,7 +1705,7 @@
     "vitlus": {
       "wallet": "0x6ff9be05b6b101881ffd4f483e630e18268fe134",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-06-17T17:39:44.851+00:00"
+      "lastActive": "2026-06-17T22:19:23.929+00:00"
     },
     "valbez": {
       "wallet": "0x094e78fbe169d86800fbe23757ade6c223d28ed9",
