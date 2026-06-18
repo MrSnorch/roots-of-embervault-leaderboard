@@ -1,0 +1,31 @@
+name: Fetch Leaderboard
+
+on:
+  workflow_dispatch:        # Triggered externally via the GitHub API (cron-job.org)
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch all leaderboard pages
+        run: python3 scripts/fetch-all-pages.py
+
+      - name: Update daily state
+        run: node scripts/update-state.js
+
+      - name: Update hourly history
+        run: node scripts/update-hourly.js
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/state.json docs/snapshots/ docs/hourly/
+          git diff --cached --quiet || git commit -m "chore: leaderboard snapshot $(date -u +'%Y-%m-%dT%H')"
+          git push

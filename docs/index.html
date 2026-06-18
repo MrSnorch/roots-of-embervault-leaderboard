@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROE Leaderboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:       #0a0c10;
+    --surface:  #10141c;
+    --border:   #1e2535;
+    --accent:   #4f9cf9;
+    --accent2:  #a259ff;
+    --green:    #3dd68c;
+    --red:      #ff5e5e;
+    --gold:     #f7c948;
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    --font-ui:   'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-ui); min-height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+  .logo span { color: var(--accent2); }
+  .header-meta { margin-left: auto; font-size: 12px; color: var(--muted); font-family: var(--font-mono); display: flex; align-items: center; gap: 16px; }
+  .rank-alert { color: var(--red); font-weight: 700; animation: blink 1s infinite; }
+  .rank-ok { color: var(--green); font-weight: 700; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 6px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── Layout ── */
+  main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── Stats bar ── */
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .stat-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .stat-card .value { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text); }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.gold  { color: var(--gold); }
+  .stat-card .value.blue  { color: var(--accent); }
+  .stat-card .value.red   { color: var(--red); }
+
+  /* ── Cards ── */
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .chart-card h3 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+
+  /* ── Charts row ── */
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
+  .chart-wrap { position: relative; height: 180px; }
+
+  /* ── Top farmers ── */
+  .farmer-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  .farmer-row:last-child { border-bottom: none; }
+  .farmer-pos { width: 22px; color: var(--muted); font-size: 11px; }
+  .farmer-pos.top3 { color: var(--gold); font-weight: 700; }
+  .farmer-name { flex: 1; font-weight: 600; }
+  .farmer-delta { color: var(--green); font-weight: 700; min-width: 100px; text-align: right; }
+  .farmer-total { color: var(--muted); font-size: 11px; min-width: 110px; text-align: right; }
+  .farmer-bar-wrap { flex: 2; height: 4px; background: var(--border); border-radius: 2px; }
+  .farmer-bar { height: 4px; background: var(--green); border-radius: 2px; }
+  .farmers-empty { color: var(--muted); font-size: 13px; padding: 12px 0; font-family: var(--font-mono); }
+
+  /* ── Rune trends chart ── */
+  .rune-trends-wrap { position: relative; height: 220px; }
+
+  /* ── Forecast ── */
+  .forecast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .forecast-item {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 14px; font-family: var(--font-mono); font-size: 12px;
+  }
+  .forecast-item .fc-name { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .forecast-item .fc-days { color: var(--accent); font-size: 18px; font-weight: 700; }
+  .forecast-item .fc-detail { color: var(--muted); font-size: 11px; margin-top: 2px; }
+  .forecast-item.overtaken { border-color: var(--green); }
+  .forecast-item.overtaken .fc-days { color: var(--green); }
+  .forecast-empty { color: var(--muted); font-size: 13px; font-family: var(--font-mono); }
+
+  /* ── Player section ── */
+  .player-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+  .player-section h3 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .player-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+  .player-controls label { font-size: 12px; color: var(--muted); }
+  select, input[type=text] {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 6px 10px; border-radius: 6px; font-size: 13px;
+    font-family: var(--font-mono); outline: none;
+  }
+  select:focus, input:focus { border-color: var(--accent); }
+  .metric-btn {
+    background: var(--bg); border: 1px solid var(--border); color: var(--muted);
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.15s;
+  }
+  .metric-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .player-chart-wrap { position: relative; height: 200px; }
+
+  /* ── Table ── */
+  .table-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .table-header { padding: 14px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .table-header h3 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .search-input { margin-left: auto; width: 200px; }
+  .snapshot-select { font-size: 12px; }
+  .filter-btn {
+    background: var(--bg); border: 1px solid var(--border); color: var(--muted);
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn.active { border-color: var(--accent); color: var(--accent); }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--bg); padding: 10px 12px; text-align: left;
+    font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th.sorted { color: var(--accent); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(79,156,249,0.04); }
+  tbody tr.is-online { background: rgba(61,214,140,0.04); }
+  tbody tr.is-me { background: rgba(162,89,255,0.08); }
+  td { padding: 9px 12px; font-family: var(--font-mono); white-space: nowrap; }
+  .rank-cell { color: var(--muted); font-size: 12px; width: 40px; }
+  .rank-cell.top3 { color: var(--gold); font-weight: 700; }
+  .user-cell { font-weight: 600; color: var(--text); }
+  .me-badge { display: inline-block; background: var(--accent2); color: #fff; font-size: 9px; padding: 1px 5px; border-radius: 3px; margin-left: 6px; vertical-align: middle; font-family: var(--font-ui); }
+  .online-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 4px; animation: pulse 2s infinite; }
+  .score-cell { color: var(--accent); }
+  .rune-cell  { color: var(--text); }
+  .mult-cell  { color: var(--gold); }
+  .level-cell { color: var(--text); }
+  .delta-pos  { color: var(--green); }
+  .delta-neg  { color: var(--red); }
+  .delta-neu  { color: var(--muted); }
+  .guild-yes  { color: var(--green); font-size: 11px; }
+  .guild-no   { color: var(--muted); font-size: 11px; }
+  .nft-cell   { color: var(--accent2); }
+  .lastseen-cell { color: var(--muted); font-size: 11px; }
+  .lastseen-cell.recent { color: var(--green); }
+  .wallet-cell {
+    font-family: monospace; font-size: 11px; color: var(--muted);
+    cursor: pointer; border-bottom: 1px dashed currentColor; transition: color .15s;
+  }
+  .wallet-cell:hover { color: var(--accent); }
+  /* ── Footer ── */
+  footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
+
+  /* ── Loading ── */
+  #loading { display: flex; align-items: center; justify-content: center; height: 60vh; font-family: var(--font-mono); color: var(--muted); font-size: 14px; }
+  #app { display: none; }
+
+  .section-gap { margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<div id="loading">loading state.json…</div>
+<div id="app">
+
+<header>
+  <div class="logo">ROE<span>·</span>LB</div>
+  <div class="header-meta">
+    <span id="my-rank-alert"></span>
+    <span id="header-online"></span>
+  </div>
+</header>
+
+<main>
+  <!-- Stats bar -->
+  <div class="stats-bar" id="stats-bar"></div>
+
+  <!-- Charts row -->
+  <div class="charts-row section-gap">
+    <div class="chart-card">
+      <h3>Online players / day</h3>
+      <div class="chart-wrap"><canvas id="chart-online"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Top-10 score distribution (latest)</h3>
+      <div class="chart-wrap"><canvas id="chart-top-score"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Hourly online (last 7 days) -->
+  <div class="chart-card section-gap">
+    <h3>Online players — last 30 days <span style="color:var(--muted);font-size:11px;font-weight:400;">— hourly</span></h3>
+    <div style="position:relative;height:200px;"><canvas id="chart-hourly-online"></canvas></div>
+  </div>
+
+  <!-- Active players by last seen -->
+  <div class="chart-card section-gap">
+    <h3>Total players by last seen day <span style="color:var(--muted);font-size:11px;font-weight:400;">— unique players whose Last seen falls on each day</span></h3>
+    <div style="position:relative;height:200px;"><canvas id="chart-active-per-day"></canvas></div>
+  </div>
+
+  <!-- Top farmers + rune trends -->
+  <div class="charts-row section-gap">
+    <div class="chart-card">
+      <h3>Top farmers <span id="farmers-date" style="color:var(--accent);margin-left:8px;font-size:11px;"></span></h3>
+      <div id="farmers-list"></div>
+    </div>
+    <div class="chart-card">
+      <h3>Rune growth — top farmers (7d)</h3>
+      <div class="rune-trends-wrap"><canvas id="chart-rune-trends"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Forecast -->
+  <div class="chart-card section-gap">
+    <h3>Overtake forecast for <span id="forecast-me" style="color:var(--accent2)"></span> <span style="color:var(--muted);font-size:11px;">(at current 7d rune pace)</span></h3>
+    <div id="forecast-grid" class="forecast-grid" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- Per-player chart -->
+  <div class="player-section section-gap">
+    <h3>Player history</h3>
+    <div class="player-controls">
+      <label>Player:</label>
+      <select id="player-select"></select>
+      <label>Metric:</label>
+      <button class="metric-btn active" data-metric="score">Score</button>
+      <button class="metric-btn" data-metric="rank">Rank</button>
+      <button class="metric-btn" data-metric="runeCount">Runes</button>
+      <button class="metric-btn" data-metric="level">Level</button>
+    </div>
+    <div class="player-chart-wrap"><canvas id="chart-player"></canvas></div>
+  </div>
+
+  <!-- Leaderboard table -->
+  <div class="table-section">
+    <div class="table-header">
+      <h3>Leaderboard</h3>
+      <label style="font-size:12px;color:var(--muted);margin-left:12px;">Snapshot:</label>
+      <select id="snapshot-select" class="snapshot-select"></select>
+      <button class="filter-btn" id="filter-guild">Guild only</button>
+      <button class="filter-btn" id="filter-nft">NFT holders</button>
+      <button class="filter-btn" id="filter-online">Online</button>
+      <input type="text" id="search-input" class="search-input" placeholder="search player…">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-col="rank">#</th>
+            <th data-col="username">Player</th>
+            <th data-col="level">Lvl</th>
+            <th data-col="score">Score</th>
+            <th data-col="runeCount">Runes</th>
+            <th data-col="runeDelta" title="Rune change vs previous snapshot">Δ Runes</th>
+            <th data-col="multiplier">Mult</th>
+            <th data-col="ruyuiNftCount">NFTs</th>
+            <th data-col="guildPassHolder">Guild</th>
+            <th data-col="delta" title="Rank change vs previous snapshot">Δ Rank</th>
+            <th data-col="lastActive">Last seen</th>
+            <th data-col="wallet">Wallet</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>roe-leaderboard · data updated hourly via GitHub Actions</footer>
+
+</div>
+
+<script>
+const ME = 'mrsnorch';
+
+Chart.defaults.color = '#e2e8f0';
+Chart.defaults.borderColor = '#1e2535';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+
+const COLORS = {
+  accent: '#4f9cf9', accent2: '#a259ff', green: '#3dd68c',
+  gold: '#f7c948', red: '#ff5e5e', muted: '#64748b',
+};
+
+const PALETTE = [
+  '#4f9cf9','#3dd68c','#f7c948','#a259ff','#ff5e5e',
+  '#38bdf8','#fb923c','#e879f9','#4ade80','#facc15',
+];
+
+let STATE = null;        // state.json: { snapshots: [...dates], players: {...} }
+let SNAPS = {};          // cache: date -> snapshot object
+let sortCol = 'rank';
+let sortAsc = true;
+let playerChart = null;
+let runeTrendsChart = null;
+let currentMetric = 'score';
+let currentPlayer = null;
+let filterGuild = false;
+let filterNft = false;
+let filterOnline = false;
+
+async function loadState() {
+  const r = await fetch('state.json?_=' + Date.now());
+  STATE = await r.json();
+
+  // migrate old format: snapshots was an object { "2026-06-14": { players... } }
+  if (!Array.isArray(STATE.snapshots)) {
+    const embedded = STATE.snapshots; // save old data
+    STATE.snapshots = Object.keys(embedded).sort();
+    // pre-populate SNAPS cache from embedded data so loadSnap doesn't 404
+    for (const [date, snap] of Object.entries(embedded)) {
+      SNAPS[date] = snap;
+    }
+  }
+}
+
+async function loadSnap(date) {
+  if (SNAPS[date]) return SNAPS[date];
+  try {
+    const r = await fetch(`snapshots/${date}.json?_=` + Date.now());
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    SNAPS[date] = await r.json();
+  } catch(e) {
+    console.warn(`Snapshot ${date} not found, skipping:`, e.message);
+    // remove from index so it doesn't break rendering
+    STATE.snapshots = STATE.snapshots.filter(d => d !== date);
+  }
+  return SNAPS[date] || null;
+}
+
+async function loadSnaps(dates) {
+  await Promise.all(dates.map(d => loadSnap(d)));
+  // filter out any dates that failed to load
+  STATE.snapshots = STATE.snapshots.filter(d => SNAPS[d]);
+}
+
+function getDates() { return [...STATE.snapshots].sort(); }
+function getLatestDate() { const d = getDates(); return d[d.length - 1]; }
+function getLatestSnapshot() { return SNAPS[getLatestDate()]; }
+
+// ── Helpers ──
+function daysAgo(isoStr) {
+  if (!isoStr) return null;
+  const diff = Date.now() - new Date(isoStr).getTime();
+  return Math.floor(diff / 86400000);
+}
+
+function fmtLastSeen(isoStr) {
+  if (!isoStr) return '—';
+  const d = daysAgo(isoStr);
+  if (d === 0) return 'today';
+  if (d === 1) return '1d ago';
+  if (d < 30) return `${d}d ago`;
+  if (d < 365) return `${Math.floor(d/30)}mo ago`;
+  return `${Math.floor(d/365)}y ago`;
+}
+
+// daily rune rate over last N days for a player
+function runeRate(username, days = 7) {
+  const dates = getDates();
+  const n = Math.min(days, dates.length - 1);
+  if (n < 1) return 0;
+  const recent = dates[dates.length - 1];
+  const old = dates[dates.length - 1 - n];
+  const r = SNAPS[recent].players[username];
+  const o = SNAPS[old].players[username];
+  if (!r || !o) return 0;
+  return (r.runeCount - o.runeCount) / n;
+}
+
+// ── Init ──
+async function init() {
+  try {
+    await loadState();
+    await loadSnaps(getDates()); // fetch all per-day snapshot files
+  }
+  catch(e) { document.getElementById('loading').textContent = 'Error: ' + e.message; return; }
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  renderHeader();
+  renderStats();
+  renderOnlineChart();
+  renderHourlyOnlineChart(await loadHourlyRecent());
+  renderActivePerDayChart();
+  renderTopScoreChart();
+  renderFarmers();
+  renderRuneTrends();
+  renderForecast();
+  initPlayerSelect();
+  initSnapshotSelect();
+  initTable();
+  initSortHeaders();
+  initSearch();
+  initFilters();
+}
+
+// ── Header ──
+function renderHeader() {
+  const latest = getLatestDate();
+  const snap = SNAPS[latest];
+  document.getElementById('header-online').innerHTML =
+    `<span class="pulse"></span>${snap.online} online · ${latest}`;
+
+  // My rank alert
+  const dates = getDates();
+  const meNow = snap.players[ME];
+  if (meNow && dates.length >= 2) {
+    const prev = SNAPS[dates[dates.length - 2]].players[ME];
+    if (prev) {
+      const delta = prev.rank - meNow.rank; // positive = improved
+      const el = document.getElementById('my-rank-alert');
+      if (delta < 0) {
+        el.innerHTML = `<span class="rank-alert">▼ rank ${meNow.rank} (${delta})</span>`;
+      } else if (delta > 0) {
+        el.innerHTML = `<span class="rank-ok">▲ rank ${meNow.rank} (+${delta})</span>`;
+      } else {
+        el.innerHTML = `<span style="color:var(--muted)">rank ${meNow.rank}</span>`;
+      }
+    }
+  }
+}
+
+// ── Stats ──
+function renderStats() {
+  const dates = getDates();
+  const latest = getLatestSnapshot();
+  const players = Object.values(latest.players);
+  const totalPlayers = players.length;
+  const onlineNow = latest.online;
+  const maxScore = Math.max(...players.map(p => p.score));
+  const totalRunes = players.reduce((a,p) => a + p.runeCount, 0);
+  const avgLevel = (players.reduce((a,p) => a + p.level, 0) / totalPlayers).toFixed(1);
+
+  const meData = latest.players[ME];
+  const meRank = meData ? meData.rank : '—';
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-card"><div class="label">Players tracked</div><div class="value blue">${totalPlayers}</div></div>
+    <div class="stat-card"><div class="label">Online now</div><div class="value green">${onlineNow}</div></div>
+    <div class="stat-card"><div class="label">Active today</div><div class="value green">${latest.activeToday ?? '—'}</div></div>
+    <div class="stat-card"><div class="label">Top score</div><div class="value gold">${maxScore.toLocaleString()}</div></div>
+    <div class="stat-card"><div class="label">Total runes</div><div class="value">${(totalRunes/1e6).toFixed(2)}M</div></div>
+    <div class="stat-card"><div class="label">Avg level</div><div class="value">${avgLevel}</div></div>
+    <div class="stat-card"><div class="label">Days tracked</div><div class="value">${dates.length}</div></div>
+    <div class="stat-card"><div class="label">My rank</div><div class="value${meData ? ' gold' : ''}">${meRank}</div></div>
+  `;
+}
+
+// ── Active players per day (from snapshot.activeToday) ──
+function renderActivePerDayChart() {
+  const dates = getDates();
+  const days = [], values = [];
+  for (const d of dates) {
+    const v = SNAPS[d].activeToday;
+    if (v != null) { days.push(d); values.push(v); }
+  }
+
+  // fallback: if no snapshots have activeToday yet, derive from STATE.players lastActive
+  if (!days.length) {
+    const dayCounts = {};
+    for (const meta of Object.values(STATE.players || {})) {
+      const la = meta.lastActive;
+      if (!la) continue;
+      const day = la.slice(0, 10);
+      dayCounts[day] = (dayCounts[day] || 0) + 1;
+    }
+    for (const d of Object.keys(dayCounts).sort()) { days.push(d); values.push(dayCounts[d]); }
+  }
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const bgColors = days.map(d => d === todayStr ? COLORS.green + 'dd' : COLORS.accent + 'aa');
+
+  new Chart(document.getElementById('chart-active-per-day'), {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'Players',
+        data: values,
+        backgroundColor: bgColors,
+        borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: ctx => ctx[0].label,
+            label: ctx => `${ctx.raw} player${ctx.raw !== 1 ? 's' : ''} last seen this day`,
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 20 } },
+        y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } }
+      }
+    }
+  });
+}
+
+// ── Online chart ──
+function renderOnlineChart() {
+  const dates = getDates();
+  const values = dates.map(d => SNAPS[d].online);
+  new Chart(document.getElementById('chart-online'), {
+    type: 'line',
+    data: { labels: dates, datasets: [{ data: values, borderColor: COLORS.green, backgroundColor: 'rgba(61,214,140,0.08)', fill: true, tension: 0.3, pointRadius: dates.length > 30 ? 0 : 3, pointHoverRadius: 5 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 10 } }, y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+}
+
+// ── Hourly online chart (last 7 days, from docs/hourly/recent.json) ──
+async function loadHourlyRecent() {
+  try {
+    const r = await fetch('hourly/recent.json?_=' + Date.now());
+    if (!r.ok) return [];
+    return await r.json();
+  } catch (e) {
+    console.warn('hourly/recent.json not available yet:', e.message);
+    return [];
+  }
+}
+
+function renderHourlyOnlineChart(recent) {
+  const card = document.getElementById('chart-hourly-online').closest('.chart-card');
+  if (!recent.length) { card.style.display = 'none'; return; }
+  const labels = recent.map(e => e.hour.replace('T', ' ') + ':00');
+  const values = recent.map(e => e.online);
+  new Chart(document.getElementById('chart-hourly-online'), {
+    type: 'line',
+    data: { labels, datasets: [{ data: values, borderColor: COLORS.accent, backgroundColor: 'rgba(79,156,249,0.08)', fill: true, tension: 0.3, pointRadius: 0, pointHoverRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 12 } }, y: { grid: { color: '#1e2535' }, beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+}
+
+// ── Top score chart ──
+function renderTopScoreChart() {
+  const snap = getLatestSnapshot();
+  const top10 = Object.entries(snap.players).sort((a,b) => a[1].rank - b[1].rank).slice(0,10);
+  new Chart(document.getElementById('chart-top-score'), {
+    type: 'bar',
+    data: { labels: top10.map(([u]) => u), datasets: [{ data: top10.map(([,p]) => p.score), backgroundColor: top10.map(([u]) => u === ME ? COLORS.accent2 : COLORS.accent + 'bb'), borderRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#1e2535' }, ticks: { callback: v => (v/1000).toFixed(0)+'k' } } } }
+  });
+}
+
+// ── Top farmers ──
+function renderFarmers() {
+  const dates = getDates();
+  let farmersDate = null, farmers = [];
+  for (let i = dates.length - 1; i >= 0; i--) {
+    const snap = SNAPS[dates[i]];
+    if (snap.topFarmers && snap.topFarmers.length > 0) { farmersDate = dates[i]; farmers = snap.topFarmers; break; }
+  }
+  document.getElementById('farmers-date').textContent = farmersDate || '';
+  const container = document.getElementById('farmers-list');
+  if (!farmers.length) {
+    container.innerHTML = '<div class="farmers-empty">Available from the second snapshot onwards.</div>';
+    return;
+  }
+  const maxDelta = farmers[0].runesGained;
+  container.innerHTML = farmers.map((f, i) => {
+    const pct = Math.round((f.runesGained / maxDelta) * 100);
+    const meTag = f.username === ME ? ` <span style="background:var(--accent2);color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;font-family:var(--font-ui)">YOU</span>` : '';
+    return `<div class="farmer-row">
+      <span class="farmer-pos${i<3?' top3':''}">${i+1}</span>
+      <span class="farmer-name">${f.username}${meTag}</span>
+      <div class="farmer-bar-wrap"><div class="farmer-bar" style="width:${pct}%"></div></div>
+      <span class="farmer-delta">+${f.runesGained.toLocaleString()}</span>
+      <span class="farmer-total">${f.runeCount.toLocaleString()} total</span>
+    </div>`;
+  }).join('');
+}
+
+// ── Rune trends (top farmers 7d) ──
+function renderRuneTrends() {
+  const dates = getDates();
+  if (dates.length < 2) return;
+
+  // pick top farmers from latest snapshot that has them
+  let topUsernames = [];
+  for (let i = dates.length - 1; i >= 0; i--) {
+    const snap = SNAPS[dates[i]];
+    if (snap.topFarmers && snap.topFarmers.length > 0) {
+      topUsernames = snap.topFarmers.slice(0, 7).map(f => f.username);
+      break;
+    }
+  }
+  if (!topUsernames.length) {
+    // fallback: top by current runeCount
+    const snap = getLatestSnapshot();
+    topUsernames = Object.entries(snap.players).sort((a,b) => b[1].runeCount - a[1].runeCount).slice(0,7).map(([u]) => u);
+  }
+
+  const last7 = dates.slice(-7);
+
+  const datasets = topUsernames.map((u, idx) => ({
+    label: u,
+    data: last7.map(d => SNAPS[d].players[u]?.runeCount ?? null),
+    borderColor: u === ME ? COLORS.accent2 : PALETTE[idx % PALETTE.length],
+    backgroundColor: 'transparent',
+    tension: 0.3,
+    pointRadius: 3,
+    pointHoverRadius: 5,
+    spanGaps: true,
+    borderWidth: u === ME ? 2.5 : 1.5,
+  }));
+
+  if (runeTrendsChart) runeTrendsChart.destroy();
+  runeTrendsChart = new Chart(document.getElementById('chart-rune-trends'), {
+    type: 'line',
+    data: { labels: last7, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { boxWidth: 10, padding: 10, font: { size: 10 } } } },
+      scales: {
+        x: { grid: { color: '#1e2535' } },
+        y: { grid: { color: '#1e2535' }, ticks: { callback: v => (v/1000).toFixed(0)+'k' } }
+      }
+    }
+  });
+}
+
+// ── Forecast ──
+function renderForecast() {
+  document.getElementById('forecast-me').textContent = ME;
+  const snap = getLatestSnapshot();
+  const meData = snap.players[ME];
+  if (!meData) { document.getElementById('forecast-grid').innerHTML = '<div class="forecast-empty">Player not found in latest snapshot.</div>'; return; }
+
+  const myRate = runeRate(ME, 7);
+  const myRunes = meData.runeCount;
+
+  // players ranked above me
+  const targets = Object.entries(snap.players)
+    .filter(([u, p]) => p.rank < meData.rank)
+    .sort((a, b) => b[1].rank - a[1].rank) // closest first
+    .slice(0, 12);
+
+  if (!targets.length) { document.getElementById('forecast-grid').innerHTML = '<div class="forecast-empty">You\'re #1!</div>'; return; }
+
+  const items = targets.map(([username, p]) => {
+    const theirRate = runeRate(username, 7);
+    const relativeRate = myRate - theirRate; // my net gain per day over them
+    const gap = p.runeCount - myRunes;
+
+    let daysHtml, cls = '';
+    if (gap <= 0) {
+      daysHtml = '<div class="fc-days">✓ ahead</div>';
+      cls = 'overtaken';
+    } else if (relativeRate <= 0) {
+      daysHtml = '<div class="fc-days" style="color:var(--red)">∞</div>';
+    } else {
+      const days = Math.ceil(gap / relativeRate);
+      daysHtml = `<div class="fc-days">${days}d</div>`;
+      if (days <= 14) cls = 'overtaken';
+    }
+
+    return `<div class="forecast-item ${cls}">
+      <div class="fc-name">#${p.rank} ${username}</div>
+      ${daysHtml}
+      <div class="fc-detail">gap: ${gap.toLocaleString()} runes · their pace: ${theirRate >= 0 ? '+' : ''}${Math.round(theirRate).toLocaleString()}/d</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('forecast-grid').innerHTML = items;
+}
+
+// ── Player chart ──
+function initPlayerSelect() {
+  const snap = getLatestSnapshot();
+  const players = Object.keys(snap.players).sort();
+  const sel = document.getElementById('player-select');
+  players.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u; opt.textContent = u;
+    if (u === ME) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  currentPlayer = sel.value;
+  renderPlayerChart();
+  sel.addEventListener('change', () => { currentPlayer = sel.value; renderPlayerChart(); });
+  document.querySelectorAll('.metric-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.metric-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMetric = btn.dataset.metric;
+      renderPlayerChart();
+    });
+  });
+}
+
+const METRIC_LABELS = { score: 'Score', rank: 'Rank', runeCount: 'Runes', level: 'Level' };
+const METRIC_COLORS = { score: COLORS.accent, rank: COLORS.red, runeCount: COLORS.gold, level: COLORS.green };
+
+function renderPlayerChart() {
+  const dates = getDates();
+  const values = dates.map(d => { const p = SNAPS[d].players[currentPlayer]; return p ? p[currentMetric] : null; });
+  const ctx = document.getElementById('chart-player');
+  if (playerChart) playerChart.destroy();
+  playerChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: dates, datasets: [{ label: METRIC_LABELS[currentMetric], data: values, borderColor: METRIC_COLORS[currentMetric], backgroundColor: METRIC_COLORS[currentMetric] + '18', fill: true, tension: 0.3, pointRadius: dates.length > 30 ? 0 : 3, pointHoverRadius: 5, spanGaps: true }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${METRIC_LABELS[currentMetric]}: ${ctx.raw?.toLocaleString()}` } } },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 12 } },
+        y: { grid: { color: '#1e2535' }, reverse: currentMetric === 'rank', ticks: { callback: v => currentMetric === 'runeCount' ? (v/1000).toFixed(0)+'k' : v } }
+      }
+    }
+  });
+}
+
+// ── Table ──
+let currentSnapshot = null, prevSnapshot = null, tableData = [], filterText = '';
+
+function initSnapshotSelect() {
+  const dates = getDates().reverse();
+  const sel = document.getElementById('snapshot-select');
+  dates.forEach((d, i) => {
+    const opt = document.createElement('option');
+    opt.value = d; opt.textContent = d;
+    if (i === 0) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  currentSnapshot = dates[0]; prevSnapshot = dates[1] || null;
+  buildTableData();
+  sel.addEventListener('change', async () => {
+    const allDates = getDates();
+    currentSnapshot = sel.value;
+    const idx = allDates.indexOf(currentSnapshot);
+    prevSnapshot = idx > 0 ? allDates[idx - 1] : null;
+    // ensure both snapshots are loaded
+    const toLoad = [currentSnapshot, prevSnapshot].filter(Boolean);
+    await loadSnaps(toLoad);
+    buildTableData(); renderTable();
+  });
+}
+
+function buildTableData() {
+  const snap = SNAPS[currentSnapshot];
+  const prev = prevSnapshot ? SNAPS[prevSnapshot] : null;
+  tableData = Object.entries(snap.players).map(([username, p]) => {
+    const prevP = prev?.players[username];
+    const delta = prevP != null ? prevP.rank - p.rank : null;
+    const runeDelta = prevP != null ? p.runeCount - prevP.runeCount : null;
+    // lastActive now stored in snapshot; fall back to players meta for old snapshots
+    const lastActive = p.lastActive ?? STATE.players[username]?.lastActive ?? null;
+    return { username, ...p, delta, runeDelta, lastActive };
+  });
+}
+
+function initTable() { buildTableData(); renderTable(); }
+
+function initSortHeaders() {
+  document.querySelectorAll('thead th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) sortAsc = !sortAsc;
+      else { sortCol = col; sortAsc = col === 'rank'; }
+      document.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted'));
+      th.classList.add('sorted');
+      renderTable();
+    });
+  });
+}
+
+function initSearch() {
+  document.getElementById('search-input').addEventListener('input', e => { filterText = e.target.value.toLowerCase().trim(); renderTable(); });
+}
+
+function initFilters() {
+  document.getElementById('filter-guild').addEventListener('click', function() { filterGuild = !filterGuild; this.classList.toggle('active', filterGuild); renderTable(); });
+  document.getElementById('filter-nft').addEventListener('click', function() { filterNft = !filterNft; this.classList.toggle('active', filterNft); renderTable(); });
+  document.getElementById('filter-online').addEventListener('click', function() { filterOnline = !filterOnline; this.classList.toggle('active', filterOnline); renderTable(); });
+}
+
+function renderTable() {
+  let rows = [...tableData];
+  if (filterText) rows = rows.filter(r => r.username.toLowerCase().includes(filterText));
+  if (filterGuild) rows = rows.filter(r => r.guildPassHolder);
+  if (filterNft) rows = rows.filter(r => r.ruyuiNftCount > 0);
+  if (filterOnline) rows = rows.filter(r => r.isOnline);
+
+  rows.sort((a, b) => {
+    let av = a[sortCol], bv = b[sortCol];
+    if (av == null) return 1; if (bv == null) return -1;
+    if (typeof av === 'string') return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return sortAsc ? av - bv : bv - av;
+  });
+
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = rows.map(r => {
+    const isMe = r.username === ME;
+    const rankClass = r.rank <= 3 ? 'rank-cell top3' : 'rank-cell';
+    const meBadge = isMe ? '<span class="me-badge">YOU</span>' : '';
+    const onlineDot = r.isOnline ? '<span class="online-dot"></span>' : '';
+
+    let deltaHtml = '<span class="delta-neu">—</span>';
+    if (r.delta !== null) {
+      if (r.delta > 0) deltaHtml = `<span class="delta-pos">▲${r.delta}</span>`;
+      else if (r.delta < 0) deltaHtml = `<span class="delta-neg">▼${Math.abs(r.delta)}</span>`;
+      else deltaHtml = `<span class="delta-neu">0</span>`;
+    }
+
+    let runeDeltaHtml = '<span class="delta-neu">—</span>';
+    if (r.runeDelta !== null) {
+      if (r.runeDelta > 0) runeDeltaHtml = `<span class="delta-pos">+${r.runeDelta.toLocaleString()}</span>`;
+      else if (r.runeDelta < 0) runeDeltaHtml = `<span class="delta-neg">${r.runeDelta.toLocaleString()}</span>`;
+      else runeDeltaHtml = `<span class="delta-neu">0</span>`;
+    }
+
+    const d = daysAgo(r.lastActive);
+    const lsClass = d !== null && d <= 3 ? 'lastseen-cell recent' : 'lastseen-cell';
+    const lsHtml = `<span class="${lsClass}">${fmtLastSeen(r.lastActive)}</span>`;
+
+    const walletFull = r.wallet || STATE.players[r.username]?.wallet || '';
+    const walletShort = walletFull ? walletFull.slice(0, 6) + '…' + walletFull.slice(-4) : '—';
+    const walletHtml = walletFull
+      ? `<span class="wallet-cell" title="${walletFull}" onclick="navigator.clipboard.writeText('${walletFull}');this.textContent='✓ copied';setTimeout(()=>this.textContent='${walletShort}',1200)">${walletShort}</span>`
+      : '—';
+
+    return `<tr class="${r.isOnline ? 'is-online' : ''} ${isMe ? 'is-me' : ''}">
+      <td class="${rankClass}">${r.rank}</td>
+      <td class="user-cell">${onlineDot}${r.username}${meBadge}</td>
+      <td class="level-cell">${r.level}</td>
+      <td class="score-cell">${r.score.toLocaleString()}</td>
+      <td class="rune-cell">${r.runeCount.toLocaleString()}</td>
+      <td>${runeDeltaHtml}</td>
+      <td class="mult-cell">${r.multiplier.toFixed(3)}×</td>
+      <td class="nft-cell">${r.ruyuiNftCount}</td>
+      <td>${r.guildPassHolder ? '<span class="guild-yes">✓</span>' : '<span class="guild-no">✗</span>'}</td>
+      <td>${deltaHtml}</td>
+      <td>${lsHtml}</td>
+      <td>${walletHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+init();
+</script>
+</body>
+</html>
