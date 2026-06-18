@@ -1,9 +1,7 @@
 name: Fetch Leaderboard
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # Every hour
-  workflow_dispatch:        # Manual trigger
+  workflow_dispatch:        # Triggered externally via the GitHub API (cron-job.org)
 
 jobs:
   fetch:

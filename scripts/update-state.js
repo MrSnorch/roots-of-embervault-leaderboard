@@ -25,8 +25,11 @@ if (fs.existsSync(STATE_PATH)) {
   if (!Array.isArray(state.snapshots)) state.snapshots = Object.keys(state.snapshots).sort();
 }
 
-// Load previous snapshot file for delta calculation
-const prevDate = state.snapshots.length > 0 ? state.snapshots[state.snapshots.length - 1] : null;
+// Load previous snapshot file for delta calculation.
+// Must be strictly before today: at hourly cadence, state.snapshots may
+// already contain today's own date from an earlier run this same day.
+const priorDates = state.snapshots.filter(d => d < today);
+const prevDate = priorDates.length > 0 ? priorDates[priorDates.length - 1] : null;
 let prevSnapshot = null;
 if (prevDate) {
   const prevPath = path.join(SNAPS_DIR, `${prevDate}.json`);
