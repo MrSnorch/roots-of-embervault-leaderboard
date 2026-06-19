@@ -81,7 +81,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-06-18T14:39:28.324+00:00"
+      "lastActive": "2026-06-19T00:43:33.64+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -236,7 +236,7 @@
     "won": {
       "wallet": "0xcdbb4106bd3a2949b718a1686f1009294e1955b4",
       "activeSince": "2026-02-08T03:29:10.161+00:00",
-      "lastActive": "2026-06-18T14:56:05.86+00:00"
+      "lastActive": "2026-06-19T00:17:33.326+00:00"
     },
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
@@ -286,7 +286,7 @@
     "affy": {
       "wallet": "0xf28506e6bf73b15ee0cf9e800c60cef4af96bab9",
       "activeSince": "2026-02-21T12:07:06.604+00:00",
-      "lastActive": "2026-06-18T22:10:07.883+00:00"
+      "lastActive": "2026-06-19T00:12:51.299+00:00"
     },
     "stefan2212": {
       "wallet": "0x90b75a9ea3604553b70cee1f9c213c6bee213b09",
@@ -3576,7 +3576,7 @@
     "nezko2026": {
       "wallet": "0x3aa99b7106d667e2fb32b3b1ce200df3ed385b3b",
       "activeSince": "2026-02-01T09:08:12.597+00:00",
-      "lastActive": "2026-06-14T06:28:53.457+00:00"
+      "lastActive": "2026-06-19T00:54:06.127+00:00"
     },
     "prisonsbf": {
       "wallet": "0x1f33694a92c02cd3f2a44dd50f4af4ad582afa64",
@@ -5122,6 +5122,11 @@
       "wallet": "0x90583b449a260c35a761d3a45e41a9d3d59443fe",
       "activeSince": "2026-01-31T12:31:49.406+00:00",
       "lastActive": "2026-02-27T12:49:51.966+00:00"
+    },
+    "0xvio": {
+      "wallet": "0x8b1484e0d9b1e4ab9a1608f9110f0b39de7f8ed6",
+      "activeSince": "2026-02-20T06:31:40.34+00:00",
+      "lastActive": "2026-02-23T10:20:00.804+00:00"
     }
   }
 }
