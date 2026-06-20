@@ -5,7 +5,8 @@
     "2026-06-16",
     "2026-06-17",
     "2026-06-18",
-    "2026-06-19"
+    "2026-06-19",
+    "2026-06-20"
   ],
   "players": {
     "677": {
@@ -56,7 +57,7 @@
     "lord cyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
       "activeSince": "2026-01-30T09:16:15.299+00:00",
-      "lastActive": "2026-06-19T21:51:21.687+00:00"
+      "lastActive": "2026-06-19T23:41:22.791+00:00"
     },
     "alex": {
       "wallet": "0x8c04be14e35eef3e248128d2cfd08b343c91c4e9",
@@ -186,7 +187,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-06-19T22:52:54.685+00:00"
+      "lastActive": "2026-06-19T23:01:37.075+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -286,7 +287,7 @@
     "affy": {
       "wallet": "0xf28506e6bf73b15ee0cf9e800c60cef4af96bab9",
       "activeSince": "2026-02-21T12:07:06.604+00:00",
-      "lastActive": "2026-06-19T21:59:04.945+00:00"
+      "lastActive": "2026-06-19T23:23:19.579+00:00"
     },
     "stefan2212": {
       "wallet": "0x90b75a9ea3604553b70cee1f9c213c6bee213b09",
@@ -686,7 +687,7 @@
     "truk": {
       "wallet": "0x92599bdd1ded8d462c58972f6c3badbb39cd06ba",
       "activeSince": "2026-01-29T22:11:41.014+00:00",
-      "lastActive": "2026-06-19T17:30:52.837+00:00"
+      "lastActive": "2026-06-19T23:58:36.701+00:00"
     },
     "rantka": {
       "wallet": "0x9881aad5eb444fd4103dfb60b260e6470dc7e194",
@@ -5101,7 +5102,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-06-16T03:09:31.525+00:00"
+      "lastActive": "2026-06-19T23:34:09.281+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
