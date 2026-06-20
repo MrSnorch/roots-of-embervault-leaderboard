@@ -37,7 +37,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-06-20T01:58:27.287+00:00"
+      "lastActive": "2026-06-20T05:08:31.724+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -187,7 +187,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-06-20T04:40:06.937+00:00"
+      "lastActive": "2026-06-20T05:23:42.203+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -512,7 +512,7 @@
     "drynuts": {
       "wallet": "0x135b235d2a3ef00e3fa9e6199a15e92f27cb03b0",
       "activeSince": "2026-02-02T12:53:42.517+00:00",
-      "lastActive": "2026-06-19T14:43:06.983+00:00"
+      "lastActive": "2026-06-20T05:52:22.75+00:00"
     },
     "eional": {
       "wallet": "0xe1abde4f95efbcea3bc2238b32b14bf9348ecbf7",
@@ -882,7 +882,7 @@
     "roarstone": {
       "wallet": "0x93e88fa114f2251bb6c970a03c5a5a775b305a8c",
       "activeSince": "2026-01-29T21:24:35.278+00:00",
-      "lastActive": "2026-06-19T02:40:04.661+00:00"
+      "lastActive": "2026-06-20T05:50:12.871+00:00"
     },
     "clonereal": {
       "wallet": "0x3392b3b54a3dee7873ec5bc97ed225171814e3fe",
@@ -3827,7 +3827,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T18:04:01.848+00:00"
+      "lastActive": "2026-05-23T09:10:30.163+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
