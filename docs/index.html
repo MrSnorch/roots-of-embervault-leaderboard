@@ -219,7 +219,7 @@
   <!-- Top farmers + rune trends -->
   <div class="charts-row section-gap">
     <div class="chart-card">
-      <h3>Top farmers <span id="farmers-date" style="color:var(--accent);margin-left:8px;font-size:11px;"></span></h3>
+      <h3>Top farmers <span style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;"><button id="farmers-prev" onclick="shiftFarmersDay(-1)" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:1px 7px;border-radius:4px;cursor:pointer;font-size:12px;line-height:1.4;">&#8592;</button><span id="farmers-date" style="color:var(--accent);font-size:11px;min-width:80px;text-align:center;"></span><button id="farmers-next" onclick="shiftFarmersDay(1)" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:1px 7px;border-radius:4px;cursor:pointer;font-size:12px;line-height:1.4;">&#8594;</button></span></h3>
       <div id="farmers-list"></div>
     </div>
     <div class="chart-card">
@@ -314,6 +314,7 @@ let playerChart = null;
 let runeTrendsChart = null;
 let currentMetric = 'score';
 let currentPlayer = null;
+let farmersDateIdx = -1; // -1 = use latest available
 let filterGuild = false;
 let filterNft = false;
 let filterOnline = false;
@@ -403,7 +404,7 @@ async function init() {
   renderHourlyOnlineChart(await loadHourlyRecent());
   renderActivePerDayChart();
   renderTopScoreChart();
-  renderFarmers();
+  initFarmers();
   renderRuneTrends();
   renderForecast();
   initPlayerSelect();
@@ -568,14 +569,33 @@ function renderTopScoreChart() {
 }
 
 // ── Top farmers ──
-function renderFarmers() {
+// datesWithFarmers: dates that have topFarmers data (computed once after load)
+let datesWithFarmers = [];
+
+function initFarmers() {
   const dates = getDates();
-  let farmersDate = null, farmers = [];
-  for (let i = dates.length - 1; i >= 0; i--) {
-    const snap = SNAPS[dates[i]];
-    if (snap.topFarmers && snap.topFarmers.length > 0) { farmersDate = dates[i]; farmers = snap.topFarmers; break; }
-  }
-  document.getElementById('farmers-date').textContent = farmersDate || '';
+  datesWithFarmers = dates.filter(d => SNAPS[d].topFarmers && SNAPS[d].topFarmers.length > 0);
+  farmersDateIdx = datesWithFarmers.length - 1; // start at latest
+  renderFarmers();
+}
+
+function shiftFarmersDay(dir) {
+  const next = farmersDateIdx + dir;
+  if (next < 0 || next >= datesWithFarmers.length) return;
+  farmersDateIdx = next;
+  renderFarmers();
+}
+
+function renderFarmers() {
+  const date = datesWithFarmers[farmersDateIdx] || null;
+  const farmers = date ? SNAPS[date].topFarmers : [];
+
+  document.getElementById('farmers-date').textContent = date || '';
+  document.getElementById('farmers-prev').disabled = farmersDateIdx <= 0;
+  document.getElementById('farmers-next').disabled = farmersDateIdx >= datesWithFarmers.length - 1;
+  document.getElementById('farmers-prev').style.opacity = farmersDateIdx <= 0 ? '0.3' : '1';
+  document.getElementById('farmers-next').style.opacity = farmersDateIdx >= datesWithFarmers.length - 1 ? '0.3' : '1';
+
   const container = document.getElementById('farmers-list');
   if (!farmers.length) {
     container.innerHTML = '<div class="farmers-empty">Available from the second snapshot onwards.</div>';
