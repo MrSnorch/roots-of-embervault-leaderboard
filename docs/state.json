@@ -53,7 +53,7 @@
     "dazz": {
       "wallet": "0xaff7ae986b1de9d5ffbe9062434366b8f242cd2a",
       "activeSince": "2026-01-30T10:26:08.569+00:00",
-      "lastActive": "2026-06-21T17:27:23.472+00:00"
+      "lastActive": "2026-06-21T18:58:09.581+00:00"
     },
     "lord cyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
@@ -103,12 +103,12 @@
     "sik094": {
       "wallet": "0x7c89f0fddb3b216ebc03a64b26563c0fad5fe14b",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-06-21T01:04:52.475+00:00"
+      "lastActive": "2026-06-21T18:31:12.733+00:00"
     },
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-06-21T17:32:11.229+00:00"
+      "lastActive": "2026-06-21T18:34:49.411+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -243,7 +243,7 @@
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
       "activeSince": "2026-01-30T04:45:23.449+00:00",
-      "lastActive": "2026-06-20T19:42:13.566+00:00"
+      "lastActive": "2026-06-21T18:07:07.355+00:00"
     },
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
@@ -378,7 +378,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-06-20T03:15:45.878+00:00"
+      "lastActive": "2026-06-21T18:52:59.46+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -458,7 +458,7 @@
     "dm_pits": {
       "wallet": "0xbe5fa39f1fb1fb4a1651b962247c17d4258d4e7f",
       "activeSince": "2026-01-30T19:33:32.417+00:00",
-      "lastActive": "2026-06-20T19:07:01.325+00:00"
+      "lastActive": "2026-06-21T18:24:45.674+00:00"
     },
     "cryptopiper": {
       "wallet": "0x1ffa18e3c45cf2b240ad55757cb5e0318d1402c4",
@@ -688,7 +688,7 @@
     "truk": {
       "wallet": "0x92599bdd1ded8d462c58972f6c3badbb39cd06ba",
       "activeSince": "2026-01-29T22:11:41.014+00:00",
-      "lastActive": "2026-06-21T16:19:35.509+00:00"
+      "lastActive": "2026-06-21T18:29:07.65+00:00"
     },
     "rantka": {
       "wallet": "0x9881aad5eb444fd4103dfb60b260e6470dc7e194",
@@ -993,7 +993,7 @@
     "skorbut": {
       "wallet": "0x77f8238ec9d7928a9d56f1a916524980742d9005",
       "activeSince": "2026-01-30T12:38:10.445+00:00",
-      "lastActive": "2026-06-20T08:45:33.192+00:00"
+      "lastActive": "2026-06-21T18:53:46.145+00:00"
     },
     "karolp13": {
       "wallet": "0xe7a728af9b4dd45c7769092778e5911bc38896ee",
@@ -1138,7 +1138,7 @@
     "olegospolkan": {
       "wallet": "0x489227847f47617717a23a77acdf11153e5535b0",
       "activeSince": "2026-02-05T12:32:18.167+00:00",
-      "lastActive": "2026-06-20T19:05:02.427+00:00"
+      "lastActive": "2026-06-21T18:49:14.152+00:00"
     },
     "kadik": {
       "wallet": "0xdb1de0e1a18b82a7ad7437e759c216d7d8193dd1",
@@ -3828,7 +3828,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-23T09:10:30.163+00:00"
+      "lastActive": "2026-05-19T18:04:01.848+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
@@ -4928,7 +4928,7 @@
     "alex93": {
       "wallet": "0xcb4a20acb331ac9e7edb0b07f806f64f87ed54e0",
       "activeSince": "2026-01-30T17:00:14.686+00:00",
-      "lastActive": "2026-06-13T17:36:56.737+00:00"
+      "lastActive": "2026-06-21T18:56:32.11+00:00"
     },
     "astarta": {
       "wallet": "0x3eda210ff41e2b2d1658ca5ebe0b80a376c7e0f4",
@@ -5118,7 +5118,7 @@
     "yonsgo": {
       "wallet": "0x527062d01fa2639fa5a11c3b54a69f377e18fa62",
       "activeSince": "2026-02-15T18:23:09.729+00:00",
-      "lastActive": "2026-06-21T15:48:46.647+00:00"
+      "lastActive": "2026-06-21T19:00:06.021+00:00"
     },
     "[akg]loginlee": {
       "wallet": "0x90583b449a260c35a761d3a45e41a9d3d59443fe",
