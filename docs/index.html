@@ -165,6 +165,51 @@
     cursor: pointer; border-bottom: 1px dashed currentColor; transition: color .15s;
   }
   .wallet-cell:hover { color: var(--accent); }
+  /* ── Streak badge ── */
+  .streak-badge { display:inline-block; font-size:10px; color:var(--gold); margin-left:6px; font-family:var(--font-ui); }
+
+  /* ── Risers ── */
+  .risers-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+  .riser-item {
+    background:var(--bg); border:1px solid var(--border); border-radius:6px;
+    padding:10px 14px; font-family:var(--font-mono); font-size:12px; cursor:pointer;
+    transition:border-color .15s;
+  }
+  .riser-item:hover { border-color:var(--accent); }
+  .riser-item .ri-name { font-weight:700; color:var(--text); margin-bottom:3px; }
+  .riser-item .ri-rank { color:var(--accent); font-size:13px; font-weight:700; }
+  .riser-item .ri-detail { color:var(--muted); font-size:11px; margin-top:2px; }
+
+  /* ── Player modal ── */
+  #player-modal {
+    display:none; position:fixed; inset:0; z-index:1000;
+    background:rgba(0,0,0,0.7); backdrop-filter:blur(2px);
+    align-items:center; justify-content:center;
+  }
+  #player-modal.open { display:flex; }
+  .modal-box {
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:20px; width:min(680px,95vw); max-height:85vh; overflow-y:auto;
+    position:relative;
+  }
+  .modal-title { font-family:var(--font-mono); font-size:16px; font-weight:700; margin-bottom:4px; }
+  .modal-sub { font-size:11px; color:var(--muted); font-family:var(--font-mono); margin-bottom:16px; }
+  .modal-close {
+    position:absolute; top:14px; right:14px;
+    background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer; line-height:1;
+  }
+  .modal-close:hover { color:var(--text); }
+  .modal-chart-wrap { position:relative; height:180px; margin-bottom:16px; }
+  .modal-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-bottom:16px; }
+  .modal-stat { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 12px; font-family:var(--font-mono); }
+  .modal-stat .ms-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px; margin-bottom:3px; }
+  .modal-stat .ms-value { font-size:16px; font-weight:700; }
+  .modal-farmer-history { font-family:var(--font-mono); font-size:12px; }
+  .modal-farmer-history table { width:100%; border-collapse:collapse; }
+  .modal-farmer-history th { text-align:left; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px; padding:4px 8px; border-bottom:1px solid var(--border); }
+  .modal-farmer-history td { padding:5px 8px; border-bottom:1px solid var(--border); }
+  .modal-farmer-history tr:last-child td { border-bottom:none; }
+
   /* ── Footer ── */
   footer { text-align: center; padding: 24px; color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
 
@@ -228,6 +273,12 @@
     </div>
   </div>
 
+  <!-- Rising stars (new to top-50) -->
+  <div class="chart-card section-gap" id="risers-section">
+    <h3>Rising stars <span style="color:var(--muted);font-size:11px;font-weight:400;">— entered top 50 in last 3 snapshots</span></h3>
+    <div id="risers-grid" class="risers-grid" style="margin-top:12px;"></div>
+  </div>
+
   <!-- Forecast -->
   <div class="chart-card section-gap">
     <h3>Overtake forecast for <span id="forecast-me" style="color:var(--accent2)"></span> <span style="color:var(--muted);font-size:11px;">(at current 7d rune pace)</span></h3>
@@ -286,6 +337,18 @@
 
 <footer>roe-leaderboard · data updated hourly via GitHub Actions</footer>
 
+</div>
+
+<!-- Player modal -->
+<div id="player-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-name"></div>
+    <div class="modal-sub" id="modal-sub"></div>
+    <div class="modal-stats" id="modal-stats"></div>
+    <div class="modal-chart-wrap"><canvas id="modal-chart"></canvas></div>
+    <div class="modal-farmer-history" id="modal-farmer-history"></div>
+  </div>
 </div>
 
 <script>
@@ -405,6 +468,7 @@ async function init() {
   renderActivePerDayChart();
   renderTopScoreChart();
   initFarmers();
+  renderRisers();
   renderRuneTrends();
   renderForecast();
   initPlayerSelect();
@@ -602,12 +666,15 @@ function renderFarmers() {
     return;
   }
   const maxDelta = farmers[0].runesGained;
+  const streakMap = computeStreaks();
   container.innerHTML = farmers.map((f, i) => {
     const pct = Math.round((f.runesGained / maxDelta) * 100);
     const meTag = f.username === ME ? ` <span style="background:var(--accent2);color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;font-family:var(--font-ui)">YOU</span>` : '';
+    const streakVal = streakMap[f.username] || 0;
+    const streakTag = streakVal >= 2 ? `<span class="streak-badge">🔥${streakVal}d</span>` : '';
     return `<div class="farmer-row">
       <span class="farmer-pos${i<3?' top3':''}">${i+1}</span>
-      <span class="farmer-name">${f.username}${meTag}</span>
+      <span class="farmer-name" style="cursor:pointer" onclick="openModal('${f.username}')">${f.username}${meTag}${streakTag}</span>
       <div class="farmer-bar-wrap"><div class="farmer-bar" style="width:${pct}%"></div></div>
       <span class="farmer-delta">+${f.runesGained.toLocaleString()}</span>
       <span class="farmer-total">${f.runeCount.toLocaleString()} total</span>
@@ -866,7 +933,7 @@ function renderTable() {
 
     return `<tr class="${r.isOnline ? 'is-online' : ''} ${isMe ? 'is-me' : ''}">
       <td class="${rankClass}">${r.rank}</td>
-      <td class="user-cell">${onlineDot}${r.username}${meBadge}</td>
+      <td class="user-cell" style="cursor:pointer" onclick="openModal('${r.username}')">${onlineDot}${r.username}${meBadge}</td>
       <td class="level-cell">${r.level}</td>
       <td class="score-cell">${r.score.toLocaleString()}</td>
       <td class="rune-cell">${r.runeCount.toLocaleString()}</td>
@@ -880,6 +947,159 @@ function renderTable() {
     </tr>`;
   }).join('');
 }
+
+init();
+
+// ── Streaks ──
+// Returns map: username -> consecutive days in topFarmers up to latest available
+function computeStreaks() {
+  const streaks = {};
+  // iterate datesWithFarmers newest→oldest
+  for (let i = datesWithFarmers.length - 1; i >= 0; i--) {
+    const farmers = SNAPS[datesWithFarmers[i]].topFarmers || [];
+    const names = new Set(farmers.map(f => f.username));
+    for (const u of names) {
+      if (streaks[u] === undefined) {
+        // check if they were in the latest snapshot
+        // only start counting from the newest day backwards
+        streaks[u] = null; // placeholder
+      }
+    }
+  }
+  // proper streak: count from newest backwards
+  const result = {};
+  const allUsers = new Set();
+  for (const d of datesWithFarmers) {
+    (SNAPS[d].topFarmers || []).forEach(f => allUsers.add(f.username));
+  }
+  for (const u of allUsers) {
+    let streak = 0;
+    for (let i = datesWithFarmers.length - 1; i >= 0; i--) {
+      const inTop = (SNAPS[datesWithFarmers[i]].topFarmers || []).some(f => f.username === u);
+      if (inTop) streak++;
+      else break;
+    }
+    result[u] = streak;
+  }
+  return result;
+}
+
+// ── Risers ──
+function renderRisers() {
+  const dates = getDates();
+  if (dates.length < 2) { document.getElementById('risers-section').style.display = 'none'; return; }
+  const latest = SNAPS[dates[dates.length - 1]];
+  // players in top 50 now
+  const top50Now = Object.entries(latest.players).filter(([,p]) => p.rank <= 50).map(([u]) => u);
+  // find who wasn't in top 50 N snapshots ago (up to 3)
+  const lookback = Math.min(3, dates.length - 1);
+  const oldSnap = SNAPS[dates[dates.length - 1 - lookback]];
+  const risers = top50Now
+    .filter(u => {
+      const oldP = oldSnap.players[u];
+      return !oldP || oldP.rank > 50;
+    })
+    .map(u => {
+      const now = latest.players[u];
+      const old = oldSnap.players[u];
+      const rankGain = old ? old.rank - now.rank : null;
+      return { username: u, rank: now.rank, rankGain, runeCount: now.runeCount };
+    })
+    .sort((a, b) => a.rank - b.rank);
+
+  const grid = document.getElementById('risers-grid');
+  if (!risers.length) {
+    document.getElementById('risers-section').style.display = 'none';
+    return;
+  }
+  grid.innerHTML = risers.map(r => {
+    const gainStr = r.rankGain != null ? `+${r.rankGain} ranks` : 'new entry';
+    const meTag = r.username === ME ? ' <span style="background:var(--accent2);color:#fff;font-size:9px;padding:1px 4px;border-radius:3px;">YOU</span>' : '';
+    return `<div class="riser-item" onclick="openModal('${r.username}')">
+      <div class="ri-name">${r.username}${meTag}</div>
+      <div class="ri-rank">#${r.rank}</div>
+      <div class="ri-detail">${gainStr} in ${lookback}d · ${r.runeCount.toLocaleString()} runes</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Modal ──
+let modalChart = null;
+
+function openModal(username) {
+  const dates = getDates();
+  const latest = getLatestSnapshot();
+  const p = latest.players[username];
+  if (!p) return;
+
+  document.getElementById('modal-name').textContent = username + (username === ME ? '  (you)' : '');
+
+  // stats cards
+  const streaks = computeStreaks();
+  const rate = runeRate(username, 7);
+  const streak = streaks[username] || 0;
+  document.getElementById('modal-stats').innerHTML = `
+    <div class="modal-stat"><div class="ms-label">Rank</div><div class="ms-value" style="color:var(--gold)">#${p.rank}</div></div>
+    <div class="modal-stat"><div class="ms-label">Score</div><div class="ms-value" style="color:var(--accent)">${p.score.toLocaleString()}</div></div>
+    <div class="modal-stat"><div class="ms-label">Runes</div><div class="ms-value">${p.runeCount.toLocaleString()}</div></div>
+    <div class="modal-stat"><div class="ms-label">Level</div><div class="ms-value">${p.level}</div></div>
+    <div class="modal-stat"><div class="ms-label">7d pace</div><div class="ms-value" style="color:var(--green)">${rate >= 0 ? '+' : ''}${Math.round(rate).toLocaleString()}/d</div></div>
+    ${streak > 0 ? `<div class="modal-stat"><div class="ms-label">Farmer streak</div><div class="ms-value" style="color:var(--gold)">🔥 ${streak}d</div></div>` : ''}
+  `;
+  document.getElementById('modal-sub').textContent = `history across ${dates.length} snapshots`;
+
+  // rune chart
+  const runeValues = dates.map(d => SNAPS[d].players[username]?.runeCount ?? null);
+  const ctx = document.getElementById('modal-chart');
+  if (modalChart) modalChart.destroy();
+  modalChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: dates, datasets: [
+      { label: 'Runes', data: runeValues, borderColor: COLORS.gold, backgroundColor: 'rgba(247,201,72,0.1)', fill: true, tension: 0.3, pointRadius: dates.length > 20 ? 0 : 3, spanGaps: true },
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#1e2535' }, ticks: { maxTicksLimit: 10 } },
+        y: { grid: { color: '#1e2535' }, ticks: { callback: v => (v/1000).toFixed(0)+'k' } }
+      }
+    }
+  });
+
+  // farmer appearances
+  const appearances = datesWithFarmers
+    .map(d => {
+      const entry = (SNAPS[d].topFarmers || []).find(f => f.username === username);
+      return entry ? { date: d, pos: (SNAPS[d].topFarmers.indexOf(entry) + 1), gained: entry.runesGained } : null;
+    })
+    .filter(Boolean)
+    .reverse();
+
+  const fh = document.getElementById('modal-farmer-history');
+  if (appearances.length) {
+    fh.innerHTML = `<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Top farmer appearances (${appearances.length})</div>
+    <table>
+      <thead><tr><th>Date</th><th>Pos</th><th>Runes gained</th></tr></thead>
+      <tbody>${appearances.map(a => `<tr>
+        <td style="color:var(--muted)">${a.date}</td>
+        <td style="color:var(--gold);font-weight:700">#${a.pos}</td>
+        <td style="color:var(--green)">+${a.gained.toLocaleString()}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+  } else {
+    fh.innerHTML = '';
+  }
+
+  document.getElementById('player-modal').classList.add('open');
+  document.addEventListener('keydown', onModalKey);
+}
+
+function closeModal() {
+  document.getElementById('player-modal').classList.remove('open');
+  document.removeEventListener('keydown', onModalKey);
+}
+function onModalKey(e) { if (e.key === 'Escape') closeModal(); }
 
 init();
 </script>
