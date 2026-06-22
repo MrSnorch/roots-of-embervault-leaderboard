@@ -39,7 +39,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-06-22T04:14:50.494+00:00"
+      "lastActive": "2026-06-22T06:18:50.712+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -84,7 +84,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-06-22T05:41:25.093+00:00"
+      "lastActive": "2026-06-22T06:59:06.985+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -109,7 +109,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-06-21T21:18:46.925+00:00"
+      "lastActive": "2026-06-22T07:00:41.749+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -184,12 +184,12 @@
     "stallion": {
       "wallet": "0xd5deb3bcb3cc092c1fd972e62b1af9d99dae7f3f",
       "activeSince": "2026-01-30T23:38:45.973+00:00",
-      "lastActive": "2026-06-22T00:23:59.337+00:00"
+      "lastActive": "2026-06-22T06:58:15.745+00:00"
     },
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-06-22T05:37:17.655+00:00"
+      "lastActive": "2026-06-22T06:29:25.733+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -239,7 +239,7 @@
     "won": {
       "wallet": "0xcdbb4106bd3a2949b718a1686f1009294e1955b4",
       "activeSince": "2026-02-08T03:29:10.161+00:00",
-      "lastActive": "2026-06-22T01:37:17.631+00:00"
+      "lastActive": "2026-06-22T06:48:12.066+00:00"
     },
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
@@ -1064,7 +1064,7 @@
     "maxcool": {
       "wallet": "0x16b4086539f6a1684d5da7c534f80077008437a6",
       "activeSince": "2026-01-31T04:42:59.716+00:00",
-      "lastActive": "2026-06-22T05:58:21.745+00:00"
+      "lastActive": "2026-06-22T06:11:10.218+00:00"
     },
     "tehnomod": {
       "wallet": "0x4b38f4ad918dcabfc4dcd798df63c3e94ee33e83",
@@ -3829,7 +3829,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T18:04:01.848+00:00"
+      "lastActive": "2026-05-23T09:10:30.163+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
