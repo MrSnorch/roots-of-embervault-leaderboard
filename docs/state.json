@@ -35,12 +35,12 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-06-23T09:42:38.905+00:00"
+      "lastActive": "2026-06-23T10:58:41.627+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-06-23T08:21:59.364+00:00"
+      "lastActive": "2026-06-23T10:50:47.868+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -90,7 +90,7 @@
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
       "activeSince": "2026-01-29T22:59:03.159+00:00",
-      "lastActive": "2026-06-23T09:48:08.761+00:00"
+      "lastActive": "2026-06-23T10:25:53.98+00:00"
     },
     "chunibro": {
       "wallet": "0x8004d65ae1470ce83a432e5a5c67204ae03f12f7",
@@ -110,7 +110,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-06-23T09:30:01.427+00:00"
+      "lastActive": "2026-06-23T10:21:29.257+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -370,7 +370,7 @@
     "ozi": {
       "wallet": "0xf55af9cd0880394b597966451ec2f4a6facb125e",
       "activeSince": "2026-01-29T21:15:41.707+00:00",
-      "lastActive": "2026-06-23T09:55:51.589+00:00"
+      "lastActive": "2026-06-23T10:07:25.575+00:00"
     },
     "flaydenn": {
       "wallet": "0x9885600a10909ee26832d11b24c8a1128aa865ea",
@@ -1260,7 +1260,7 @@
     "josep": {
       "wallet": "0x1e0295c9eadbefcbda383b8ab99f6556e76cd2eb",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-06-22T22:53:31.648+00:00"
+      "lastActive": "2026-06-23T10:52:13.232+00:00"
     },
     "kalashniikov": {
       "wallet": "0x21a8cfede72184bc5d2af25ba80bfabc70fc2985",
@@ -3830,7 +3830,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T18:04:01.848+00:00"
+      "lastActive": "2026-05-18T15:11:11.418+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
