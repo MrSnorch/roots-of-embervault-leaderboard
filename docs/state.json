@@ -130,7 +130,7 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-06-22T20:43:47.699+00:00"
+      "lastActive": "2026-06-23T01:23:51.47+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
@@ -460,7 +460,7 @@
     "dm_pits": {
       "wallet": "0xbe5fa39f1fb1fb4a1651b962247c17d4258d4e7f",
       "activeSince": "2026-01-30T19:33:32.417+00:00",
-      "lastActive": "2026-06-22T12:33:38.175+00:00"
+      "lastActive": "2026-06-23T01:41:07.245+00:00"
     },
     "cryptopiper": {
       "wallet": "0x1ffa18e3c45cf2b240ad55757cb5e0318d1402c4",
@@ -650,7 +650,7 @@
     "georgy": {
       "wallet": "0x8eb6899d75b70e99c6d5cd9d1003933d459574fb",
       "activeSince": "2026-01-30T08:51:37.035+00:00",
-      "lastActive": "2026-06-22T04:33:16.261+00:00"
+      "lastActive": "2026-06-23T01:47:50.617+00:00"
     },
     "maddondang": {
       "wallet": "0xcaafc0081ebb9f46cd0df29a5c147d3335d0e811",
@@ -3830,7 +3830,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-23T09:10:30.163+00:00"
+      "lastActive": "2026-05-19T18:04:01.848+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
