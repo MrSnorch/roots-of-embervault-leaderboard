@@ -37,7 +37,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-06-25T02:46:27.827+00:00"
+      "lastActive": "2026-06-25T03:28:29.371+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -87,7 +87,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-06-25T02:32:08.726+00:00"
+      "lastActive": "2026-06-25T03:44:11.463+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -132,7 +132,7 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-06-24T20:27:03.503+00:00"
+      "lastActive": "2026-06-25T03:55:38.379+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
@@ -142,7 +142,7 @@
     "nammari": {
       "wallet": "0x08b8f26102599b802082a9dfb432b00f0a9093e8",
       "activeSince": "2026-01-29T21:16:15.134+00:00",
-      "lastActive": "2026-06-25T02:48:00.32+00:00"
+      "lastActive": "2026-06-25T03:49:02.313+00:00"
     },
     "usb": {
       "wallet": "0x0f65d2d78a01e9f8303551fc8ab6d889f5faf1c3",
@@ -192,7 +192,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-06-25T02:47:07.773+00:00"
+      "lastActive": "2026-06-25T03:48:08.22+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -247,7 +247,7 @@
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
       "activeSince": "2026-01-30T04:45:23.449+00:00",
-      "lastActive": "2026-06-24T09:36:48.7+00:00"
+      "lastActive": "2026-06-25T03:42:59.946+00:00"
     },
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
@@ -332,12 +332,12 @@
     "recluseham": {
       "wallet": "0x4e16f03fafc94af2d0b79d2d15d3d54f7c9f04fa",
       "activeSince": "2026-01-30T01:57:35.687+00:00",
-      "lastActive": "2026-06-24T05:18:15.05+00:00"
+      "lastActive": "2026-06-25T03:59:31.757+00:00"
     },
     "dimansin24": {
       "wallet": "0x4a2b38c1e888c83cb4bcf5fb9b5f6e8dc06a0133",
       "activeSince": "2026-01-30T02:38:03.833+00:00",
-      "lastActive": "2026-06-25T00:58:34.316+00:00"
+      "lastActive": "2026-06-25T03:40:23.071+00:00"
     },
     "placi": {
       "wallet": "0x99bfa1f0e5b769a814e988350562751e5fc365b3",
@@ -517,7 +517,7 @@
     "drynuts": {
       "wallet": "0x135b235d2a3ef00e3fa9e6199a15e92f27cb03b0",
       "activeSince": "2026-02-02T12:53:42.517+00:00",
-      "lastActive": "2026-06-24T06:39:05.642+00:00"
+      "lastActive": "2026-06-25T04:00:12.456+00:00"
     },
     "eional": {
       "wallet": "0xe1abde4f95efbcea3bc2238b32b14bf9348ecbf7",
@@ -3557,7 +3557,7 @@
     "stevan": {
       "wallet": "0x9d30907718ada8d5ce7ac3f70b0d5d94b3ccd67e",
       "activeSince": "2026-01-30T17:32:05.61+00:00",
-      "lastActive": "2026-02-22T07:40:20.407+00:00"
+      "lastActive": "2026-06-25T03:45:56.858+00:00"
     },
     "dzientygrys": {
       "wallet": "0xfec571ef685217f54a3e6071f1ecabb03907eeca",
@@ -3832,7 +3832,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-23T09:10:30.163+00:00"
+      "lastActive": "2026-05-19T18:04:01.848+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
@@ -5122,7 +5122,7 @@
     "yonsgo": {
       "wallet": "0x527062d01fa2639fa5a11c3b54a69f377e18fa62",
       "activeSince": "2026-02-15T18:23:09.729+00:00",
-      "lastActive": "2026-06-25T01:27:50.316+00:00"
+      "lastActive": "2026-06-25T03:56:59.004+00:00"
     },
     "[akg]loginlee": {
       "wallet": "0x90583b449a260c35a761d3a45e41a9d3d59443fe",
