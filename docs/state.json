@@ -112,7 +112,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-06-25T10:53:51.187+00:00"
+      "lastActive": "2026-06-25T14:13:03.02+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -257,7 +257,7 @@
     "hollywood": {
       "wallet": "0x53535a52b08919a053603d645c8bc736a9b1fef7",
       "activeSince": "2026-02-27T10:13:18.748+00:00",
-      "lastActive": "2026-06-24T08:25:20.05+00:00"
+      "lastActive": "2026-06-25T14:28:35.273+00:00"
     },
     "bluedragon": {
       "wallet": "0x96eb386c3fbe85f01a7279cd5b7b810575ee2079",
@@ -317,7 +317,7 @@
     "inter_ae": {
       "wallet": "0x80d12e60a979b2bc06d5922c8f2d1e1f4006db27",
       "activeSince": "2026-02-08T13:33:35.296+00:00",
-      "lastActive": "2026-06-20T16:36:50.195+00:00"
+      "lastActive": "2026-06-25T14:15:11.418+00:00"
     },
     "dmaker": {
       "wallet": "0xaea7cbb144e26f23e7d9a8cc88a16316226ab31c",
@@ -5157,7 +5157,7 @@
     "yourfriend": {
       "wallet": "0x139e8410012eaa309b35f07348e6967885f88d1f",
       "activeSince": "2026-06-25T12:52:32.924191+00:00",
-      "lastActive": "2026-06-25T13:13:56.112+00:00"
+      "lastActive": "2026-06-25T14:37:51.267+00:00"
     }
   }
 }
