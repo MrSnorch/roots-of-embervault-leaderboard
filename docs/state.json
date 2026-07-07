@@ -49,7 +49,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-07T08:35:06.007+00:00"
+      "lastActive": "2026-07-07T09:50:05.537+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -104,7 +104,7 @@
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
       "activeSince": "2026-01-29T22:59:03.159+00:00",
-      "lastActive": "2026-07-06T23:16:13.189+00:00"
+      "lastActive": "2026-07-07T09:28:51.41+00:00"
     },
     "chunibro": {
       "wallet": "0x8004d65ae1470ce83a432e5a5c67204ae03f12f7",
@@ -124,7 +124,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-07-07T08:40:16.651+00:00"
+      "lastActive": "2026-07-07T09:27:06.933+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -199,7 +199,7 @@
     "stallion": {
       "wallet": "0xd5deb3bcb3cc092c1fd972e62b1af9d99dae7f3f",
       "activeSince": "2026-01-30T23:38:45.973+00:00",
-      "lastActive": "2026-07-05T23:15:08.941+00:00"
+      "lastActive": "2026-07-07T09:44:06.675+00:00"
     },
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
@@ -229,7 +229,7 @@
     "neoen": {
       "wallet": "0x7756562bdf3ce852a701ac783ae92a91577a7454",
       "activeSince": "2026-01-30T03:17:03.979+00:00",
-      "lastActive": "2026-07-06T08:24:09.756+00:00"
+      "lastActive": "2026-07-07T09:58:13.661+00:00"
     },
     "primitive": {
       "wallet": "0x75f2e1c753c76f10b66abe57a344fcae71915b0e",
@@ -244,7 +244,7 @@
     "bosketica": {
       "wallet": "0x4586807056f2b26011eeefe96ea1e04b751ab603",
       "activeSince": "2026-02-05T10:25:45.046+00:00",
-      "lastActive": "2026-07-07T08:37:46.817+00:00"
+      "lastActive": "2026-07-07T09:25:23.089+00:00"
     },
     "gogoxing": {
       "wallet": "0x0c5c2e19c9971da6bf010c9c8a4f41d904669fd6",
@@ -339,7 +339,7 @@
     "sultan": {
       "wallet": "0xf599983fa77c5ccdb9d8237155e281c08a8abe49",
       "activeSince": "2026-01-29T21:44:39.871+00:00",
-      "lastActive": "2026-07-07T06:35:21.442+00:00"
+      "lastActive": "2026-07-07T09:48:05.56+00:00"
     },
     "recluseham": {
       "wallet": "0x4e16f03fafc94af2d0b79d2d15d3d54f7c9f04fa",
@@ -374,7 +374,7 @@
     "dongduru": {
       "wallet": "0xade5cb66b3c18b845ac463b2e88ef9ddc7e2205d",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-05-16T19:05:19.873+00:00"
+      "lastActive": "2026-07-07T09:39:16.977+00:00"
     },
     "darkwindmist": {
       "wallet": "0x1e9e33e15904783ed1375015a44517543c3083d0",
@@ -384,7 +384,7 @@
     "ozi": {
       "wallet": "0xf55af9cd0880394b597966451ec2f4a6facb125e",
       "activeSince": "2026-01-29T21:15:41.707+00:00",
-      "lastActive": "2026-07-07T07:56:00.731+00:00"
+      "lastActive": "2026-07-07T09:51:15.09+00:00"
     },
     "flaydenn": {
       "wallet": "0x9885600a10909ee26832d11b24c8a1128aa865ea",
@@ -394,7 +394,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-07-05T21:57:07.061+00:00"
+      "lastActive": "2026-07-07T09:32:38.107+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -484,7 +484,7 @@
     "rummo": {
       "wallet": "0x94dd0bb5c36cec1425a83cf09c0c6648e24231d4",
       "activeSince": "2026-02-19T05:39:58.126+00:00",
-      "lastActive": "2026-07-06T14:28:53.41+00:00"
+      "lastActive": "2026-07-07T09:35:24.527+00:00"
     },
     "pjlyun": {
       "wallet": "0xe40e973d556d233ee39e3d9ada02f3c16d4f8e70",
@@ -589,7 +589,7 @@
     "menzyr": {
       "wallet": "0xf6a0822e6946860f02d383c49d5ef6c1dfd882a3",
       "activeSince": "2026-02-03T10:22:50.416+00:00",
-      "lastActive": "2026-06-10T07:38:33.123+00:00"
+      "lastActive": "2026-07-07T09:56:37.371+00:00"
     },
     "cryptobro": {
       "wallet": "0xda2ca34d57242cbe18f3046925645668b9e60292",
@@ -664,7 +664,7 @@
     "georgy": {
       "wallet": "0x8eb6899d75b70e99c6d5cd9d1003933d459574fb",
       "activeSince": "2026-01-30T08:51:37.035+00:00",
-      "lastActive": "2026-06-25T02:11:40.63+00:00"
+      "lastActive": "2026-07-07T09:51:36.298+00:00"
     },
     "maddondang": {
       "wallet": "0xcaafc0081ebb9f46cd0df29a5c147d3335d0e811",
@@ -839,7 +839,7 @@
     "voxelqueen": {
       "wallet": "0xaacafd8fad0e782c2adee5c1a64cdd522d59b9db",
       "activeSince": "2026-01-29T18:31:29.477+00:00",
-      "lastActive": "2026-07-07T08:58:51.394+00:00"
+      "lastActive": "2026-07-07T09:21:18.659+00:00"
     },
     "gentilvirus": {
       "wallet": "0xd876c42a0ca1bbecca379ed6724ef91c576ef6d6",
@@ -1799,7 +1799,7 @@
     "erik": {
       "wallet": "0x2e66a12985a6807537fc645d887c8b219c6db3af",
       "activeSince": "2026-01-29T21:30:04.323+00:00",
-      "lastActive": "2026-07-06T21:42:47.032+00:00"
+      "lastActive": "2026-07-07T09:56:01.245+00:00"
     },
     "pengulover": {
       "wallet": "0x1dde9fe6c41506bb6c234c270f1544761b707239",
@@ -2054,7 +2054,7 @@
     "elusive": {
       "wallet": "0x3497346935464fd2e0f589145d62261a586e23fc",
       "activeSince": "2026-01-30T15:16:20.166+00:00",
-      "lastActive": "2026-07-06T11:09:58.93+00:00"
+      "lastActive": "2026-07-07T10:00:28.682+00:00"
     },
     "solanaeden": {
       "wallet": "0x0c0a71e32e1954635e2dde143ed9e59fe471fb94",
@@ -3844,7 +3844,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-23T09:10:30.163+00:00"
+      "lastActive": "2026-05-18T15:06:32.344+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
