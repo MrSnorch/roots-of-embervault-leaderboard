@@ -44,7 +44,7 @@
     "ethos": {
       "wallet": "0x04584c4f59b8b14dae1c4acd7f784edef2de4ab0",
       "activeSince": "2026-01-29T19:39:33.942+00:00",
-      "lastActive": "2026-07-07T11:04:01.38+00:00"
+      "lastActive": "2026-07-07T21:40:03.065+00:00"
     },
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
@@ -144,7 +144,7 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-07-07T20:59:37.354+00:00"
+      "lastActive": "2026-07-07T21:01:58.325+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
@@ -154,7 +154,7 @@
     "nammari": {
       "wallet": "0x08b8f26102599b802082a9dfb432b00f0a9093e8",
       "activeSince": "2026-01-29T21:16:15.134+00:00",
-      "lastActive": "2026-07-07T20:48:13.959+00:00"
+      "lastActive": "2026-07-07T21:32:48.896+00:00"
     },
     "usb": {
       "wallet": "0x0f65d2d78a01e9f8303551fc8ab6d889f5faf1c3",
@@ -204,7 +204,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-07-07T18:49:47.605+00:00"
+      "lastActive": "2026-07-07T21:19:49.137+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -5179,7 +5179,7 @@
     "noxx": {
       "wallet": "0x1be4c254c045a09b2311836bdfcea0032fbc3159",
       "activeSince": "2026-01-29T20:39:31.218+00:00",
-      "lastActive": "2026-07-07T19:47:17.559+00:00"
+      "lastActive": "2026-07-07T21:54:05.771+00:00"
     }
   }
 }
