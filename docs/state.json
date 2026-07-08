@@ -50,7 +50,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-07T23:14:41.135+00:00"
+      "lastActive": "2026-07-08T00:40:16.576+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -100,7 +100,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-07-07T06:00:48.971+00:00"
+      "lastActive": "2026-07-08T00:56:44.373+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -175,7 +175,7 @@
     "sylee": {
       "wallet": "0x3bf8090e27274e770a0e61a53dd6b3145ad29b95",
       "activeSince": "2026-02-04T11:05:52.057+00:00",
-      "lastActive": "2026-07-07T18:36:55.482+00:00"
+      "lastActive": "2026-07-08T00:59:49.21+00:00"
     },
     "dimsunset": {
       "wallet": "0x846f05b1a365b06406892922a19903a908b19aec",
@@ -200,7 +200,7 @@
     "stallion": {
       "wallet": "0xd5deb3bcb3cc092c1fd972e62b1af9d99dae7f3f",
       "activeSince": "2026-01-30T23:38:45.973+00:00",
-      "lastActive": "2026-07-07T23:44:26.499+00:00"
+      "lastActive": "2026-07-08T01:00:37.835+00:00"
     },
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
@@ -265,7 +265,7 @@
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
       "activeSince": "2026-02-13T17:20:33.779+00:00",
-      "lastActive": "2026-07-07T14:56:01.933+00:00"
+      "lastActive": "2026-07-08T00:39:18.77+00:00"
     },
     "hollywood": {
       "wallet": "0x53535a52b08919a053603d645c8bc736a9b1fef7",
@@ -3845,7 +3845,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T11:48:37.521+00:00"
+      "lastActive": "2026-05-28T05:48:22.368+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
