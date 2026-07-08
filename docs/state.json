@@ -145,7 +145,7 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-07-08T19:11:48.616+00:00"
+      "lastActive": "2026-07-08T21:02:09.745+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
@@ -205,7 +205,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-07-08T13:09:52.12+00:00"
+      "lastActive": "2026-07-08T22:00:16.638+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -1205,7 +1205,7 @@
     "wizu": {
       "wallet": "0x7452c5644b16c22e0e3fa3aac57a9c08ffe4908e",
       "activeSince": "2026-03-01T11:39:25.404+00:00",
-      "lastActive": "2026-07-03T11:59:54.296+00:00"
+      "lastActive": "2026-07-08T21:51:21.684+00:00"
     },
     "fackmeo": {
       "wallet": "0x90e72f190b6926a6ed013dff9e99dadcccd265bc",
@@ -2245,7 +2245,7 @@
     "artstory": {
       "wallet": "0x26f9e7c68dc2031a871e974e7aa4631baa6632f0",
       "activeSince": "2026-01-29T19:55:18.246+00:00",
-      "lastActive": "2026-06-22T01:58:56.56+00:00"
+      "lastActive": "2026-07-08T21:55:36.502+00:00"
     },
     "kogr": {
       "wallet": "0x400c8428a273fb3a61a0872091e4936b5a02a08b",
@@ -5120,7 +5120,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-05T19:31:01.311+00:00"
+      "lastActive": "2026-07-08T21:40:59.583+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
@@ -5181,6 +5181,11 @@
       "wallet": "0x1be4c254c045a09b2311836bdfcea0032fbc3159",
       "activeSince": "2026-01-29T20:39:31.218+00:00",
       "lastActive": "2026-07-07T21:54:05.771+00:00"
+    },
+    "baxo89": {
+      "wallet": "0x48873f50d84c21f68292e0784d3a9d63c30c6903",
+      "activeSince": "2026-06-28T11:40:36.483392+00:00",
+      "lastActive": "2026-07-08T21:41:47.269+00:00"
     }
   }
 }
