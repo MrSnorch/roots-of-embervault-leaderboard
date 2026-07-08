@@ -205,7 +205,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-07-08T22:00:16.638+00:00"
+      "lastActive": "2026-07-08T22:52:15.56+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -840,7 +840,7 @@
     "voxelqueen": {
       "wallet": "0xaacafd8fad0e782c2adee5c1a64cdd522d59b9db",
       "activeSince": "2026-01-29T18:31:29.477+00:00",
-      "lastActive": "2026-07-08T19:42:48.045+00:00"
+      "lastActive": "2026-07-08T22:16:57.014+00:00"
     },
     "gentilvirus": {
       "wallet": "0xd876c42a0ca1bbecca379ed6724ef91c576ef6d6",
@@ -2245,7 +2245,7 @@
     "artstory": {
       "wallet": "0x26f9e7c68dc2031a871e974e7aa4631baa6632f0",
       "activeSince": "2026-01-29T19:55:18.246+00:00",
-      "lastActive": "2026-07-08T21:55:36.502+00:00"
+      "lastActive": "2026-07-08T22:05:48.163+00:00"
     },
     "kogr": {
       "wallet": "0x400c8428a273fb3a61a0872091e4936b5a02a08b",
@@ -5120,7 +5120,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-08T21:40:59.583+00:00"
+      "lastActive": "2026-07-08T22:09:26.427+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
@@ -5185,7 +5185,7 @@
     "baxo89": {
       "wallet": "0x48873f50d84c21f68292e0784d3a9d63c30c6903",
       "activeSince": "2026-06-28T11:40:36.483392+00:00",
-      "lastActive": "2026-07-08T21:41:47.269+00:00"
+      "lastActive": "2026-07-08T22:07:06.155+00:00"
     }
   }
 }
