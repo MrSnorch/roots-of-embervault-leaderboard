@@ -24,7 +24,8 @@
     "2026-07-05",
     "2026-07-06",
     "2026-07-07",
-    "2026-07-08"
+    "2026-07-08",
+    "2026-07-09"
   ],
   "players": {
     "677": {
@@ -50,7 +51,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-08T12:53:27.758+00:00"
+      "lastActive": "2026-07-08T23:07:30.723+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -205,7 +206,7 @@
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
       "activeSince": "2026-01-29T21:25:20.454+00:00",
-      "lastActive": "2026-07-08T22:52:15.56+00:00"
+      "lastActive": "2026-07-08T23:46:52.609+00:00"
     },
     "kajotinha": {
       "wallet": "0x7e80ff3cbabb781a954f2ababeb11cb3437b01cb",
@@ -265,7 +266,7 @@
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
       "activeSince": "2026-02-13T17:20:33.779+00:00",
-      "lastActive": "2026-07-08T18:52:26.038+00:00"
+      "lastActive": "2026-07-08T23:43:57.467+00:00"
     },
     "hollywood": {
       "wallet": "0x53535a52b08919a053603d645c8bc736a9b1fef7",
@@ -1045,7 +1046,7 @@
     "borsi": {
       "wallet": "0x1ebf0e8ff0a6cdf0288d9f9d7bb4e1abbb00ccd4",
       "activeSince": "2026-01-30T19:39:41.393+00:00",
-      "lastActive": "2026-07-03T20:57:01.383+00:00"
+      "lastActive": "2026-07-08T18:52:00.879+00:00"
     },
     "sambyd": {
       "wallet": "0xc132eb2430236ce43e7398cabccd449244586555",
@@ -3845,7 +3846,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T18:04:01.848+00:00"
+      "lastActive": "2026-05-18T15:11:11.418+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
@@ -5120,7 +5121,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-08T22:09:26.427+00:00"
+      "lastActive": "2026-07-08T23:56:38.056+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
