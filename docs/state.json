@@ -147,12 +147,12 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-07-10T19:13:05.523+00:00"
+      "lastActive": "2026-07-10T22:40:44.172+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
       "activeSince": "2026-01-30T07:02:21.421+00:00",
-      "lastActive": "2026-07-10T18:31:20.17+00:00"
+      "lastActive": "2026-07-10T22:08:26.236+00:00"
     },
     "nammari": {
       "wallet": "0x08b8f26102599b802082a9dfb432b00f0a9093e8",
@@ -397,7 +397,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-07-10T20:01:58.742+00:00"
+      "lastActive": "2026-07-10T22:40:44.173+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -1277,7 +1277,7 @@
     "josep": {
       "wallet": "0x1e0295c9eadbefcbda383b8ab99f6556e76cd2eb",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-07-10T19:13:30.778+00:00"
+      "lastActive": "2026-07-10T22:39:47.716+00:00"
     },
     "kalashniikov": {
       "wallet": "0x21a8cfede72184bc5d2af25ba80bfabc70fc2985",
@@ -3847,7 +3847,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T09:02:03.58+00:00"
+      "lastActive": "2026-05-23T09:10:30.163+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
