@@ -54,12 +54,12 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-12T08:54:33.436+00:00"
+      "lastActive": "2026-07-12T09:29:50.005+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-12T07:45:00.834+00:00"
+      "lastActive": "2026-07-12T09:29:34.845+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -69,7 +69,7 @@
     "danceboy": {
       "wallet": "0x0fbabcc900ae4a66e2960fd9a2df555e99670ef0",
       "activeSince": "2026-01-29T22:14:13.295+00:00",
-      "lastActive": "2026-07-09T05:22:28.855+00:00"
+      "lastActive": "2026-07-12T09:21:55.944+00:00"
     },
     "dazz": {
       "wallet": "0xaff7ae986b1de9d5ffbe9062434366b8f242cd2a",
@@ -104,7 +104,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-07-12T08:09:00.555+00:00"
+      "lastActive": "2026-07-12T09:19:18.908+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -2059,7 +2059,7 @@
     "elusive": {
       "wallet": "0x3497346935464fd2e0f589145d62261a586e23fc",
       "activeSince": "2026-01-30T15:16:20.166+00:00",
-      "lastActive": "2026-07-11T09:53:52.328+00:00"
+      "lastActive": "2026-07-12T09:49:25.234+00:00"
     },
     "solanaeden": {
       "wallet": "0x0c0a71e32e1954635e2dde143ed9e59fe471fb94",
