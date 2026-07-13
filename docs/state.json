@@ -1450,7 +1450,7 @@
     "bronze": {
       "wallet": "0x933414d6d4d25c18fa45eb51dc98d76474759f5f",
       "activeSince": "2026-01-29T20:48:00.448+00:00",
-      "lastActive": "2026-07-11T23:58:34.406+00:00"
+      "lastActive": "2026-07-13T22:48:14.833+00:00"
     },
     "idedj": {
       "wallet": "0xed225909be84c5fe11493219d9e2e1a02dcd5cab",
@@ -2095,7 +2095,7 @@
     "azino": {
       "wallet": "0xb5748a472adfa371244cdc5a0a13189410cf8097",
       "activeSince": "2026-01-29T21:22:50.119+00:00",
-      "lastActive": "2026-07-10T23:20:57.619+00:00"
+      "lastActive": "2026-07-13T22:58:23.577+00:00"
     },
     "burak": {
       "wallet": "0xcf6a641c04dc513743eb415581e142997729cbde",
@@ -5125,7 +5125,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-12T20:36:05.307+00:00"
+      "lastActive": "2026-07-13T22:58:08.9+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
@@ -5211,6 +5211,11 @@
       "wallet": "0x49fc1df350c1115325a66e2dcdb4604fb506184a",
       "activeSince": "2026-07-12T13:11:15.191372+00:00",
       "lastActive": "2026-07-13T06:17:03.601+00:00"
+    },
+    "cody": {
+      "wallet": "0x15c821c18ff36b24efd0a338989281107ae26f90",
+      "activeSince": "2026-01-29T21:26:29.552+00:00",
+      "lastActive": "2026-07-13T22:49:53.492+00:00"
     }
   }
 }
