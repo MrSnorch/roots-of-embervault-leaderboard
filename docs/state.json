@@ -60,7 +60,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-13T19:00:55.767+00:00"
+      "lastActive": "2026-07-13T19:22:09.494+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -400,7 +400,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-07-13T15:20:11.948+00:00"
+      "lastActive": "2026-07-13T19:32:05.005+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -2250,7 +2250,7 @@
     "artstory": {
       "wallet": "0x26f9e7c68dc2031a871e974e7aa4631baa6632f0",
       "activeSince": "2026-01-29T19:55:18.246+00:00",
-      "lastActive": "2026-07-08T22:05:48.163+00:00"
+      "lastActive": "2026-07-13T19:50:40.699+00:00"
     },
     "kogr": {
       "wallet": "0x400c8428a273fb3a61a0872091e4936b5a02a08b",
@@ -3850,7 +3850,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T09:38:17.181+00:00"
+      "lastActive": "2026-05-19T18:04:01.848+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
@@ -4950,7 +4950,7 @@
     "alex93": {
       "wallet": "0xcb4a20acb331ac9e7edb0b07f806f64f87ed54e0",
       "activeSince": "2026-01-30T17:00:14.686+00:00",
-      "lastActive": "2026-07-08T18:45:27.038+00:00"
+      "lastActive": "2026-07-13T19:08:46.744+00:00"
     },
     "astarta": {
       "wallet": "0x3eda210ff41e2b2d1658ca5ebe0b80a376c7e0f4",
