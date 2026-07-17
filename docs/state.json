@@ -234,7 +234,7 @@
     "capanama": {
       "wallet": "0x92f4b24e91e368fad339c6147e81121ec6ee45db",
       "activeSince": "2026-01-29T21:18:00.137+00:00",
-      "lastActive": "2026-07-07T23:45:49.082+00:00"
+      "lastActive": "2026-07-17T01:54:40.324+00:00"
     },
     "neoen": {
       "wallet": "0x7756562bdf3ce852a701ac783ae92a91577a7454",
@@ -484,7 +484,7 @@
     "dm_pits": {
       "wallet": "0xbe5fa39f1fb1fb4a1651b962247c17d4258d4e7f",
       "activeSince": "2026-01-30T19:33:32.417+00:00",
-      "lastActive": "2026-07-13T07:45:30.044+00:00"
+      "lastActive": "2026-07-17T01:53:35.874+00:00"
     },
     "cryptopiper": {
       "wallet": "0x1ffa18e3c45cf2b240ad55757cb5e0318d1402c4",
@@ -1934,7 +1934,7 @@
     "brunoleon.eth": {
       "wallet": "0xe34b8d9cf0ad0597d96b7191b4b3154501e82b0a",
       "activeSince": "2026-01-29T19:29:54.23+00:00",
-      "lastActive": "2026-07-02T03:11:47.83+00:00"
+      "lastActive": "2026-07-17T01:26:01.586+00:00"
     },
     "xwade3": {
       "wallet": "0x0797c0e3220d852534b6745707e2d1e29609922e",
@@ -5129,7 +5129,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-13T22:58:08.9+00:00"
+      "lastActive": "2026-07-17T01:11:02.425+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
