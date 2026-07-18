@@ -33,7 +33,8 @@
     "2026-07-14",
     "2026-07-15",
     "2026-07-16",
-    "2026-07-17"
+    "2026-07-17",
+    "2026-07-18"
   ],
   "players": {
     "677": {
@@ -124,7 +125,7 @@
     "vanyoz": {
       "wallet": "0xf492ac6a052386972f4cc54218d61f4cf2e3b36c",
       "activeSince": "2026-01-29T21:24:26.553+00:00",
-      "lastActive": "2026-07-17T15:47:42.291+00:00"
+      "lastActive": "2026-07-17T23:44:57.753+00:00"
     },
     "sik094": {
       "wallet": "0x7c89f0fddb3b216ebc03a64b26563c0fad5fe14b",
@@ -1304,7 +1305,7 @@
     "coolgolfer": {
       "wallet": "0xa8cf07d10b478f15e2e0c00eb49b56ffcebcaca5",
       "activeSince": "2026-01-29T23:03:03.958+00:00",
-      "lastActive": "2026-07-17T05:02:48.819+00:00"
+      "lastActive": "2026-07-17T23:15:32.976+00:00"
     },
     "h761": {
       "wallet": "0x03cda8022e2e626845b5ac983c2dec0d8b567e1a",
@@ -1809,7 +1810,7 @@
     "erik": {
       "wallet": "0x2e66a12985a6807537fc645d887c8b219c6db3af",
       "activeSince": "2026-01-29T21:30:04.323+00:00",
-      "lastActive": "2026-07-17T22:59:49.373+00:00"
+      "lastActive": "2026-07-17T23:59:34.778+00:00"
     },
     "pengulover": {
       "wallet": "0x1dde9fe6c41506bb6c234c270f1544761b707239",
@@ -5129,7 +5130,7 @@
     "rich": {
       "wallet": "0xbdecab53bb16b74aa1a1715cc4b80db641eac9da",
       "activeSince": "2026-01-29T23:25:19.957+00:00",
-      "lastActive": "2026-07-17T01:11:02.425+00:00"
+      "lastActive": "2026-07-17T23:59:40.227+00:00"
     },
     "roche": {
       "wallet": "0x0522e1a481ebe2bf9098ef13f00bdcecebc014ce",
