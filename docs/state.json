@@ -112,7 +112,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-07-19T23:26:06.927+00:00"
+      "lastActive": "2026-07-20T02:14:29.949+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -157,7 +157,7 @@
     "atzhura": {
       "wallet": "0x8ea5d48884728cd1c41af95733011b4276f83e0b",
       "activeSince": "2026-01-29T21:53:02.737+00:00",
-      "lastActive": "2026-07-19T19:44:13.818+00:00"
+      "lastActive": "2026-07-20T00:02:05.949+00:00"
     },
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
@@ -212,7 +212,7 @@
     "stallion": {
       "wallet": "0xd5deb3bcb3cc092c1fd972e62b1af9d99dae7f3f",
       "activeSince": "2026-01-30T23:38:45.973+00:00",
-      "lastActive": "2026-07-19T01:43:44.247+00:00"
+      "lastActive": "2026-07-20T02:41:17.865+00:00"
     },
     "ron": {
       "wallet": "0xf545bf7e833461948620aa2a10fb0ec6b592170b",
@@ -407,7 +407,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-07-19T23:21:39.166+00:00"
+      "lastActive": "2026-07-20T00:29:04.256+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -1052,7 +1052,7 @@
     "dr3": {
       "wallet": "0x5400add7ee1e261a7ee70bc84b33400153fb441e",
       "activeSince": "2026-05-05T21:06:14.643122+00:00",
-      "lastActive": "2026-07-19T21:28:41.693+00:00"
+      "lastActive": "2026-07-20T02:48:32.993+00:00"
     },
     "borsi": {
       "wallet": "0x1ebf0e8ff0a6cdf0288d9f9d7bb4e1abbb00ccd4",
@@ -3487,7 +3487,7 @@
     "cryptogrit": {
       "wallet": "0xf6182bb74c82ddeaf96c43cc60eccfb070bc0b57",
       "activeSince": "2026-01-30T00:53:26.263+00:00",
-      "lastActive": "2026-02-22T02:02:33.953+00:00"
+      "lastActive": "2026-07-20T00:02:05.212+00:00"
     },
     "ruyui_test": {
       "wallet": "0x3a211a5c9ea2668246eb46f1894e64112143f507",
@@ -5147,7 +5147,7 @@
     "yonsgo": {
       "wallet": "0x527062d01fa2639fa5a11c3b54a69f377e18fa62",
       "activeSince": "2026-02-15T18:23:09.729+00:00",
-      "lastActive": "2026-07-19T18:16:54.685+00:00"
+      "lastActive": "2026-07-20T02:51:49.199+00:00"
     },
     "[akg]loginlee": {
       "wallet": "0x90583b449a260c35a761d3a45e41a9d3d59443fe",
