@@ -75,7 +75,7 @@
 </header>
 
 <h1>ROOTS OF EMBERVAULT — почасовая статистика</h1>
-<div class="sub">Последние 24 часа · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
+<div class="sub">С 00:00 UTC текущих суток · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
 
 <div class="controls">
   <input type="text" id="filter" placeholder="фильтр по нику…">
@@ -112,7 +112,8 @@ async function fetchHourSnapshot(hourKey){
 async function main(){
   const indexRes = await fetch(`${HOURLY_DIR}/index.json`);
   const allHours = await indexRes.json();
-  const hours = allHours.slice(-24);
+  const todayUTC = new Date().toISOString().slice(0, 10); // "2026-07-22"
+  const hours = allHours.filter(h => h.slice(0, 10) === todayUTC);
 
   const data = {};
   await Promise.all(hours.map(async h=>{
