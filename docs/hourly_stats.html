@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Embervault — почасовая статистика (24ч)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0e0d;
+    --panel:#121613;
+    --line:#212823;
+    --text:#d7e0d9;
+    --dim:#6f7d74;
+    --accent:#5ee6a0;
+    --hot:#ff6b5e;
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"SF Mono","JetBrains Mono",Consolas,monospace;
+    margin:0;
+    padding:24px;
+    font-size:13px;
+  }
+  h1{ font-size:16px; letter-spacing:.5px; margin:0 0 4px; color:var(--accent); }
+  .sub{ color:var(--dim); margin-bottom:18px; }
+  .controls{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  input[type=text], select{
+    background:var(--panel); border:1px solid var(--line); color:var(--text);
+    padding:6px 10px; border-radius:4px; font-family:inherit; font-size:13px;
+  }
+  input[type=text]{ width:220px; }
+  .tablewrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; }
+  table{ border-collapse:collapse; width:100%; min-width:1400px; }
+  th,td{ padding:5px 8px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ position:sticky; top:0; background:var(--panel); color:var(--dim); font-weight:normal; font-size:11px; z-index:2; }
+  td.name, th.name{ text-align:left; position:sticky; left:0; background:var(--bg); z-index:1; min-width:150px; font-weight:600; }
+  th.name{ background:var(--panel); z-index:3; }
+  tr:hover td{ background:#171d19; }
+  tr:hover td.name{ background:#171d19; }
+  .delta-pos{ color:var(--accent); }
+  .delta-hot{ color:var(--hot); font-weight:700; }
+  .delta-zero{ color:var(--dim); }
+  .online{ color:var(--accent); }
+  .offline{ color:var(--dim); }
+  .metric-label{ color:var(--dim); font-size:10px; display:block; }
+  #summary{ margin-top:16px; color:var(--dim); font-size:12px; }
+  #loading{ color:var(--dim); padding:20px 0; }
+</style>
+</head>
+<body>
+
+<h1>ROOTS OF EMBERVAULT — почасовая статистика</h1>
+<div class="sub">Последние 24 часа · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
+
+<div class="controls">
+  <input type="text" id="filter" placeholder="фильтр по нику…">
+  <select id="sortBy">
+    <option value="totalScoreDelta">Сорт.: рост score (24ч)</option>
+    <option value="totalRuneDelta">Сорт.: рост runeCount (24ч)</option>
+    <option value="maxHourlyRune">Сорт.: макс. фарм за 1ч (rune)</option>
+    <option value="name">Сорт.: ник</option>
+  </select>
+</div>
+
+<div id="loading">Загрузка часовых снапшотов…</div>
+
+<div class="tablewrap" style="display:none" id="wrap">
+  <table id="tbl">
+    <thead><tr id="headRow"></tr></thead>
+    <tbody id="body"></tbody>
+  </table>
+</div>
+
+<div id="summary"></div>
+
+<script>
+const HOURLY_DIR = 'hourly'; // relative to this file, matches docs/hourly/
+
+async function fetchHourSnapshot(hourKey){
+  const res = await fetch(`${HOURLY_DIR}/${hourKey}.json.gz`);
+  if(!res.ok) throw new Error(`missing ${hourKey}`);
+  const buf = await res.arrayBuffer();
+  const text = pako.inflate(new Uint8Array(buf), { to: 'string' });
+  return JSON.parse(text);
+}
+
+async function main(){
+  const indexRes = await fetch(`${HOURLY_DIR}/index.json`);
+  const allHours = await indexRes.json();
+  const hours = allHours.slice(-24);
+
+  const data = {};
+  await Promise.all(hours.map(async h=>{
+    const snap = await fetchHourSnapshot(h);
+    data[h] = {};
+    for(const [name, p] of Object.entries(snap.players)){
+      data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline };
+    }
+  }));
+
+  const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
+  render(hours, players, data);
+}
+
+function render(hours, players, data){
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('wrap').style.display = 'block';
+
+  const headRow = document.getElementById('headRow');
+  let h = '<th class="name">игрок</th>';
+  hours.forEach(hh=>{
+    h += `<th>${hh.slice(11)}:00<span class="metric-label">score / rune Δ</span></th>`;
+  });
+  h += '<th>Σ score Δ</th><th>Σ rune Δ</th>';
+  headRow.innerHTML = h;
+
+  const rows = players.map(name=>{
+    const cells = [];
+    let totalScoreDelta = 0, totalRuneDelta = 0, maxHourlyRune = 0, lastOnline = false, prev = null;
+    hours.forEach(hh=>{
+      const cur = data[hh][name];
+      if(cur) lastOnline = cur.isOnline;
+      if(prev && cur){
+        const ds = cur.score - prev.score;
+        const dr = cur.runeCount - prev.runeCount;
+        totalScoreDelta += ds; totalRuneDelta += dr;
+        if(dr > maxHourlyRune) maxHourlyRune = dr;
+        cells.push({ds, dr, present:true});
+      } else {
+        cells.push({ds:null, dr:null, present: !!cur});
+      }
+      if(cur) prev = cur;
+    });
+    return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, lastOnline};
+  });
+
+  function fmt(n){
+    if(n===null) return '<span class="delta-zero">—</span>';
+    if(n===0) return '<span class="delta-zero">0</span>';
+    const cls = n > 5000 ? 'delta-hot' : 'delta-pos';
+    return `<span class="${cls}">${n>0?'+':''}${n.toLocaleString('ru')}</span>`;
+  }
+
+  function draw(){
+    const filter = document.getElementById('filter').value.toLowerCase();
+    const sortBy = document.getElementById('sortBy').value;
+    let list = rows.filter(r=>r.name.toLowerCase().includes(filter));
+    list.sort((a,b)=> sortBy==='name' ? a.name.localeCompare(b.name) : b[sortBy]-a[sortBy]);
+
+    document.getElementById('body').innerHTML = list.map(r=>{
+      let row = `<td class="name">${r.name} <span class="${r.lastOnline?'online':'offline'}">●</span></td>`;
+      r.cells.forEach(c=>{
+        row += c.present ? `<td>${fmt(c.ds)}<br>${fmt(c.dr)}</td>` : '<td>—</td>';
+      });
+      row += `<td><b>${fmt(r.totalScoreDelta)}</b></td><td><b>${fmt(r.totalRuneDelta)}</b></td>`;
+      return `<tr>${row}</tr>`;
+    }).join('');
+
+    document.getElementById('summary').textContent =
+      `Показано ${list.length} из ${rows.length} игроков · период: ${hours[0]}:00 → ${hours[hours.length-1]}:00`;
+  }
+
+  document.getElementById('filter').addEventListener('input', draw);
+  document.getElementById('sortBy').addEventListener('change', draw);
+  draw();
+}
+
+main().catch(e=>{
+  document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message;
+});
+</script>
+
+</body>
+</html>
