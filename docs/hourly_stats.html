@@ -131,10 +131,20 @@ function render(hours, players, data){
   document.getElementById('loading').style.display = 'none';
   document.getElementById('wrap').style.display = 'block';
 
+  const kyivFmt = new Intl.DateTimeFormat('ru-RU', {
+    timeZone: 'Europe/Kyiv', hour: '2-digit', minute: '2-digit',
+    day: '2-digit', month: '2-digit'
+  });
+  function toKyiv(hourKey){
+    // hourKey like "2026-07-22T12" -> treat as UTC hour, format in Kyiv time
+    const d = new Date(hourKey + ':00:00Z');
+    return kyivFmt.format(d); // "22.07, 15:00"
+  }
+
   const headRow = document.getElementById('headRow');
   let h = '<th class="name">игрок</th>';
   hours.forEach(hh=>{
-    h += `<th>${hh.slice(11)}:00<span class="metric-label">score / rune Δ</span></th>`;
+    h += `<th>${toKyiv(hh)}<span class="metric-label">score / rune Δ</span></th>`;
   });
   h += '<th>Σ score Δ</th><th>Σ rune Δ</th>';
   headRow.innerHTML = h;
@@ -182,7 +192,7 @@ function render(hours, players, data){
     }).join('');
 
     document.getElementById('summary').textContent =
-      `Показано ${list.length} из ${rows.length} игроков · период: ${hours[0]}:00 → ${hours[hours.length-1]}:00`;
+      `Показано ${list.length} из ${rows.length} игроков · период (Киев): ${toKyiv(hours[0])} → ${toKyiv(hours[hours.length-1])}`;
   }
 
   document.getElementById('filter').addEventListener('input', draw);
