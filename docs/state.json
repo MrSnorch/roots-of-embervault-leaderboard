@@ -64,12 +64,12 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-22T08:33:23.39+00:00"
+      "lastActive": "2026-07-22T09:11:18.465+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-22T08:13:30.115+00:00"
+      "lastActive": "2026-07-22T09:36:09.133+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -89,7 +89,7 @@
     "lord cyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
       "activeSince": "2026-01-30T09:16:15.299+00:00",
-      "lastActive": "2026-07-21T22:40:49.772+00:00"
+      "lastActive": "2026-07-22T09:46:31.622+00:00"
     },
     "alex": {
       "wallet": "0x8c04be14e35eef3e248128d2cfd08b343c91c4e9",
@@ -114,7 +114,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-07-21T13:30:45.961+00:00"
+      "lastActive": "2026-07-22T09:50:24.909+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -139,7 +139,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-07-22T08:24:25.012+00:00"
+      "lastActive": "2026-07-22T09:49:07.734+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -269,7 +269,7 @@
     "won": {
       "wallet": "0xcdbb4106bd3a2949b718a1686f1009294e1955b4",
       "activeSince": "2026-02-08T03:29:10.161+00:00",
-      "lastActive": "2026-07-22T07:07:29.609+00:00"
+      "lastActive": "2026-07-22T09:10:13.846+00:00"
     },
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
@@ -5249,7 +5249,7 @@
     "abgary": {
       "wallet": "0xdbcdc2d0d17216af325dd9dcea6a551388c76cdd",
       "activeSince": "2026-07-22T02:42:17.18127+00:00",
-      "lastActive": "2026-07-22T09:00:43.845+00:00"
+      "lastActive": "2026-07-22T09:15:38.442+00:00"
     }
   }
 }
