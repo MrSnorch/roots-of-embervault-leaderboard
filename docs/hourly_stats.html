@@ -47,9 +47,32 @@
   .metric-label{ color:var(--dim); font-size:10px; display:block; }
   #summary{ margin-top:16px; color:var(--dim); font-size:12px; }
   #loading{ color:var(--dim); padding:20px 0; }
+
+  header{
+    border-bottom:1px solid var(--line); padding:16px 24px;
+    display:flex; align-items:center; gap:16px; background:var(--panel);
+    margin:-24px -24px 24px; position:sticky; top:0; z-index:10;
+  }
+  .logo{ font-family:inherit; font-size:18px; font-weight:700; color:var(--accent); letter-spacing:-.5px; }
+  .logo span{ color:#a259ff; }
+  .tabs{ display:flex; gap:4px; }
+  .tab{
+    font-size:12px; color:var(--dim); text-decoration:none;
+    padding:6px 12px; border-radius:6px; border:1px solid transparent;
+  }
+  .tab:hover{ color:var(--text); border-color:var(--line); }
+  .tab.active{ color:var(--text); background:var(--bg); border-color:var(--line); }
 </style>
 </head>
 <body>
+
+<header>
+  <div class="logo">ROE<span>·</span>LB</div>
+  <nav class="tabs">
+    <a href="index.html" class="tab">Dashboard</a>
+    <a href="hourly_stats.html" class="tab active">Hourly</a>
+  </nav>
+</header>
 
 <h1>ROOTS OF EMBERVAULT — почасовая статистика</h1>
 <div class="sub">Последние 24 часа · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
