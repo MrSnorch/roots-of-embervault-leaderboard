@@ -64,12 +64,12 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-22T07:33:17.473+00:00"
+      "lastActive": "2026-07-22T08:33:23.39+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-21T22:34:10.977+00:00"
+      "lastActive": "2026-07-22T08:13:30.115+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -139,7 +139,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-07-22T07:22:11.847+00:00"
+      "lastActive": "2026-07-22T08:24:25.012+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -319,7 +319,7 @@
     "affy": {
       "wallet": "0xf28506e6bf73b15ee0cf9e800c60cef4af96bab9",
       "activeSince": "2026-02-21T12:07:06.604+00:00",
-      "lastActive": "2026-07-19T15:39:36.431+00:00"
+      "lastActive": "2026-07-22T08:37:45.725+00:00"
     },
     "stefan2212": {
       "wallet": "0x90b75a9ea3604553b70cee1f9c213c6bee213b09",
@@ -349,7 +349,7 @@
     "dmaker": {
       "wallet": "0xaea7cbb144e26f23e7d9a8cc88a16316226ab31c",
       "activeSince": "2026-01-29T21:38:55.475+00:00",
-      "lastActive": "2026-07-22T06:52:46.596+00:00"
+      "lastActive": "2026-07-22T08:15:44.94+00:00"
     },
     "sultan": {
       "wallet": "0xf599983fa77c5ccdb9d8237155e281c08a8abe49",
@@ -409,7 +409,7 @@
     "dagacuantica": {
       "wallet": "0xa4fa3f3f6b6afea7237b8f27e756fa349f6e47dd",
       "activeSince": "2026-01-30T03:04:21.163+00:00",
-      "lastActive": "2026-07-22T07:47:28.575+00:00"
+      "lastActive": "2026-07-22T08:52:25.476+00:00"
     },
     "sangvin": {
       "wallet": "0x6dea30208c585cc5c4213a9b0e80348d2a947ce6",
@@ -2259,7 +2259,7 @@
     "artstory": {
       "wallet": "0x26f9e7c68dc2031a871e974e7aa4631baa6632f0",
       "activeSince": "2026-01-29T19:55:18.246+00:00",
-      "lastActive": "2026-07-21T16:19:37.448+00:00"
+      "lastActive": "2026-07-22T08:52:06.728+00:00"
     },
     "kogr": {
       "wallet": "0x400c8428a273fb3a61a0872091e4936b5a02a08b",
@@ -5249,7 +5249,7 @@
     "abgary": {
       "wallet": "0xdbcdc2d0d17216af325dd9dcea6a551388c76cdd",
       "activeSince": "2026-07-22T02:42:17.18127+00:00",
-      "lastActive": "2026-07-22T03:27:16.915+00:00"
+      "lastActive": "2026-07-22T09:00:43.845+00:00"
     }
   }
 }
