@@ -182,7 +182,11 @@ async function main(){
   const indexRes = await fetch(`${HOURLY_DIR}/index.json`);
   const allHours = await indexRes.json();
   const todayUTC = new Date().toISOString().slice(0, 10); // "2026-07-22"
-  const hours = allHours.filter(h => h.slice(0, 10) === todayUTC);
+  let hours = allHours.filter(h => h.slice(0, 10) === todayUTC);
+  if(hours.length === 0){
+    // fallback: today's data not published yet — show last 24 available hours instead
+    hours = allHours.slice(-24);
+  }
 
   const data = {};
   await Promise.all(hours.map(async h=>{
