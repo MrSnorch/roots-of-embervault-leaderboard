@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Embervault — почасовая статистика (24ч)</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
   :root{
     --bg:#0b0e0d;
@@ -102,13 +101,6 @@
   .top-card.score .value{ color:var(--accent); }
   .top-card.spike .value{ color:#ffb14e; }
 
-  .watch-chart-wrap{
-    background:var(--panel); border:1px solid var(--line); border-radius:8px;
-    padding:12px; margin-bottom:12px; display:none;
-  }
-  .watch-chart-wrap.visible{ display:block; }
-  .watch-chart-title{ color:var(--dim); font-size:11px; margin-bottom:8px; }
-
   .sparkline{ vertical-align:middle; }
   td.rank-cell{ font-size:10.5px; }
   .rank-up{ color:var(--accent); }
@@ -130,11 +122,6 @@
 <div class="sub">С 00:00 UTC текущих суток (время в таблице — Киев) · читается напрямую из docs/hourly/</div>
 
 <div class="top-cards" id="topCards"></div>
-
-<div class="watch-chart-wrap" id="watchChartWrap">
-  <div class="watch-chart-title">Отслеживаемые — динамика по часам</div>
-  <canvas id="watchChart" height="70"></canvas>
-</div>
 
 <div class="panel">
   <div class="metric-toggle" id="metricToggle">
@@ -195,7 +182,7 @@ async function fetchHourSnapshot(hourKey){
 
 async function main(){
   dlog(`window.location.href = ${window.location.href}`);
-  dlog(`pako defined: ${typeof pako !== 'undefined'}, Chart defined: ${typeof Chart !== 'undefined'}`);
+  dlog(`pako defined: ${typeof pako !== 'undefined'}`);
 
   const indexUrl = `${HOURLY_DIR}/index.json`;
   const indexRes = await fetch(indexUrl);
@@ -314,7 +301,6 @@ function render(hours, players, data){
     </svg>`;
   }
 
-  let watchChartInstance = null;
   let currentMetric = localStorage.getItem('roe_metric') || 'score';
 
   function buildHeader(){
@@ -414,52 +400,6 @@ function render(hours, players, data){
     `;
   }
 
-  function renderWatchChart(){
-    const wrap = document.getElementById('watchChartWrap');
-    if(watchlist.length===0){
-      wrap.classList.remove('visible');
-      return;
-    }
-    if(typeof Chart === 'undefined'){
-      wrap.classList.remove('visible');
-      dlog('Chart.js not loaded (CDN blocked?) — skipping watch chart');
-      return;
-    }
-    wrap.classList.add('visible');
-
-    const labels = hours.map(toKyiv);
-    const colors = ['#5ee6a0','#ff6b5e','#ffb14e','#5ea0ff','#c25eff','#5edee6'];
-    const datasets = watchlist.map((name, i)=>{
-      const row = rows.find(r=>r.name===name);
-      const series = currentMetric === 'score' ? (row?.scoreSeries||[]) : (row?.runeSeries||[]);
-      return {
-        label: name,
-        data: series,
-        borderColor: colors[i % colors.length],
-        backgroundColor: 'transparent',
-        tension: 0.25,
-        pointRadius: 2,
-      };
-    });
-
-    if(watchChartInstance) watchChartInstance.destroy();
-    watchChartInstance = new Chart(document.getElementById('watchChart'), {
-      type: 'line',
-      data: { labels, datasets },
-      options: {
-        responsive: true,
-        interaction: { mode: 'index', intersect: false },
-        plugins: {
-          legend: { labels: { color: '#d7e0d9', font: { family: 'monospace', size: 11 } } }
-        },
-        scales: {
-          x: { ticks: { color: '#6f7d74', font: { size: 10 } }, grid: { color: '#212823' } },
-          y: { ticks: { color: '#6f7d74', font: { size: 10 } }, grid: { color: '#212823' } }
-        }
-      }
-    });
-  }
-
   function draw(){
     const filter = document.getElementById('filter').value.toLowerCase();
     const sortBy = document.getElementById('sortBy').value;
@@ -488,8 +428,6 @@ function render(hours, players, data){
 
     document.getElementById('summary').textContent =
       `Показано ${list.length} из ${rows.length} игроков · период (Киев): ${toKyiv(hours[0])} → ${toKyiv(hours[hours.length-1])}`;
-
-    renderWatchChart();
   }
 
   document.getElementById('filter').addEventListener('input', draw);
