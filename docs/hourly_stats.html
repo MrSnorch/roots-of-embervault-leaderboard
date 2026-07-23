@@ -208,7 +208,13 @@ function render(hours, players, data){
     e.target.value = '';
   });
 
-  document.getElementById('watchOnly').addEventListener('change', draw);
+  const WATCH_ONLY_KEY = 'roe_watch_only';
+  const watchOnlyEl = document.getElementById('watchOnly');
+  watchOnlyEl.checked = localStorage.getItem(WATCH_ONLY_KEY) === '1';
+  watchOnlyEl.addEventListener('change', ()=>{
+    localStorage.setItem(WATCH_ONLY_KEY, watchOnlyEl.checked ? '1' : '0');
+    draw();
+  });
 
   renderTags();
 
