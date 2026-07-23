@@ -255,7 +255,7 @@ function render(hours, players, data){
     const scoreSeries = [];
     const runeSeries = [];
     let totalScoreDelta = 0, totalRuneDelta = 0, maxHourlyRune = 0, lastOnline = false, prev = null;
-    let firstRank = null, lastRank = null, deltaHourCount = 0;
+    let firstRank = null, lastRank = null, activeHourCount = 0;
     hours.forEach(hh=>{
       const cur = data[hh][name];
       if(cur){
@@ -269,7 +269,7 @@ function render(hours, players, data){
         const ds = cur.score - prev.score;
         const dr = cur.runeCount - prev.runeCount;
         totalScoreDelta += ds; totalRuneDelta += dr;
-        deltaHourCount++;
+        if(dr > 0) activeHourCount++; // only count hours with actual farming toward the average
         if(dr > maxHourlyRune) maxHourlyRune = dr;
         cells.push({ds, dr, present:true});
       } else {
@@ -278,7 +278,7 @@ function render(hours, players, data){
       if(cur) prev = cur;
     });
     const rankChange = (firstRank!==null && lastRank!==null) ? firstRank - lastRank : 0; // positive = rank improved (moved up)
-    const avgHourlyRune = deltaHourCount > 0 ? totalRuneDelta / deltaHourCount : 0;
+    const avgHourlyRune = activeHourCount > 0 ? totalRuneDelta / activeHourCount : 0;
     return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, avgHourlyRune, lastOnline, scoreSeries, runeSeries, lastRank, rankChange};
   });
 
