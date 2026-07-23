@@ -174,11 +174,11 @@
 const HOURLY_DIR = 'hourly'; // relative to this file, matches docs/hourly/
 
 const debugLines = [];
-function dlog(msg){
+function dlog(msg, forceShow){
   debugLines.push(`[${new Date().toISOString().slice(11,19)}] ${msg}`);
   const el = document.getElementById('debugLog');
   el.textContent = debugLines.join('\n');
-  el.classList.add('visible');
+  if(forceShow) el.classList.add('visible');
   console.log('[hourly-debug]', msg);
 }
 
@@ -314,6 +314,9 @@ function render(hours, players, data){
     </svg>`;
   }
 
+  let watchChartInstance = null;
+  let currentMetric = localStorage.getItem('roe_metric') || 'score';
+
   function buildHeader(){
     const headRow = document.getElementById('headRow');
     let h = '<th class="name">игрок</th><th>ранг</th>';
@@ -371,9 +374,6 @@ function render(hours, players, data){
 
   renderTags();
 
-  let watchChartInstance = null;
-  let currentMetric = localStorage.getItem('roe_metric') || 'score';
-
   document.querySelectorAll('#metricToggle button').forEach(btn=>{
     if(btn.dataset.metric === currentMetric) btn.classList.add('active');
     else btn.classList.remove('active');
@@ -418,6 +418,11 @@ function render(hours, players, data){
     const wrap = document.getElementById('watchChartWrap');
     if(watchlist.length===0){
       wrap.classList.remove('visible');
+      return;
+    }
+    if(typeof Chart === 'undefined'){
+      wrap.classList.remove('visible');
+      dlog('Chart.js not loaded (CDN blocked?) — skipping watch chart');
       return;
     }
     wrap.classList.add('visible');
@@ -494,8 +499,8 @@ function render(hours, players, data){
 }
 
 main().catch(e=>{
-  dlog(`ERROR: ${e.message}`);
-  dlog(`STACK: ${e.stack || '(no stack)'}`);
+  dlog(`ERROR: ${e.message}`, true);
+  dlog(`STACK: ${e.stack || '(no stack)'}`, true);
   document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message + ' (см. дебаг-лог выше)';
 });
 </script>
