@@ -217,52 +217,6 @@ function render(hours, players, data){
   let watchlist = getWatchlist().filter(p=>players.includes(p));
   setWatchlist(watchlist);
 
-  function renderTags(){
-    const el = document.getElementById('watchTags');
-    if(watchlist.length===0){
-      el.innerHTML = '<span class="empty-watchlist">никого не отслеживаешь</span>';
-      return;
-    }
-    el.innerHTML = watchlist.map(name=>
-      `<span class="watch-tag">${name}<button data-name="${name}">×</button></span>`
-    ).join('');
-    el.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        watchlist = watchlist.filter(n=>n!==btn.dataset.name);
-        setWatchlist(watchlist);
-        renderTags();
-        draw();
-      });
-    });
-  }
-
-  document.getElementById('watchInput').addEventListener('keydown', e=>{
-    if(e.key !== 'Enter') return;
-    const val = e.target.value.trim();
-    if(!val) return;
-    if(!players.includes(val)){
-      alert('Игрок не найден за выбранный период: ' + val);
-      return;
-    }
-    if(!watchlist.includes(val)){
-      watchlist.push(val);
-      setWatchlist(watchlist);
-      renderTags();
-      draw();
-    }
-    e.target.value = '';
-  });
-
-  const WATCH_ONLY_KEY = 'roe_watch_only';
-  const watchOnlyEl = document.getElementById('watchOnly');
-  watchOnlyEl.checked = localStorage.getItem(WATCH_ONLY_KEY) === '1';
-  watchOnlyEl.addEventListener('change', ()=>{
-    localStorage.setItem(WATCH_ONLY_KEY, watchOnlyEl.checked ? '1' : '0');
-    draw();
-  });
-
-  renderTags();
-
   const kyivFmt = new Intl.DateTimeFormat('ru-RU', {
     timeZone: 'Europe/Kyiv', hour: '2-digit', minute: '2-digit',
     day: '2-digit', month: '2-digit'
@@ -272,17 +226,6 @@ function render(hours, players, data){
     const d = new Date(hourKey + ':00:00Z');
     return kyivFmt.format(d); // "22.07, 15:00"
   }
-
-  function buildHeader(){
-    const headRow = document.getElementById('headRow');
-    let h = '<th class="name">игрок</th><th>ранг</th>';
-    hours.forEach(hh=>{
-      h += `<th>${toKyiv(hh)}</th>`;
-    });
-    h += `<th>тренд</th><th>Σ ${currentMetric==='score'?'score':'rune'} Δ</th>`;
-    headRow.innerHTML = h;
-  }
-  buildHeader();
 
   const rows = players.map(name=>{
     const cells = [];
@@ -336,6 +279,63 @@ function render(hours, players, data){
       <polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5"/>
     </svg>`;
   }
+
+  function buildHeader(){
+    const headRow = document.getElementById('headRow');
+    let h = '<th class="name">игрок</th><th>ранг</th>';
+    hours.forEach(hh=>{
+      h += `<th>${toKyiv(hh)}</th>`;
+    });
+    h += `<th>тренд</th><th>Σ ${currentMetric==='score'?'score':'rune'} Δ</th>`;
+    headRow.innerHTML = h;
+  }
+  buildHeader();
+
+  function renderTags(){
+    const el = document.getElementById('watchTags');
+    if(watchlist.length===0){
+      el.innerHTML = '<span class="empty-watchlist">никого не отслеживаешь</span>';
+      return;
+    }
+    el.innerHTML = watchlist.map(name=>
+      `<span class="watch-tag">${name}<button data-name="${name}">×</button></span>`
+    ).join('');
+    el.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        watchlist = watchlist.filter(n=>n!==btn.dataset.name);
+        setWatchlist(watchlist);
+        renderTags();
+        draw();
+      });
+    });
+  }
+
+  document.getElementById('watchInput').addEventListener('keydown', e=>{
+    if(e.key !== 'Enter') return;
+    const val = e.target.value.trim();
+    if(!val) return;
+    if(!players.includes(val)){
+      alert('Игрок не найден за выбранный период: ' + val);
+      return;
+    }
+    if(!watchlist.includes(val)){
+      watchlist.push(val);
+      setWatchlist(watchlist);
+      renderTags();
+      draw();
+    }
+    e.target.value = '';
+  });
+
+  const WATCH_ONLY_KEY = 'roe_watch_only';
+  const watchOnlyEl = document.getElementById('watchOnly');
+  watchOnlyEl.checked = localStorage.getItem(WATCH_ONLY_KEY) === '1';
+  watchOnlyEl.addEventListener('change', ()=>{
+    localStorage.setItem(WATCH_ONLY_KEY, watchOnlyEl.checked ? '1' : '0');
+    draw();
+  });
+
+  renderTags();
 
   let watchChartInstance = null;
   let currentMetric = localStorage.getItem('roe_metric') || 'score';
