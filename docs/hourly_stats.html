@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Embervault — почасовая статистика (24ч)</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <style>
   :root{
     --bg:#0b0e0d;
@@ -77,6 +78,37 @@
   .watch-tag button:hover{ color:var(--hot); }
   label.watch-only{ display:flex; align-items:center; gap:6px; color:var(--dim); font-size:12px; cursor:pointer; }
   .empty-watchlist{ color:var(--dim); font-size:12px; }
+
+  .top-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+  .top-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px;
+  }
+  .top-card .label{ color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+  .top-card .name{ font-size:15px; font-weight:700; margin-bottom:2px; }
+  .top-card .value{ font-size:13px; }
+  .top-card.rune .value{ color:var(--hot); }
+  .top-card.score .value{ color:var(--accent); }
+  .top-card.spike .value{ color:#ffb14e; }
+
+  .watch-chart-wrap{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:16px; margin-bottom:20px; display:none;
+  }
+  .watch-chart-wrap.visible{ display:block; }
+  .watch-chart-title{ color:var(--dim); font-size:12px; margin-bottom:10px; }
+  .chart-toggle{ display:flex; gap:8px; margin-bottom:10px; }
+  .chart-toggle button{
+    background:var(--bg); border:1px solid var(--line); color:var(--dim);
+    padding:4px 10px; border-radius:4px; font-size:11px; cursor:pointer; font-family:inherit;
+  }
+  .chart-toggle button.active{ color:var(--accent); border-color:var(--accent); }
+
+  .sparkline{ vertical-align:middle; }
+  td.rank-cell{ font-size:11px; }
+  .rank-up{ color:var(--accent); }
+  .rank-down{ color:var(--hot); }
+  .rank-same{ color:var(--dim); }
 </style>
 </head>
 <body>
@@ -91,6 +123,17 @@
 
 <h1>ROOTS OF EMBERVAULT — почасовая статистика</h1>
 <div class="sub">С 00:00 UTC текущих суток · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
+
+<div class="top-cards" id="topCards"></div>
+
+<div class="watch-chart-wrap" id="watchChartWrap">
+  <div class="watch-chart-title">Отслеживаемые игроки — динамика по часам</div>
+  <div class="chart-toggle">
+    <button data-metric="score" class="active">Score</button>
+    <button data-metric="runeCount">Rune Count</button>
+  </div>
+  <canvas id="watchChart" height="80"></canvas>
+</div>
 
 <div class="watchlist">
   <input type="text" id="watchInput" placeholder="добавить игрока в отслеживание…" list="playerList" autocomplete="off">
@@ -144,7 +187,7 @@ async function main(){
     const snap = await fetchHourSnapshot(h);
     data[h] = {};
     for(const [name, p] of Object.entries(snap.players)){
-      data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline };
+      data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline, rank: p.rank };
     }
   }));
 
@@ -229,19 +272,28 @@ function render(hours, players, data){
   }
 
   const headRow = document.getElementById('headRow');
-  let h = '<th class="name">игрок</th>';
+  let h = '<th class="name">игрок</th><th>ранг</th>';
   hours.forEach(hh=>{
     h += `<th>${toKyiv(hh)}<span class="metric-label">score / rune Δ</span></th>`;
   });
-  h += '<th>Σ score Δ</th><th>Σ rune Δ</th>';
+  h += '<th>тренд</th><th>Σ score Δ</th><th>Σ rune Δ</th>';
   headRow.innerHTML = h;
 
   const rows = players.map(name=>{
     const cells = [];
+    const scoreSeries = [];
+    const runeSeries = [];
     let totalScoreDelta = 0, totalRuneDelta = 0, maxHourlyRune = 0, lastOnline = false, prev = null;
+    let firstRank = null, lastRank = null;
     hours.forEach(hh=>{
       const cur = data[hh][name];
-      if(cur) lastOnline = cur.isOnline;
+      if(cur){
+        lastOnline = cur.isOnline;
+        lastRank = cur.rank;
+        if(firstRank === null) firstRank = cur.rank;
+        scoreSeries.push(cur.score);
+        runeSeries.push(cur.runeCount);
+      }
       if(prev && cur){
         const ds = cur.score - prev.score;
         const dr = cur.runeCount - prev.runeCount;
@@ -253,7 +305,8 @@ function render(hours, players, data){
       }
       if(cur) prev = cur;
     });
-    return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, lastOnline};
+    const rankChange = (firstRank!==null && lastRank!==null) ? firstRank - lastRank : 0; // positive = rank improved (moved up)
+    return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, lastOnline, scoreSeries, runeSeries, lastRank, rankChange};
   });
 
   function fmt(n){
@@ -262,6 +315,102 @@ function render(hours, players, data){
     const cls = n > 5000 ? 'delta-hot' : 'delta-pos';
     return `<span class="${cls}">${n>0?'+':''}${n.toLocaleString('ru')}</span>`;
   }
+
+  function sparkline(series, color){
+    if(series.length < 2) return '';
+    const w = 90, ht = 24, pad = 2;
+    const min = Math.min(...series), max = Math.max(...series);
+    const range = (max - min) || 1;
+    const step = (w - pad*2) / (series.length - 1);
+    const points = series.map((v,i)=>{
+      const x = pad + i*step;
+      const y = ht - pad - ((v - min) / range) * (ht - pad*2);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    return `<svg class="sparkline" width="${w}" height="${ht}" viewBox="0 0 ${w} ${ht}">
+      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5"/>
+    </svg>`;
+  }
+
+  let watchChartInstance = null;
+  let currentMetric = 'score';
+
+  function renderTopCards(){
+    const withData = rows.filter(r=>r.cells.some(c=>c.present));
+    if(withData.length===0){ document.getElementById('topCards').innerHTML=''; return; }
+
+    const topScore = [...withData].sort((a,b)=>b.totalScoreDelta-a.totalScoreDelta)[0];
+    const topRune = [...withData].sort((a,b)=>b.totalRuneDelta-a.totalRuneDelta)[0];
+    const topSpike = [...withData].sort((a,b)=>b.maxHourlyRune-a.maxHourlyRune)[0];
+
+    document.getElementById('topCards').innerHTML = `
+      <div class="top-card score">
+        <div class="label">Лидер роста Score (сегодня)</div>
+        <div class="name">${topScore.name}</div>
+        <div class="value">+${topScore.totalScoreDelta.toLocaleString('ru')}</div>
+      </div>
+      <div class="top-card rune">
+        <div class="label">Лидер фарма Rune (сегодня)</div>
+        <div class="name">${topRune.name}</div>
+        <div class="value">+${topRune.totalRuneDelta.toLocaleString('ru')}</div>
+      </div>
+      <div class="top-card spike">
+        <div class="label">Самый резкий скачок за 1 час</div>
+        <div class="name">${topSpike.name}</div>
+        <div class="value">+${topSpike.maxHourlyRune.toLocaleString('ru')} rune/ч</div>
+      </div>
+    `;
+  }
+
+  function renderWatchChart(){
+    const wrap = document.getElementById('watchChartWrap');
+    if(watchlist.length===0){
+      wrap.classList.remove('visible');
+      return;
+    }
+    wrap.classList.add('visible');
+
+    const labels = hours.map(toKyiv);
+    const colors = ['#5ee6a0','#ff6b5e','#ffb14e','#5ea0ff','#c25eff','#5edee6'];
+    const datasets = watchlist.map((name, i)=>{
+      const row = rows.find(r=>r.name===name);
+      const series = currentMetric === 'score' ? (row?.scoreSeries||[]) : (row?.runeSeries||[]);
+      return {
+        label: name,
+        data: series,
+        borderColor: colors[i % colors.length],
+        backgroundColor: 'transparent',
+        tension: 0.25,
+        pointRadius: 2,
+      };
+    });
+
+    if(watchChartInstance) watchChartInstance.destroy();
+    watchChartInstance = new Chart(document.getElementById('watchChart'), {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: '#d7e0d9', font: { family: 'monospace', size: 11 } } }
+        },
+        scales: {
+          x: { ticks: { color: '#6f7d74', font: { size: 10 } }, grid: { color: '#212823' } },
+          y: { ticks: { color: '#6f7d74', font: { size: 10 } }, grid: { color: '#212823' } }
+        }
+      }
+    });
+  }
+
+  document.querySelectorAll('.chart-toggle button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.chart-toggle button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMetric = btn.dataset.metric;
+      renderWatchChart();
+    });
+  });
 
   function draw(){
     const filter = document.getElementById('filter').value.toLowerCase();
@@ -275,19 +424,26 @@ function render(hours, players, data){
     document.getElementById('body').innerHTML = list.map(r=>{
       const watched = watchlist.includes(r.name);
       let row = `<td class="name"${watched?' style="color:var(--hot)"':''}>${watched?'★ ':''}${r.name} <span class="${r.lastOnline?'online':'offline'}">●</span></td>`;
+      const rankCls = r.rankChange > 0 ? 'rank-up' : (r.rankChange < 0 ? 'rank-down' : 'rank-same');
+      const rankArrow = r.rankChange > 0 ? '↑' : (r.rankChange < 0 ? '↓' : '·');
+      row += `<td class="rank-cell">#${r.lastRank ?? '—'} <span class="${rankCls}">${rankArrow}${r.rankChange!==0?Math.abs(r.rankChange):''}</span></td>`;
       r.cells.forEach(c=>{
         row += c.present ? `<td>${fmt(c.ds)}<br>${fmt(c.dr)}</td>` : '<td>—</td>';
       });
+      row += `<td>${sparkline(r.scoreSeries, 'var(--accent)')}</td>`;
       row += `<td><b>${fmt(r.totalScoreDelta)}</b></td><td><b>${fmt(r.totalRuneDelta)}</b></td>`;
       return `<tr>${row}</tr>`;
     }).join('');
 
     document.getElementById('summary').textContent =
       `Показано ${list.length} из ${rows.length} игроков · период (Киев): ${toKyiv(hours[0])} → ${toKyiv(hours[hours.length-1])}`;
+
+    renderWatchChart();
   }
 
   document.getElementById('filter').addEventListener('input', draw);
   document.getElementById('sortBy').addEventListener('change', draw);
+  renderTopCards();
   draw();
 }
 
