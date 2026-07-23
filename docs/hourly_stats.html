@@ -58,6 +58,8 @@
   .offline{ color:var(--dim); font-size:9px; }
   #summary{ margin-top:10px; color:var(--dim); font-size:11px; }
   #loading{ color:var(--dim); padding:20px 0; }
+  #debugLog{ color:#ffb14e; background:#1a1410; border:1px solid #3a2a10; border-radius:6px; padding:8px 10px; margin-bottom:12px; font-size:11px; white-space:pre-wrap; display:none; }
+  #debugLog.visible{ display:block; }
 
   header{
     border-bottom:1px solid var(--line); padding:10px 20px;
@@ -156,6 +158,7 @@
   </select>
 </div>
 
+<div id="debugLog"></div>
 <div id="loading">Загрузка часовых снапшотов…</div>
 
 <div class="tablewrap" style="display:none" id="wrap">
@@ -170,23 +173,47 @@
 <script>
 const HOURLY_DIR = 'hourly'; // relative to this file, matches docs/hourly/
 
+const debugLines = [];
+function dlog(msg){
+  debugLines.push(`[${new Date().toISOString().slice(11,19)}] ${msg}`);
+  const el = document.getElementById('debugLog');
+  el.textContent = debugLines.join('\n');
+  el.classList.add('visible');
+  console.log('[hourly-debug]', msg);
+}
+
 async function fetchHourSnapshot(hourKey){
-  const res = await fetch(`${HOURLY_DIR}/${hourKey}.json.gz`);
-  if(!res.ok) throw new Error(`missing ${hourKey}`);
+  const url = `${HOURLY_DIR}/${hourKey}.json.gz`;
+  const res = await fetch(url);
+  dlog(`fetch ${url} -> ${res.status} ${res.ok ? 'OK' : 'FAIL'}`);
+  if(!res.ok) throw new Error(`missing ${hourKey} (HTTP ${res.status})`);
   const buf = await res.arrayBuffer();
+  if(typeof pako === 'undefined') throw new Error('pako library not loaded (CDN blocked?)');
   const text = pako.inflate(new Uint8Array(buf), { to: 'string' });
   return JSON.parse(text);
 }
 
 async function main(){
-  const indexRes = await fetch(`${HOURLY_DIR}/index.json`);
+  dlog(`window.location.href = ${window.location.href}`);
+  dlog(`pako defined: ${typeof pako !== 'undefined'}, Chart defined: ${typeof Chart !== 'undefined'}`);
+
+  const indexUrl = `${HOURLY_DIR}/index.json`;
+  const indexRes = await fetch(indexUrl);
+  dlog(`fetch ${indexUrl} -> ${indexRes.status} ${indexRes.ok ? 'OK' : 'FAIL'}`);
+  if(!indexRes.ok) throw new Error(`failed to load index.json (HTTP ${indexRes.status})`);
   const allHours = await indexRes.json();
+  dlog(`allHours.length = ${allHours.length}, last 3 = ${JSON.stringify(allHours.slice(-3))}`);
+
   const todayUTC = new Date().toISOString().slice(0, 10); // "2026-07-22"
+  dlog(`todayUTC (browser) = ${todayUTC}`);
   let hours = allHours.filter(h => h.slice(0, 10) === todayUTC);
+  dlog(`hours matching todayUTC = ${hours.length}`);
   if(hours.length === 0){
     // fallback: today's data not published yet — show last 24 available hours instead
     hours = allHours.slice(-24);
+    dlog(`fallback: using last 24 available hours instead`);
   }
+  dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
   const data = {};
   await Promise.all(hours.map(async h=>{
@@ -196,9 +223,12 @@ async function main(){
       data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline, rank: p.rank };
     }
   }));
+  dlog(`all hour snapshots loaded OK`);
 
   const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
+  dlog(`players.length = ${players.length}`);
   render(hours, players, data);
+  dlog(`render() completed`);
 }
 
 const WATCH_KEY = 'roe_watchlist';
@@ -464,7 +494,9 @@ function render(hours, players, data){
 }
 
 main().catch(e=>{
-  document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message;
+  dlog(`ERROR: ${e.message}`);
+  dlog(`STACK: ${e.stack || '(no stack)'}`);
+  document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message + ' (см. дебаг-лог выше)';
 });
 </script>
 
