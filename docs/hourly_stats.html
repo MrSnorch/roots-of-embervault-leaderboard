@@ -21,91 +21,94 @@
     color:var(--text);
     font-family:"SF Mono","JetBrains Mono",Consolas,monospace;
     margin:0;
-    padding:24px;
-    font-size:13px;
+    padding:16px 20px;
+    font-size:12.5px;
   }
-  h1{ font-size:16px; letter-spacing:.5px; margin:0 0 4px; color:var(--accent); }
-  .sub{ color:var(--dim); margin-bottom:18px; }
-  .controls{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  h1{ display:none; }
+  .sub{ color:var(--dim); margin-bottom:12px; font-size:11px; }
+  .panel{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:8px 10px; margin-bottom:12px;
+  }
+  .panel .sep{ width:1px; height:20px; background:var(--line); margin:0 2px; }
   input[type=text], select{
-    background:var(--panel); border:1px solid var(--line); color:var(--text);
-    padding:6px 10px; border-radius:4px; font-family:inherit; font-size:13px;
+    background:var(--bg); border:1px solid var(--line); color:var(--text);
+    padding:5px 8px; border-radius:4px; font-family:inherit; font-size:12px;
   }
-  input[type=text]{ width:220px; }
+  input[type=text]{ width:170px; }
+  .metric-toggle{ display:flex; gap:2px; background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:2px; }
+  .metric-toggle button{
+    background:none; border:none; color:var(--dim); padding:4px 10px;
+    border-radius:3px; font-size:11px; cursor:pointer; font-family:inherit;
+  }
+  .metric-toggle button.active{ background:var(--line); color:var(--text); }
   .tablewrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; }
-  table{ border-collapse:collapse; width:100%; min-width:1400px; }
-  th,td{ padding:5px 8px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
-  th{ position:sticky; top:0; background:var(--panel); color:var(--dim); font-weight:normal; font-size:11px; z-index:2; }
-  td.name, th.name{ text-align:left; position:sticky; left:0; background:var(--bg); z-index:1; min-width:150px; font-weight:600; }
+  table{ border-collapse:collapse; width:100%; }
+  th,td{ padding:4px 7px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  th{ position:sticky; top:0; background:var(--panel); color:var(--dim); font-weight:normal; font-size:10.5px; z-index:2; }
+  td.name, th.name{ text-align:left; position:sticky; left:0; background:var(--bg); z-index:1; min-width:130px; font-weight:600; }
   th.name{ background:var(--panel); z-index:3; }
   tr:hover td{ background:#171d19; }
   tr:hover td.name{ background:#171d19; }
   .delta-pos{ color:var(--accent); }
   .delta-hot{ color:var(--hot); font-weight:700; }
   .delta-zero{ color:var(--dim); }
-  .online{ color:var(--accent); }
-  .offline{ color:var(--dim); }
-  .metric-label{ color:var(--dim); font-size:10px; display:block; }
-  #summary{ margin-top:16px; color:var(--dim); font-size:12px; }
+  .online{ color:var(--accent); font-size:9px; }
+  .offline{ color:var(--dim); font-size:9px; }
+  #summary{ margin-top:10px; color:var(--dim); font-size:11px; }
   #loading{ color:var(--dim); padding:20px 0; }
 
   header{
-    border-bottom:1px solid var(--line); padding:16px 24px;
+    border-bottom:1px solid var(--line); padding:10px 20px;
     display:flex; align-items:center; gap:16px; background:var(--panel);
-    margin:-24px -24px 24px; position:sticky; top:0; z-index:10;
+    margin:-16px -20px 12px; position:sticky; top:0; z-index:10;
   }
-  .logo{ font-family:inherit; font-size:18px; font-weight:700; color:var(--accent); letter-spacing:-.5px; }
+  .logo{ font-family:inherit; font-size:16px; font-weight:700; color:var(--accent); letter-spacing:-.5px; }
   .logo span{ color:#a259ff; }
   .tabs{ display:flex; gap:4px; }
   .tab{
-    font-size:12px; color:var(--dim); text-decoration:none;
-    padding:6px 12px; border-radius:6px; border:1px solid transparent;
+    font-size:11.5px; color:var(--dim); text-decoration:none;
+    padding:5px 10px; border-radius:6px; border:1px solid transparent;
   }
   .tab:hover{ color:var(--text); border-color:var(--line); }
   .tab.active{ color:var(--text); background:var(--bg); border-color:var(--line); }
 
-  .watchlist{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
-  .watch-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .watch-tags{ display:flex; gap:5px; flex-wrap:wrap; align-items:center; }
   .watch-tag{
-    display:flex; align-items:center; gap:6px;
-    background:var(--panel); border:1px solid var(--accent);
-    color:var(--accent); padding:4px 8px 4px 10px; border-radius:14px; font-size:12px;
+    display:flex; align-items:center; gap:5px;
+    background:var(--bg); border:1px solid var(--accent);
+    color:var(--accent); padding:3px 6px 3px 9px; border-radius:12px; font-size:11px;
   }
   .watch-tag button{
     background:none; border:none; color:var(--accent); cursor:pointer;
-    font-size:14px; line-height:1; padding:0; font-family:inherit;
+    font-size:13px; line-height:1; padding:0; font-family:inherit;
   }
   .watch-tag button:hover{ color:var(--hot); }
-  label.watch-only{ display:flex; align-items:center; gap:6px; color:var(--dim); font-size:12px; cursor:pointer; }
-  .empty-watchlist{ color:var(--dim); font-size:12px; }
+  label.watch-only{ display:flex; align-items:center; gap:5px; color:var(--dim); font-size:11px; cursor:pointer; white-space:nowrap; }
+  .empty-watchlist{ color:var(--dim); font-size:11px; }
 
-  .top-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+  .top-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
   .top-card{
-    background:var(--panel); border:1px solid var(--line); border-radius:8px;
-    padding:14px 16px;
+    background:var(--panel); border:1px solid var(--line); border-radius:6px;
+    padding:8px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px;
   }
-  .top-card .label{ color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
-  .top-card .name{ font-size:15px; font-weight:700; margin-bottom:2px; }
-  .top-card .value{ font-size:13px; }
+  .top-card .label{ color:var(--dim); font-size:10px; text-transform:uppercase; letter-spacing:.4px; }
+  .top-card .name{ font-size:13px; font-weight:700; }
+  .top-card .value{ font-size:12px; white-space:nowrap; }
   .top-card.rune .value{ color:var(--hot); }
   .top-card.score .value{ color:var(--accent); }
   .top-card.spike .value{ color:#ffb14e; }
 
   .watch-chart-wrap{
     background:var(--panel); border:1px solid var(--line); border-radius:8px;
-    padding:16px; margin-bottom:20px; display:none;
+    padding:12px; margin-bottom:12px; display:none;
   }
   .watch-chart-wrap.visible{ display:block; }
-  .watch-chart-title{ color:var(--dim); font-size:12px; margin-bottom:10px; }
-  .chart-toggle{ display:flex; gap:8px; margin-bottom:10px; }
-  .chart-toggle button{
-    background:var(--bg); border:1px solid var(--line); color:var(--dim);
-    padding:4px 10px; border-radius:4px; font-size:11px; cursor:pointer; font-family:inherit;
-  }
-  .chart-toggle button.active{ color:var(--accent); border-color:var(--accent); }
+  .watch-chart-title{ color:var(--dim); font-size:11px; margin-bottom:8px; }
 
   .sparkline{ vertical-align:middle; }
-  td.rank-cell{ font-size:11px; }
+  td.rank-cell{ font-size:10.5px; }
   .rank-up{ color:var(--accent); }
   .rank-down{ color:var(--hot); }
   .rank-same{ color:var(--dim); }
@@ -122,35 +125,34 @@
 </header>
 
 <h1>ROOTS OF EMBERVAULT — почасовая статистика</h1>
-<div class="sub">С 00:00 UTC текущих суток · рост score и runeCount по каждому игроку · читается напрямую из docs/hourly/</div>
+<div class="sub">С 00:00 UTC текущих суток (время в таблице — Киев) · читается напрямую из docs/hourly/</div>
 
 <div class="top-cards" id="topCards"></div>
 
 <div class="watch-chart-wrap" id="watchChartWrap">
-  <div class="watch-chart-title">Отслеживаемые игроки — динамика по часам</div>
-  <div class="chart-toggle">
-    <button data-metric="score" class="active">Score</button>
-    <button data-metric="runeCount">Rune Count</button>
-  </div>
-  <canvas id="watchChart" height="80"></canvas>
+  <div class="watch-chart-title">Отслеживаемые — динамика по часам</div>
+  <canvas id="watchChart" height="70"></canvas>
 </div>
 
-<div class="watchlist">
-  <input type="text" id="watchInput" placeholder="добавить игрока в отслеживание…" list="playerList" autocomplete="off">
+<div class="panel">
+  <div class="metric-toggle" id="metricToggle">
+    <button data-metric="score" class="active">Score</button>
+    <button data-metric="rune">Rune</button>
+  </div>
+  <div class="sep"></div>
+  <input type="text" id="watchInput" placeholder="+ добавить в отслеживание" list="playerList" autocomplete="off">
   <datalist id="playerList"></datalist>
   <div class="watch-tags" id="watchTags"></div>
   <label class="watch-only">
-    <input type="checkbox" id="watchOnly"> только отслеживаемые
+    <input type="checkbox" id="watchOnly"> только они
   </label>
-</div>
-
-<div class="controls">
-  <input type="text" id="filter" placeholder="фильтр по нику…">
+  <div class="sep"></div>
+  <input type="text" id="filter" placeholder="поиск по нику…">
   <select id="sortBy">
-    <option value="totalScoreDelta">Сорт.: рост score (24ч)</option>
-    <option value="totalRuneDelta">Сорт.: рост runeCount (24ч)</option>
-    <option value="maxHourlyRune">Сорт.: макс. фарм за 1ч (rune)</option>
-    <option value="name">Сорт.: ник</option>
+    <option value="totalScoreDelta">рост score</option>
+    <option value="totalRuneDelta">рост rune</option>
+    <option value="maxHourlyRune">макс. скачок/ч</option>
+    <option value="name">по нику</option>
   </select>
 </div>
 
@@ -271,13 +273,16 @@ function render(hours, players, data){
     return kyivFmt.format(d); // "22.07, 15:00"
   }
 
-  const headRow = document.getElementById('headRow');
-  let h = '<th class="name">игрок</th><th>ранг</th>';
-  hours.forEach(hh=>{
-    h += `<th>${toKyiv(hh)}<span class="metric-label">score / rune Δ</span></th>`;
-  });
-  h += '<th>тренд</th><th>Σ score Δ</th><th>Σ rune Δ</th>';
-  headRow.innerHTML = h;
+  function buildHeader(){
+    const headRow = document.getElementById('headRow');
+    let h = '<th class="name">игрок</th><th>ранг</th>';
+    hours.forEach(hh=>{
+      h += `<th>${toKyiv(hh)}</th>`;
+    });
+    h += `<th>тренд</th><th>Σ ${currentMetric==='score'?'score':'rune'} Δ</th>`;
+    headRow.innerHTML = h;
+  }
+  buildHeader();
 
   const rows = players.map(name=>{
     const cells = [];
@@ -333,7 +338,20 @@ function render(hours, players, data){
   }
 
   let watchChartInstance = null;
-  let currentMetric = 'score';
+  let currentMetric = localStorage.getItem('roe_metric') || 'score';
+
+  document.querySelectorAll('#metricToggle button').forEach(btn=>{
+    if(btn.dataset.metric === currentMetric) btn.classList.add('active');
+    else btn.classList.remove('active');
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#metricToggle button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMetric = btn.dataset.metric;
+      localStorage.setItem('roe_metric', currentMetric);
+      buildHeader();
+      draw();
+    });
+  });
 
   function renderTopCards(){
     const withData = rows.filter(r=>r.cells.some(c=>c.present));
@@ -403,15 +421,6 @@ function render(hours, players, data){
     });
   }
 
-  document.querySelectorAll('.chart-toggle button').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.chart-toggle button').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      currentMetric = btn.dataset.metric;
-      renderWatchChart();
-    });
-  });
-
   function draw(){
     const filter = document.getElementById('filter').value.toLowerCase();
     const sortBy = document.getElementById('sortBy').value;
@@ -428,10 +437,13 @@ function render(hours, players, data){
       const rankArrow = r.rankChange > 0 ? '↑' : (r.rankChange < 0 ? '↓' : '·');
       row += `<td class="rank-cell">#${r.lastRank ?? '—'} <span class="${rankCls}">${rankArrow}${r.rankChange!==0?Math.abs(r.rankChange):''}</span></td>`;
       r.cells.forEach(c=>{
-        row += c.present ? `<td>${fmt(c.ds)}<br>${fmt(c.dr)}</td>` : '<td>—</td>';
+        const v = c.present ? (currentMetric==='score' ? c.ds : c.dr) : null;
+        row += `<td>${fmt(v)}</td>`;
       });
-      row += `<td>${sparkline(r.scoreSeries, 'var(--accent)')}</td>`;
-      row += `<td><b>${fmt(r.totalScoreDelta)}</b></td><td><b>${fmt(r.totalRuneDelta)}</b></td>`;
+      const series = currentMetric === 'score' ? r.scoreSeries : r.runeSeries;
+      row += `<td>${sparkline(series, currentMetric==='score' ? 'var(--accent)' : 'var(--hot)')}</td>`;
+      const total = currentMetric === 'score' ? r.totalScoreDelta : r.totalRuneDelta;
+      row += `<td><b>${fmt(total)}</b></td>`;
       return `<tr>${row}</tr>`;
     }).join('');
 
