@@ -65,7 +65,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-23T01:16:34.056+00:00"
+      "lastActive": "2026-07-23T02:42:18.429+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -115,7 +115,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-07-23T01:12:59.259+00:00"
+      "lastActive": "2026-07-23T02:41:41.497+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -270,17 +270,17 @@
     "won": {
       "wallet": "0xcdbb4106bd3a2949b718a1686f1009294e1955b4",
       "activeSince": "2026-02-08T03:29:10.161+00:00",
-      "lastActive": "2026-07-23T00:58:09.743+00:00"
+      "lastActive": "2026-07-23T02:41:41.496+00:00"
     },
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
       "activeSince": "2026-01-30T04:45:23.449+00:00",
-      "lastActive": "2026-07-22T16:50:56.987+00:00"
+      "lastActive": "2026-07-23T02:03:47.165+00:00"
     },
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
       "activeSince": "2026-02-13T17:20:33.779+00:00",
-      "lastActive": "2026-07-22T00:36:18.093+00:00"
+      "lastActive": "2026-07-23T02:49:22.356+00:00"
     },
     "hollywood": {
       "wallet": "0x53535a52b08919a053603d645c8bc736a9b1fef7",
@@ -780,7 +780,7 @@
     "ryuseok": {
       "wallet": "0x79bbf3d3137fb6e1834bf5e5e8309f76d87955d0",
       "activeSince": "2026-02-09T15:17:59.428+00:00",
-      "lastActive": "2026-07-21T23:14:03.797+00:00"
+      "lastActive": "2026-07-23T02:06:24.937+00:00"
     },
     "tonton": {
       "wallet": "0x3f303a4bd5b586493eda4c3d03925b64fb4515a9",
