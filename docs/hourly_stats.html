@@ -89,7 +89,7 @@
   label.watch-only{ display:flex; align-items:center; gap:5px; color:var(--dim); font-size:11px; cursor:pointer; white-space:nowrap; }
   .empty-watchlist{ color:var(--dim); font-size:11px; }
 
-  .top-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
+  .top-cards{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
   .top-card{
     background:var(--panel); border:1px solid var(--line); border-radius:6px;
     padding:8px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px;
@@ -100,6 +100,7 @@
   .top-card.rune .value{ color:var(--hot); }
   .top-card.score .value{ color:var(--accent); }
   .top-card.spike .value{ color:#ffb14e; }
+  .top-card.avg .value{ color:#5ea0ff; }
 
   .sparkline{ vertical-align:middle; }
   td.rank-cell{ font-size:10.5px; }
@@ -140,6 +141,7 @@
   <select id="sortBy">
     <option value="totalScoreDelta">рост score</option>
     <option value="totalRuneDelta">рост rune</option>
+    <option value="avgHourlyRune">ср. rune/ч</option>
     <option value="maxHourlyRune">макс. скачок/ч</option>
     <option value="name">по нику</option>
   </select>
@@ -253,7 +255,7 @@ function render(hours, players, data){
     const scoreSeries = [];
     const runeSeries = [];
     let totalScoreDelta = 0, totalRuneDelta = 0, maxHourlyRune = 0, lastOnline = false, prev = null;
-    let firstRank = null, lastRank = null;
+    let firstRank = null, lastRank = null, deltaHourCount = 0;
     hours.forEach(hh=>{
       const cur = data[hh][name];
       if(cur){
@@ -267,6 +269,7 @@ function render(hours, players, data){
         const ds = cur.score - prev.score;
         const dr = cur.runeCount - prev.runeCount;
         totalScoreDelta += ds; totalRuneDelta += dr;
+        deltaHourCount++;
         if(dr > maxHourlyRune) maxHourlyRune = dr;
         cells.push({ds, dr, present:true});
       } else {
@@ -275,7 +278,8 @@ function render(hours, players, data){
       if(cur) prev = cur;
     });
     const rankChange = (firstRank!==null && lastRank!==null) ? firstRank - lastRank : 0; // positive = rank improved (moved up)
-    return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, lastOnline, scoreSeries, runeSeries, lastRank, rankChange};
+    const avgHourlyRune = deltaHourCount > 0 ? totalRuneDelta / deltaHourCount : 0;
+    return {name, cells, totalScoreDelta, totalRuneDelta, maxHourlyRune, avgHourlyRune, lastOnline, scoreSeries, runeSeries, lastRank, rankChange};
   });
 
   function fmt(n){
@@ -309,7 +313,7 @@ function render(hours, players, data){
     hours.forEach(hh=>{
       h += `<th>${toKyiv(hh)}</th>`;
     });
-    h += `<th>тренд</th><th>Σ ${currentMetric==='score'?'score':'rune'} Δ</th>`;
+    h += `<th>тренд</th><th>Σ ${currentMetric==='score'?'score':'rune'} Δ</th><th>ср. rune/ч</th>`;
     headRow.innerHTML = h;
   }
   buildHeader();
@@ -380,6 +384,7 @@ function render(hours, players, data){
     const topScore = [...withData].sort((a,b)=>b.totalScoreDelta-a.totalScoreDelta)[0];
     const topRune = [...withData].sort((a,b)=>b.totalRuneDelta-a.totalRuneDelta)[0];
     const topSpike = [...withData].sort((a,b)=>b.maxHourlyRune-a.maxHourlyRune)[0];
+    const topAvg = [...withData].sort((a,b)=>b.avgHourlyRune-a.avgHourlyRune)[0];
 
     document.getElementById('topCards').innerHTML = `
       <div class="top-card score">
@@ -396,6 +401,11 @@ function render(hours, players, data){
         <div class="label">Самый резкий скачок за 1 час</div>
         <div class="name">${topSpike.name}</div>
         <div class="value">+${topSpike.maxHourlyRune.toLocaleString('ru')} rune/ч</div>
+      </div>
+      <div class="top-card avg">
+        <div class="label">Лучший средний фарм rune/ч</div>
+        <div class="name">${topAvg.name}</div>
+        <div class="value">${Math.round(topAvg.avgHourlyRune).toLocaleString('ru')} rune/ч</div>
       </div>
     `;
   }
@@ -423,6 +433,7 @@ function render(hours, players, data){
       row += `<td>${sparkline(series, currentMetric==='score' ? 'var(--accent)' : 'var(--hot)')}</td>`;
       const total = currentMetric === 'score' ? r.totalScoreDelta : r.totalRuneDelta;
       row += `<td><b>${fmt(total)}</b></td>`;
+      row += `<td>${r.avgHourlyRune > 0 ? Math.round(r.avgHourlyRune).toLocaleString('ru') : '<span class="delta-zero">—</span>'}</td>`;
       return `<tr>${row}</tr>`;
     }).join('');
 
