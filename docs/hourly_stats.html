@@ -51,6 +51,7 @@
   tr:hover td{ background:#171d19; }
   tr:hover td.name{ background:#171d19; }
   .delta-pos{ color:var(--accent); }
+  .delta-neg{ color:var(--hot); font-weight:700; }
   .delta-hot{ color:var(--hot); font-weight:700; }
   .delta-zero{ color:var(--dim); }
   .online{ color:var(--accent); font-size:9px; }
@@ -285,7 +286,7 @@ function render(hours, players, data){
   function fmt(n){
     if(n===null) return '<span class="delta-zero">—</span>';
     if(n===0) return '<span class="delta-zero">0</span>';
-    const cls = n > 5000 ? 'delta-hot' : 'delta-pos';
+    const cls = n < 0 ? 'delta-neg' : 'delta-pos';
     return `<span class="${cls}">${n>0?'+':''}${n.toLocaleString('ru')}</span>`;
   }
 
