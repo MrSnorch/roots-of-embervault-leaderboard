@@ -77,7 +77,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-30T12:55:17.496+00:00"
+      "lastActive": "2026-07-30T14:20:48.416+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -237,7 +237,7 @@
     "naegildong": {
       "wallet": "0x8f4f17682022bb7a578235e3aeb948c185146f6b",
       "activeSince": "2026-02-01T17:05:23.012+00:00",
-      "lastActive": "2026-07-29T14:39:13.322+00:00"
+      "lastActive": "2026-07-30T14:09:51.601+00:00"
     },
     "easyeth": {
       "wallet": "0xbb0207b6e38fba0dd479b8a42ebd260e1f57ab1e",
@@ -552,7 +552,7 @@
     "drynuts": {
       "wallet": "0x135b235d2a3ef00e3fa9e6199a15e92f27cb03b0",
       "activeSince": "2026-02-02T12:53:42.517+00:00",
-      "lastActive": "2026-07-30T13:23:11.86+00:00"
+      "lastActive": "2026-07-30T14:02:32.885+00:00"
     },
     "eional": {
       "wallet": "0xe1abde4f95efbcea3bc2238b32b14bf9348ecbf7",
@@ -667,7 +667,7 @@
     "hoangry": {
       "wallet": "0x2c53d33fd90fc8d5fe5cac986db81ba7f3b9aae6",
       "activeSince": "2026-01-29T19:46:21.765+00:00",
-      "lastActive": "2026-07-30T14:00:50.757+00:00"
+      "lastActive": "2026-07-30T15:00:50.459+00:00"
     },
     "linusthz": {
       "wallet": "0x90b3fe485e73c3b6cd64bf2d62db86b424945ceb",
@@ -767,7 +767,7 @@
     "laibinh": {
       "wallet": "0xc6cc0cc5d3bde0d2f4461f3fd27e93073d9b02ca",
       "activeSince": "2026-02-02T11:37:06.596+00:00",
-      "lastActive": "2026-07-29T15:52:32.839+00:00"
+      "lastActive": "2026-07-30T14:41:04.311+00:00"
     },
     "denisstoo": {
       "wallet": "0x9ba63e8ba28489391e7e9ac4177762607ad14255",
@@ -1822,7 +1822,7 @@
     "erik": {
       "wallet": "0x2e66a12985a6807537fc645d887c8b219c6db3af",
       "activeSince": "2026-01-29T21:30:04.323+00:00",
-      "lastActive": "2026-07-30T14:00:53.408+00:00"
+      "lastActive": "2026-07-30T15:00:53.164+00:00"
     },
     "pengulover": {
       "wallet": "0x1dde9fe6c41506bb6c234c270f1544761b707239",
@@ -4017,7 +4017,7 @@
     "luca": {
       "wallet": "0x7c2125fc8442eea22a83db2cbdb33adb30325349",
       "activeSince": "2026-01-30T02:15:56.672+00:00",
-      "lastActive": "2026-07-29T22:11:59.976+00:00"
+      "lastActive": "2026-07-30T14:50:53.532+00:00"
     },
     "metayugi": {
       "wallet": "0xa91187927e42e2409f8c3d32f56c02d44b830c6a",
