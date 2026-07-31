@@ -73,12 +73,12 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-07-31T09:07:05.245+00:00"
+      "lastActive": "2026-07-31T10:11:56.442+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-31T08:48:00.834+00:00"
+      "lastActive": "2026-07-31T10:26:16.66+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -148,7 +148,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-07-30T20:11:09.018+00:00"
+      "lastActive": "2026-07-31T10:41:30.296+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -268,7 +268,7 @@
     "bosketica": {
       "wallet": "0x4586807056f2b26011eeefe96ea1e04b751ab603",
       "activeSince": "2026-02-05T10:25:45.046+00:00",
-      "lastActive": "2026-07-31T07:30:26.008+00:00"
+      "lastActive": "2026-07-31T10:20:25.407+00:00"
     },
     "gogoxing": {
       "wallet": "0x0c5c2e19c9971da6bf010c9c8a4f41d904669fd6",
@@ -668,7 +668,7 @@
     "hoangry": {
       "wallet": "0x2c53d33fd90fc8d5fe5cac986db81ba7f3b9aae6",
       "activeSince": "2026-01-29T19:46:21.765+00:00",
-      "lastActive": "2026-07-31T10:00:46.969+00:00"
+      "lastActive": "2026-07-31T11:00:47.175+00:00"
     },
     "linusthz": {
       "wallet": "0x90b3fe485e73c3b6cd64bf2d62db86b424945ceb",
@@ -1018,7 +1018,7 @@
     "franzkafka": {
       "wallet": "0x7f6e2f5e24f3eb7b2f12a46b7b2bbe871c3303c1",
       "activeSince": "2026-05-04T08:34:34.329442+00:00",
-      "lastActive": "2026-07-30T13:21:44.995+00:00"
+      "lastActive": "2026-07-31T10:32:14.719+00:00"
     },
     "nex'uus": {
       "wallet": "0xb5f28b5b14c0c3a3ffced8bbd1d52c0f083b477b",
@@ -1823,7 +1823,7 @@
     "erik": {
       "wallet": "0x2e66a12985a6807537fc645d887c8b219c6db3af",
       "activeSince": "2026-01-29T21:30:04.323+00:00",
-      "lastActive": "2026-07-31T10:00:49.675+00:00"
+      "lastActive": "2026-07-31T11:00:49.822+00:00"
     },
     "pengulover": {
       "wallet": "0x1dde9fe6c41506bb6c234c270f1544761b707239",
@@ -2078,7 +2078,7 @@
     "elusive": {
       "wallet": "0x3497346935464fd2e0f589145d62261a586e23fc",
       "activeSince": "2026-01-30T15:16:20.166+00:00",
-      "lastActive": "2026-07-30T10:49:45.396+00:00"
+      "lastActive": "2026-07-31T10:43:06.344+00:00"
     },
     "solanaeden": {
       "wallet": "0x0c0a71e32e1954635e2dde143ed9e59fe471fb94",
