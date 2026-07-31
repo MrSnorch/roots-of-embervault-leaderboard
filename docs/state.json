@@ -78,7 +78,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-07-31T13:47:30.312+00:00"
+      "lastActive": "2026-07-31T14:55:50.119+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -128,7 +128,7 @@
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
       "activeSince": "2026-01-29T22:59:03.159+00:00",
-      "lastActive": "2026-07-31T13:39:11.007+00:00"
+      "lastActive": "2026-07-31T14:39:45.493+00:00"
     },
     "chunibro": {
       "wallet": "0x8004d65ae1470ce83a432e5a5c67204ae03f12f7",
@@ -668,7 +668,7 @@
     "hoangry": {
       "wallet": "0x2c53d33fd90fc8d5fe5cac986db81ba7f3b9aae6",
       "activeSince": "2026-01-29T19:46:21.765+00:00",
-      "lastActive": "2026-07-31T14:00:47.097+00:00"
+      "lastActive": "2026-07-31T15:00:47.155+00:00"
     },
     "linusthz": {
       "wallet": "0x90b3fe485e73c3b6cd64bf2d62db86b424945ceb",
@@ -978,7 +978,7 @@
     "strepi": {
       "wallet": "0x812f46348241ce827de69edcf1fb5d398f343f56",
       "activeSince": "2026-01-30T09:53:47.981+00:00",
-      "lastActive": "2026-07-21T15:39:49.007+00:00"
+      "lastActive": "2026-07-31T14:57:36.405+00:00"
     },
     "kristovpaletadw": {
       "wallet": "0xe72563141568c4dc4d63122bd2ed2db8735ebf91",
@@ -1823,7 +1823,7 @@
     "erik": {
       "wallet": "0x2e66a12985a6807537fc645d887c8b219c6db3af",
       "activeSince": "2026-01-29T21:30:04.323+00:00",
-      "lastActive": "2026-07-31T14:00:49.741+00:00"
+      "lastActive": "2026-07-31T15:00:49.802+00:00"
     },
     "pengulover": {
       "wallet": "0x1dde9fe6c41506bb6c234c270f1544761b707239",
@@ -3008,7 +3008,7 @@
     "pass": {
       "wallet": "0x13d3ed54b5daf97b0f8ccae55cdcb2d54eea8365",
       "activeSince": "2026-03-15T14:11:06.363+00:00",
-      "lastActive": "2026-05-10T04:52:15.192+00:00"
+      "lastActive": "2026-07-31T14:38:20.638+00:00"
     },
     "nicrypt": {
       "wallet": "0x958c8152355c7ea1076a4eceb49d1fa298db01d2",
@@ -5183,7 +5183,7 @@
     "garfield": {
       "wallet": "0x1c1484b415fb73758e248ef19fb0a2861122ac6f",
       "activeSince": "2026-06-19T01:40:00.105336+00:00",
-      "lastActive": "2026-07-31T13:50:16.317+00:00"
+      "lastActive": "2026-07-31T14:08:15.801+00:00"
     },
     "true": {
       "wallet": "0x6052354efe95df428da38efa36be764d3eea6bdb",
