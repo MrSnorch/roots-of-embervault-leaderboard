@@ -194,11 +194,22 @@ async function main(){
   const allHours = await indexRes.json();
   dlog(`allHours.length = ${allHours.length}, last 3 = ${JSON.stringify(allHours.slice(-3))}`);
 
-  // Rolling last-24h window (not calendar UTC day), so totals match Farmers & Forecast
-  // regardless of when today's daily snapshot was taken.
-  // Need 25 points to get 24 hour-to-hour intervals (N points = N-1 intervals).
-  let hours = allHours.slice(-25);
-  dlog(`rolling 24h window: ${hours.length} points (${hours.length - 1} intervals)`);
+  // Window: from 00:00 UTC today through the latest available hour.
+  // The 00:00 snapshot itself is the baseline (rune count already accrued up to
+  // midnight); deltas are computed from there forward, so the 00:00 row shows "—"
+  // and the 01:00 row shows the first hour's gain.
+  const todayUTC = new Date().toISOString().slice(0, 10); // "2026-08-01"
+  dlog(`todayUTC (browser) = ${todayUTC}`);
+  const todayIdx = allHours.findIndex(h => h.slice(0, 10) === todayUTC);
+  let hours;
+  if (todayIdx === -1) {
+    // today's data not published yet — fall back to last 24h rolling window
+    hours = allHours.slice(-25);
+    dlog(`fallback: no hours for todayUTC yet, using rolling last-24h window`);
+  } else {
+    hours = allHours.slice(todayIdx);
+    dlog(`hours from 00:00 UTC: ${hours.length} points`);
+  }
   dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
   const data = {};
