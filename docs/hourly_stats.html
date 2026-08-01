@@ -196,8 +196,9 @@ async function main(){
 
   // Rolling last-24h window (not calendar UTC day), so totals match Farmers & Forecast
   // regardless of when today's daily snapshot was taken.
-  let hours = allHours.slice(-24);
-  dlog(`rolling 24h window: ${hours.length} hours`);
+  // Need 25 points to get 24 hour-to-hour intervals (N points = N-1 intervals).
+  let hours = allHours.slice(-25);
+  dlog(`rolling 24h window: ${hours.length} points (${hours.length - 1} intervals)`);
   dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
   const data = {};
