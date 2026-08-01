@@ -148,7 +148,8 @@
   </select>
 </div>
 
-<div id="debugLog"></div>
+<button id="debugToggle" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px;margin-bottom:8px;">debug ▾</button>
+<div id="debugLog" class="visible"></div>
 <div id="loading">Загрузка часовых снапшотов…</div>
 
 <div class="tablewrap" style="display:none" id="wrap">
@@ -171,6 +172,9 @@ function dlog(msg, forceShow){
   if(forceShow) el.classList.add('visible');
   console.log('[hourly-debug]', msg);
 }
+document.getElementById('debugToggle').addEventListener('click', () => {
+  document.getElementById('debugLog').classList.toggle('visible');
+});
 
 async function fetchHourSnapshot(hourKey){
   const url = `${HOURLY_DIR}/${hourKey}.json.gz`;
@@ -231,6 +235,20 @@ async function main(){
   const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
   dlog(`players.length = ${players.length}`);
   const visibleHours = hiddenBaselineCount > 0 ? hours.slice(hiddenBaselineCount) : hours;
+
+  // Cross-check aid: print raw runeCount at the baseline and last hour for a
+  // couple of known usernames, so totals here can be diff'd against Farmers & Forecast.
+  ['mrsnorch', 'tong'].forEach(name => {
+    const baseHour = hours[0];
+    const lastHour = hours[hours.length - 1];
+    const baseVal = data[baseHour]?.[name]?.runeCount;
+    const lastVal = data[lastHour]?.[name]?.runeCount;
+    if (baseVal !== undefined || lastVal !== undefined) {
+      const diff = (baseVal !== undefined && lastVal !== undefined) ? lastVal - baseVal : null;
+      dlog(`${name}: runeCount@${baseHour}=${baseVal ?? '—'} runeCount@${lastHour}=${lastVal ?? '—'} delta=${diff ?? '—'}`);
+    }
+  });
+
   render(hours, visibleHours, players, data);
   dlog(`render() completed`);
 }
