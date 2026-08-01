@@ -296,6 +296,8 @@
   </div>
 
   <div class="view-section" data-view="farmers">
+    <button id="farmersDebugToggle" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px;margin-bottom:8px;">debug ▾</button>
+    <div id="farmersDebugLog" style="color:#ffb14e;background:#1a1410;border:1px solid #3a2a10;border-radius:6px;padding:8px 10px;margin-bottom:12px;font-size:11px;white-space:pre-wrap;display:none;"></div>
     <!-- Top farmers + rune trends -->
     <div class="charts-row section-gap">
       <div class="chart-card">
@@ -423,8 +425,23 @@ let filterGuild = false;
 let filterNft = false;
 let filterOnline = false;
 
+const farmersDebugLines = [];
+function flog(msg, forceShow) {
+  farmersDebugLines.push(`[${new Date().toISOString().slice(11,19)}] ${msg}`);
+  const el = document.getElementById('farmersDebugLog');
+  el.textContent = farmersDebugLines.join('\n');
+  if (forceShow) el.classList.add('visible'), (el.style.display = 'block');
+  console.log('[farmers-debug]', msg);
+}
+document.getElementById('farmersDebugToggle').addEventListener('click', () => {
+  const el = document.getElementById('farmersDebugLog');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+});
+
 async function loadState() {
+  flog('window.location.href = ' + window.location.href);
   const r = await fetch('state.json?_=' + Date.now());
+  flog(`fetch state.json -> ${r.status} ${r.ok ? 'OK' : ''}`);
   STATE = await r.json();
 
   // migrate old format: snapshots was an object { "2026-06-14": { players... } }
@@ -442,9 +459,11 @@ async function loadSnap(date) {
   if (SNAPS[date]) return SNAPS[date];
   try {
     const r = await fetch(`snapshots/${date}.json?_=` + Date.now());
+    flog(`fetch snapshots/${date}.json -> ${r.status} ${r.ok ? 'OK' : ''}`);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     SNAPS[date] = await r.json();
   } catch(e) {
+    flog(`snapshot ${date} FAILED: ${e.message}`, true);
     console.warn(`Snapshot ${date} not found, skipping:`, e.message);
     // remove from index so it doesn't break rendering
     STATE.snapshots = STATE.snapshots.filter(d => d !== date);
@@ -453,9 +472,11 @@ async function loadSnap(date) {
 }
 
 async function loadSnaps(dates) {
+  flog(`loading ${dates.length} snapshots: ${dates[0] || '—'} .. ${dates[dates.length-1] || '—'}`);
   await Promise.all(dates.map(d => loadSnap(d)));
   // filter out any dates that failed to load
   STATE.snapshots = STATE.snapshots.filter(d => SNAPS[d]);
+  flog(`all snapshots loaded OK, ${STATE.snapshots.length} usable`);
 }
 
 function getDates() { return [...STATE.snapshots].sort(); }
@@ -502,6 +523,9 @@ async function init() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 
+  const latestSnap = getLatestSnapshot();
+  flog(`players.length = ${Object.keys(latestSnap.players).length}`);
+
   renderHeader();
   renderStats();
   renderOnlineChart();
@@ -518,6 +542,7 @@ async function init() {
   initSortHeaders();
   initSearch();
   initFilters();
+  flog('render() completed');
 }
 
 // ── Header ──
@@ -680,6 +705,7 @@ let datesWithFarmers = [];
 function initFarmers() {
   const dates = getDates();
   datesWithFarmers = dates.filter(d => SNAPS[d].topFarmers && SNAPS[d].topFarmers.length > 0);
+  flog(`datesWithFarmers.length = ${datesWithFarmers.length}`);
   farmersDateIdx = datesWithFarmers.length - 1; // start at latest
   renderFarmers();
 }
@@ -715,8 +741,10 @@ function renderFarmers() {
   const container = document.getElementById('farmers-list');
   if (!farmers.length) {
     container.innerHTML = '<div class="farmers-empty">Available from the second snapshot onwards.</div>';
+    flog(`renderFarmers(${date}): no farmers data`);
     return;
   }
+  flog(`renderFarmers(${date}): ${farmers.length} farmers · ` + farmers.map(f => `${f.username}: +${f.runesGained}`).join(', '));
   const maxDelta = farmers[0].runesGained;
   const streakMap = computeStreaks();
   container.innerHTML = farmers.map((f, i) => {
@@ -799,7 +827,8 @@ function renderForecast() {
     .sort((a, b) => b[1].rank - a[1].rank) // closest first
     .slice(0, 12);
 
-  if (!targets.length) { document.getElementById('forecast-grid').innerHTML = '<div class="forecast-empty">You\'re #1!</div>'; return; }
+  if (!targets.length) { document.getElementById('forecast-grid').innerHTML = '<div class="forecast-empty">You\'re #1!</div>'; flog(`renderForecast: ${ME} is #1`); return; }
+  flog(`renderForecast: myRate=${Math.round(myRate)}/d, ${targets.length} targets above rank`);
 
   const items = targets.map(([username, p]) => {
     const theirRate = runeRate(username, 7);
