@@ -4,8 +4,11 @@ const path = require('path');
 const RAW_PATH    = '/tmp/leaderboard_raw.json';
 const STATE_PATH  = path.join(__dirname, '../docs/state.json');
 const SNAPS_DIR   = path.join(__dirname, '../docs/snapshots');
+const HOURLY_DIR  = path.join(__dirname, '../docs/hourly');
+const HOURLY_INDEX_PATH = path.join(HOURLY_DIR, 'index.json');
 
-const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+const now = new Date();
+const today = now.toISOString().slice(0, 10); // YYYY-MM-DD
 
 // Load raw fetch
 const raw = JSON.parse(fs.readFileSync(RAW_PATH, 'utf8'));
@@ -25,15 +28,26 @@ if (fs.existsSync(STATE_PATH)) {
   if (!Array.isArray(state.snapshots)) state.snapshots = Object.keys(state.snapshots).sort();
 }
 
-// Load previous snapshot file for delta calculation.
-// Must be strictly before today: at hourly cadence, state.snapshots may
-// already contain today's own date from an earlier run this same day.
-const priorDates = state.snapshots.filter(d => d < today);
-const prevDate = priorDates.length > 0 ? priorDates[priorDates.length - 1] : null;
+// Load the hourly snapshot closest to 24h ago for the topFarmers delta.
+// Using a rolling 24h window (instead of "last snapshot from the previous
+// calendar date") keeps this in sync with hourly_stats.html, which also
+// sums deltas over a rolling 24h window.
 let prevSnapshot = null;
-if (prevDate) {
-  const prevPath = path.join(SNAPS_DIR, `${prevDate}.json`);
-  if (fs.existsSync(prevPath)) prevSnapshot = JSON.parse(fs.readFileSync(prevPath, 'utf8'));
+if (fs.existsSync(HOURLY_INDEX_PATH)) {
+  const hourlyIndex = JSON.parse(fs.readFileSync(HOURLY_INDEX_PATH, 'utf8'));
+  const targetTime = now.getTime() - 24 * 3600 * 1000;
+  // hourlyIndex is sorted ascending; pick the hour closest in actual elapsed time to targetTime.
+  let closest = null;
+  let closestDiff = Infinity;
+  for (const h of hourlyIndex) {
+    const hTime = new Date(h + ':00:00Z').getTime();
+    const diff = Math.abs(hTime - targetTime);
+    if (diff < closestDiff) { closest = h; closestDiff = diff; }
+  }
+  if (closest) {
+    const gz = require('zlib').gunzipSync(fs.readFileSync(path.join(HOURLY_DIR, `${closest}.json.gz`)));
+    prevSnapshot = JSON.parse(gz.toString());
+  }
 }
 
 // Build today's snapshot
