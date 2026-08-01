@@ -28,20 +28,18 @@ if (fs.existsSync(STATE_PATH)) {
   if (!Array.isArray(state.snapshots)) state.snapshots = Object.keys(state.snapshots).sort();
 }
 
-// Load the hourly snapshot closest to 24h ago for the topFarmers delta.
-// Using a rolling 24h window (instead of "last snapshot from the previous
-// calendar date") keeps this in sync with hourly_stats.html, which also
-// sums deltas over a rolling 24h window.
+// Load the hourly snapshot closest to 00:00 UTC today for the topFarmers delta,
+// so this matches hourly_stats.html which also measures "since midnight UTC".
 let prevSnapshot = null;
 if (fs.existsSync(HOURLY_INDEX_PATH)) {
   const hourlyIndex = JSON.parse(fs.readFileSync(HOURLY_INDEX_PATH, 'utf8'));
-  const targetTime = now.getTime() - 24 * 3600 * 1000;
-  // hourlyIndex is sorted ascending; pick the hour closest in actual elapsed time to targetTime.
+  const midnightTime = new Date(`${today}T00:00:00Z`).getTime();
+  // hourlyIndex is sorted ascending; pick the hour closest in actual elapsed time to midnight.
   let closest = null;
   let closestDiff = Infinity;
   for (const h of hourlyIndex) {
     const hTime = new Date(h + ':00:00Z').getTime();
-    const diff = Math.abs(hTime - targetTime);
+    const diff = Math.abs(hTime - midnightTime);
     if (diff < closestDiff) { closest = h; closestDiff = diff; }
   }
   if (closest) {
