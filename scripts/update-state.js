@@ -33,6 +33,8 @@ if (fs.existsSync(STATE_PATH)) {
 // hourly_stats.html, which also uses that hour as a hidden calculation
 // baseline so its "00:00" row shows the gain from 23:00->00:00.
 let prevSnapshot = null;
+let baselineHourKey = null;
+let baselineDiffMin = null;
 if (fs.existsSync(HOURLY_INDEX_PATH)) {
   const hourlyIndex = JSON.parse(fs.readFileSync(HOURLY_INDEX_PATH, 'utf8'));
   const baselineTime = new Date(`${today}T00:00:00Z`).getTime() - 3600 * 1000; // 23:00 previous day
@@ -47,6 +49,11 @@ if (fs.existsSync(HOURLY_INDEX_PATH)) {
   if (closest) {
     const gz = require('zlib').gunzipSync(fs.readFileSync(path.join(HOURLY_DIR, `${closest}.json.gz`)));
     prevSnapshot = JSON.parse(gz.toString());
+    baselineHourKey = closest;
+    baselineDiffMin = Math.round(closestDiff / 60000);
+    console.log(`[debug] topFarmers baseline: target=${new Date(baselineTime).toISOString()} closest=${closest} diffMin=${baselineDiffMin}`);
+  } else {
+    console.log(`[debug] topFarmers baseline: no hourly snapshots found`);
   }
 }
 
@@ -85,6 +92,12 @@ for (const p of raw.data) {
 }
 
 // Top farmers vs previous snapshot
+snapshot.topFarmersDebug = {
+  baselineHourKey,
+  baselineDiffMin,
+  baselineTs: prevSnapshot ? prevSnapshot.ts : null,
+  currentTs: snapshot.ts,
+};
 if (prevSnapshot) {
   const deltas = [];
   for (const [username, data] of Object.entries(snapshot.players)) {
