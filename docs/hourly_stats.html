@@ -194,15 +194,10 @@ async function main(){
   const allHours = await indexRes.json();
   dlog(`allHours.length = ${allHours.length}, last 3 = ${JSON.stringify(allHours.slice(-3))}`);
 
-  const todayUTC = new Date().toISOString().slice(0, 10); // "2026-07-22"
-  dlog(`todayUTC (browser) = ${todayUTC}`);
-  let hours = allHours.filter(h => h.slice(0, 10) === todayUTC);
-  dlog(`hours matching todayUTC = ${hours.length}`);
-  if(hours.length === 0){
-    // fallback: today's data not published yet — show last 24 available hours instead
-    hours = allHours.slice(-24);
-    dlog(`fallback: using last 24 available hours instead`);
-  }
+  // Rolling last-24h window (not calendar UTC day), so totals match Farmers & Forecast
+  // regardless of when today's daily snapshot was taken.
+  let hours = allHours.slice(-24);
+  dlog(`rolling 24h window: ${hours.length} hours`);
   dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
   const data = {};
