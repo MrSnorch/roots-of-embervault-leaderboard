@@ -79,7 +79,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-08-01T16:35:14.289+00:00"
+      "lastActive": "2026-08-01T18:57:56.769+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -499,7 +499,7 @@
     "dm_pits": {
       "wallet": "0xbe5fa39f1fb1fb4a1651b962247c17d4258d4e7f",
       "activeSince": "2026-01-30T19:33:32.417+00:00",
-      "lastActive": "2026-07-31T21:13:17.834+00:00"
+      "lastActive": "2026-08-01T18:33:16.012+00:00"
     },
     "cryptopiper": {
       "wallet": "0x1ffa18e3c45cf2b240ad55757cb5e0318d1402c4",
@@ -669,7 +669,7 @@
     "hoangry": {
       "wallet": "0x2c53d33fd90fc8d5fe5cac986db81ba7f3b9aae6",
       "activeSince": "2026-01-29T19:46:21.765+00:00",
-      "lastActive": "2026-08-01T18:12:09.04+00:00"
+      "lastActive": "2026-08-01T19:00:18.49+00:00"
     },
     "linusthz": {
       "wallet": "0x90b3fe485e73c3b6cd64bf2d62db86b424945ceb",
@@ -1749,7 +1749,7 @@
     "vitlus": {
       "wallet": "0x6ff9be05b6b101881ffd4f483e630e18268fe134",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-07-23T09:36:58.441+00:00"
+      "lastActive": "2026-08-01T18:28:05.131+00:00"
     },
     "valbez": {
       "wallet": "0x094e78fbe169d86800fbe23757ade6c223d28ed9",
@@ -3869,7 +3869,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-05-19T18:04:01.848+00:00"
+      "lastActive": "2026-08-01T19:01:05.195+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
@@ -4019,7 +4019,7 @@
     "luca": {
       "wallet": "0x7c2125fc8442eea22a83db2cbdb33adb30325349",
       "activeSince": "2026-01-30T02:15:56.672+00:00",
-      "lastActive": "2026-08-01T18:12:34.177+00:00"
+      "lastActive": "2026-08-01T19:00:43.639+00:00"
     },
     "metayugi": {
       "wallet": "0xa91187927e42e2409f8c3d32f56c02d44b830c6a",
