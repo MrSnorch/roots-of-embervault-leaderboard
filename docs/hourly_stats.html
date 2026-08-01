@@ -195,20 +195,26 @@ async function main(){
   dlog(`allHours.length = ${allHours.length}, last 3 = ${JSON.stringify(allHours.slice(-3))}`);
 
   // Window: from 00:00 UTC today through the latest available hour.
-  // The 00:00 snapshot itself is the baseline (rune count already accrued up to
-  // midnight); deltas are computed from there forward, so the 00:00 row shows "—"
-  // and the 01:00 row shows the first hour's gain.
+  // Each visible row's delta = runes earned during the hour ENDING at that
+  // timestamp (e.g. row "01:00" = gain from 00:00 to 01:00). To make the
+  // "00:00" row show a real number too, we fetch one extra hidden point
+  // (23:00 the previous day) purely as a calculation baseline — it is not
+  // rendered as its own row.
   const todayUTC = new Date().toISOString().slice(0, 10); // "2026-08-01"
   dlog(`todayUTC (browser) = ${todayUTC}`);
   const todayIdx = allHours.findIndex(h => h.slice(0, 10) === todayUTC);
-  let hours;
+  let hours, hiddenBaselineCount = 0;
   if (todayIdx === -1) {
     // today's data not published yet — fall back to last 24h rolling window
     hours = allHours.slice(-25);
     dlog(`fallback: no hours for todayUTC yet, using rolling last-24h window`);
+  } else if (todayIdx > 0) {
+    hours = allHours.slice(todayIdx - 1); // include the hour just before midnight
+    hiddenBaselineCount = 1;
+    dlog(`hours from 00:00 UTC (+1 hidden baseline point): ${hours.length} points`);
   } else {
-    hours = allHours.slice(todayIdx);
-    dlog(`hours from 00:00 UTC: ${hours.length} points`);
+    hours = allHours.slice(todayIdx); // no earlier data available at all
+    dlog(`hours from 00:00 UTC (no baseline available): ${hours.length} points`);
   }
   dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
@@ -224,7 +230,8 @@ async function main(){
 
   const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
   dlog(`players.length = ${players.length}`);
-  render(hours, players, data);
+  const visibleHours = hiddenBaselineCount > 0 ? hours.slice(hiddenBaselineCount) : hours;
+  render(hours, visibleHours, players, data);
   dlog(`render() completed`);
 }
 
@@ -237,7 +244,7 @@ function setWatchlist(list){
   localStorage.setItem(WATCH_KEY, JSON.stringify(list));
 }
 
-function render(hours, players, data){
+function render(allHours, hours, players, data){
   document.getElementById('loading').style.display = 'none';
   document.getElementById('wrap').style.display = 'block';
 
@@ -264,23 +271,25 @@ function render(hours, players, data){
     const runeSeries = [];
     let totalScoreDelta = 0, totalRuneDelta = 0, maxHourlyRune = 0, lastOnline = false, prev = null;
     let firstRank = null, lastRank = null, activeHourCount = 0;
-    hours.forEach(hh=>{
+    const visibleSet = new Set(hours);
+    allHours.forEach(hh=>{
       const cur = data[hh][name];
-      if(cur){
+      const isVisible = visibleSet.has(hh);
+      if(cur && isVisible){
         lastOnline = cur.isOnline;
         lastRank = cur.rank;
         if(firstRank === null) firstRank = cur.rank;
         scoreSeries.push(cur.score);
         runeSeries.push(cur.runeCount);
       }
-      if(prev && cur){
+      if(prev && cur && isVisible){
         const ds = cur.score - prev.score;
         const dr = cur.runeCount - prev.runeCount;
         totalScoreDelta += ds; totalRuneDelta += dr;
         if(dr > 0) activeHourCount++; // only count hours with actual farming toward the average
         if(dr > maxHourlyRune) maxHourlyRune = dr;
         cells.push({ds, dr, present:true});
-      } else {
+      } else if(isVisible) {
         cells.push({ds:null, dr:null, present: !!cur});
       }
       if(cur) prev = cur;
