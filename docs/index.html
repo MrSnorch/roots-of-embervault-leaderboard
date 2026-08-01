@@ -301,6 +301,7 @@
       <div class="chart-card">
         <h3>Top farmers <span style="margin-left:8px;display:inline-flex;align-items:center;gap:6px;"><button id="farmers-prev" onclick="shiftFarmersDay(-1)" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:1px 7px;border-radius:4px;cursor:pointer;font-size:12px;line-height:1.4;">&#8592;</button><span id="farmers-date" style="color:var(--accent);font-size:11px;min-width:80px;text-align:center;"></span><button id="farmers-next" onclick="shiftFarmersDay(1)" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:1px 7px;border-radius:4px;cursor:pointer;font-size:12px;line-height:1.4;">&#8594;</button></span></h3>
         <div id="farmers-list"></div>
+        <div id="farmers-debug" style="margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--muted);opacity:0.7;"></div>
       </div>
       <div class="chart-card">
         <h3>Rune growth — top farmers (7d)</h3>
@@ -692,13 +693,24 @@ function shiftFarmersDay(dir) {
 
 function renderFarmers() {
   const date = datesWithFarmers[farmersDateIdx] || null;
-  const farmers = date ? SNAPS[date].topFarmers : [];
+  const snap = date ? SNAPS[date] : null;
+  const farmers = snap ? snap.topFarmers : [];
 
   document.getElementById('farmers-date').textContent = date || '';
   document.getElementById('farmers-prev').disabled = farmersDateIdx <= 0;
   document.getElementById('farmers-next').disabled = farmersDateIdx >= datesWithFarmers.length - 1;
   document.getElementById('farmers-prev').style.opacity = farmersDateIdx <= 0 ? '0.3' : '1';
   document.getElementById('farmers-next').style.opacity = farmersDateIdx >= datesWithFarmers.length - 1 ? '0.3' : '1';
+
+  const debugEl = document.getElementById('farmers-debug');
+  const dbg = snap && snap.topFarmersDebug;
+  if (dbg) {
+    const kyivFmt = new Intl.DateTimeFormat('ru-RU', { timeZone: 'Europe/Kyiv', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+    const fmtTs = ts => ts ? kyivFmt.format(new Date(ts)) : '—';
+    debugEl.textContent = `debug: baseline=${dbg.baselineHourKey || '—'} (${fmtTs(dbg.baselineTs)}, Киев) offset=${dbg.baselineDiffMin ?? '—'}мин · current=${fmtTs(dbg.currentTs)}, Киев`;
+  } else {
+    debugEl.textContent = '';
+  }
 
   const container = document.getElementById('farmers-list');
   if (!farmers.length) {
