@@ -76,7 +76,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-08-02T23:31:41.683+00:00"
+      "lastActive": "2026-08-03T12:27:34.592+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -126,7 +126,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-08-03T11:39:35.812+00:00"
+      "lastActive": "2026-08-03T12:19:30.789+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -176,7 +176,7 @@
     "bossface": {
       "wallet": "0xc872941ea1591133b0cde36e22910b7e50c651ca",
       "activeSince": "2026-01-30T07:02:21.421+00:00",
-      "lastActive": "2026-08-03T08:39:31.195+00:00"
+      "lastActive": "2026-08-03T12:48:17.669+00:00"
     },
     "nammari": {
       "wallet": "0x08b8f26102599b802082a9dfb432b00f0a9093e8",
@@ -361,7 +361,7 @@
     "dmaker": {
       "wallet": "0xaea7cbb144e26f23e7d9a8cc88a16316226ab31c",
       "activeSince": "2026-01-29T21:38:55.475+00:00",
-      "lastActive": "2026-08-02T09:02:36.499+00:00"
+      "lastActive": "2026-08-03T12:32:36.494+00:00"
     },
     "sultan": {
       "wallet": "0xf599983fa77c5ccdb9d8237155e281c08a8abe49",
@@ -2441,7 +2441,7 @@
     "noss": {
       "wallet": "0xabf793be9dbc4c6fb90485552dd223d242166984",
       "activeSince": "2026-01-30T16:54:48.866+00:00",
-      "lastActive": "2026-08-02T03:31:42.253+00:00"
+      "lastActive": "2026-08-03T13:00:54.788+00:00"
     },
     "0xcarrot": {
       "wallet": "0x239a8a4c0738bf399e6b821f42509c4b1c1ffabc",
@@ -5161,7 +5161,7 @@
     "yonsgo": {
       "wallet": "0x527062d01fa2639fa5a11c3b54a69f377e18fa62",
       "activeSince": "2026-02-15T18:23:09.729+00:00",
-      "lastActive": "2026-07-23T20:11:01.056+00:00"
+      "lastActive": "2026-08-03T12:48:44.773+00:00"
     },
     "[akg]loginlee": {
       "wallet": "0x90583b449a260c35a761d3a45e41a9d3d59443fe",
