@@ -77,7 +77,7 @@
     "tong": {
       "wallet": "0x6cfad950306cf5949d8920f9ec2215a896c3bcb7",
       "activeSince": "2026-01-29T23:38:14.589+00:00",
-      "lastActive": "2026-08-03T23:31:53.602+00:00"
+      "lastActive": "2026-08-04T12:43:16.367+00:00"
     },
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
@@ -127,7 +127,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-08-04T11:09:57.022+00:00"
+      "lastActive": "2026-08-04T12:04:35.518+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -152,7 +152,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-08-03T18:08:06.916+00:00"
+      "lastActive": "2026-08-04T12:38:12.631+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -772,7 +772,7 @@
     "laibinh": {
       "wallet": "0xc6cc0cc5d3bde0d2f4461f3fd27e93073d9b02ca",
       "activeSince": "2026-02-02T11:37:06.596+00:00",
-      "lastActive": "2026-08-04T12:00:43.964+00:00"
+      "lastActive": "2026-08-04T12:48:12.634+00:00"
     },
     "denisstoo": {
       "wallet": "0x9ba63e8ba28489391e7e9ac4177762607ad14255",
@@ -2442,7 +2442,7 @@
     "noss": {
       "wallet": "0xabf793be9dbc4c6fb90485552dd223d242166984",
       "activeSince": "2026-01-30T16:54:48.866+00:00",
-      "lastActive": "2026-08-03T13:27:40.344+00:00"
+      "lastActive": "2026-08-04T12:57:15.238+00:00"
     },
     "0xcarrot": {
       "wallet": "0x239a8a4c0738bf399e6b821f42509c4b1c1ffabc",
@@ -5207,7 +5207,7 @@
     "noxx": {
       "wallet": "0x1be4c254c045a09b2311836bdfcea0032fbc3159",
       "activeSince": "2026-01-29T20:39:31.218+00:00",
-      "lastActive": "2026-08-03T20:13:57.796+00:00"
+      "lastActive": "2026-08-04T12:44:26.941+00:00"
     },
     "baxo89": {
       "wallet": "0x48873f50d84c21f68292e0784d3a9d63c30c6903",
@@ -5267,7 +5267,7 @@
     "lordcyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
       "activeSince": "2026-01-30T09:16:15.299+00:00",
-      "lastActive": "2026-08-04T11:52:28.733+00:00"
+      "lastActive": "2026-08-04T12:10:59.733+00:00"
     }
   }
 }
