@@ -82,7 +82,7 @@
     "mrsnorch": {
       "wallet": "0x07fd84181699ae69f07d82bbc5056389b46d7da9",
       "activeSince": "2026-01-29T21:16:13.418+00:00",
-      "lastActive": "2026-08-03T20:39:10.262+00:00"
+      "lastActive": "2026-08-04T06:05:58.899+00:00"
     },
     "darcy": {
       "wallet": "0x2d37fb5ef511f3df3fff5c9fec7d03cdfdca1572",
@@ -127,7 +127,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-08-04T05:41:54.252+00:00"
+      "lastActive": "2026-08-04T06:31:47.892+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -287,7 +287,7 @@
     "jello": {
       "wallet": "0x9714a649f3ff075dca25386e98e384daf3abb323",
       "activeSince": "2026-01-30T04:45:23.449+00:00",
-      "lastActive": "2026-08-04T05:58:44.575+00:00"
+      "lastActive": "2026-08-04T06:04:38.566+00:00"
     },
     "prince": {
       "wallet": "0x03e72127aa5fe7432904543176782ce87f01540e",
@@ -517,7 +517,7 @@
     "pjlyun": {
       "wallet": "0xe40e973d556d233ee39e3d9ada02f3c16d4f8e70",
       "activeSince": "2026-01-30T02:28:42.805+00:00",
-      "lastActive": "2026-08-03T05:17:03.647+00:00"
+      "lastActive": "2026-08-04T06:48:26.228+00:00"
     },
     "xtazy": {
       "wallet": "0x1bd7cf57ecf50f5a2733fcf48125cf5f82754f24",
@@ -692,7 +692,7 @@
     "georgy": {
       "wallet": "0x8eb6899d75b70e99c6d5cd9d1003933d459574fb",
       "activeSince": "2026-01-30T08:51:37.035+00:00",
-      "lastActive": "2026-08-04T06:00:10.557+00:00"
+      "lastActive": "2026-08-04T06:01:05.678+00:00"
     },
     "maddondang": {
       "wallet": "0xcaafc0081ebb9f46cd0df29a5c147d3335d0e811",
@@ -5263,6 +5263,11 @@
       "wallet": "0xdbcdc2d0d17216af325dd9dcea6a551388c76cdd",
       "activeSince": "2026-07-22T02:42:17.18127+00:00",
       "lastActive": "2026-07-28T02:01:43.398+00:00"
+    },
+    "lordcyberr": {
+      "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
+      "activeSince": "2026-01-30T09:16:15.299+00:00",
+      "lastActive": "2026-08-04T04:35:30.938+00:00"
     }
   }
 }
