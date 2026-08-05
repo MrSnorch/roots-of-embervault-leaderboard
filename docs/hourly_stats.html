@@ -131,6 +131,8 @@
     <button data-metric="rune">Rune</button>
   </div>
   <div class="sep"></div>
+  <input type="date" id="dayPicker">
+  <div class="sep"></div>
   <input type="text" id="watchInput" placeholder="+ добавить в отслеживание" list="playerList" autocomplete="off">
   <datalist id="playerList"></datalist>
   <div class="watch-tags" id="watchTags"></div>
@@ -187,40 +189,30 @@ async function fetchHourSnapshot(hourKey){
   return JSON.parse(text);
 }
 
-async function main(){
-  dlog(`window.location.href = ${window.location.href}`);
-  dlog(`pako defined: ${typeof pako !== 'undefined'}`);
+let allHoursGlobal = null;
 
-  const indexUrl = `${HOURLY_DIR}/index.json`;
-  const indexRes = await fetch(indexUrl);
-  dlog(`fetch ${indexUrl} -> ${indexRes.status} ${indexRes.ok ? 'OK' : 'FAIL'}`);
-  if(!indexRes.ok) throw new Error(`failed to load index.json (HTTP ${indexRes.status})`);
-  const allHours = await indexRes.json();
-  dlog(`allHours.length = ${allHours.length}, last 3 = ${JSON.stringify(allHours.slice(-3))}`);
-
-  // Window: from 00:00 UTC today through the latest available hour.
-  // Each visible row's delta = runes earned during the hour ENDING at that
-  // timestamp (e.g. row "01:00" = gain from 00:00 to 01:00). To make the
-  // "00:00" row show a real number too, we fetch one extra hidden point
-  // (23:00 the previous day) purely as a calculation baseline — it is not
-  // rendered as its own row.
-  const todayUTC = new Date().toISOString().slice(0, 10); // "2026-08-01"
-  dlog(`todayUTC (browser) = ${todayUTC}`);
-  const todayIdx = allHours.findIndex(h => h.slice(0, 10) === todayUTC);
-  let hours, hiddenBaselineCount = 0;
-  if (todayIdx === -1) {
-    // today's data not published yet — fall back to last 24h rolling window
-    hours = allHours.slice(-25);
-    dlog(`fallback: no hours for todayUTC yet, using rolling last-24h window`);
-  } else if (todayIdx > 0) {
-    hours = allHours.slice(todayIdx - 1); // include the hour just before midnight
-    hiddenBaselineCount = 1;
-    dlog(`hours from 00:00 UTC (+1 hidden baseline point): ${hours.length} points`);
-  } else {
-    hours = allHours.slice(todayIdx); // no earlier data available at all
-    dlog(`hours from 00:00 UTC (no baseline available): ${hours.length} points`);
+async function loadDay(dayUTC){
+  // Window: from 00:00 UTC of the selected day through the latest available
+  // hour of that day. Each visible row's delta = runes earned during the hour
+  // ENDING at that timestamp (e.g. row "01:00" = gain from 00:00 to 01:00). To
+  // make the "00:00" row show a real number too, we fetch one extra hidden
+  // point (23:00 the previous day) purely as a calculation baseline — it is
+  // not rendered as its own row.
+  const allHours = allHoursGlobal;
+  const dayIdx = allHours.findIndex(h => h.slice(0, 10) === dayUTC);
+  if (dayIdx === -1) {
+    dlog(`no data for dayUTC=${dayUTC}`);
+    return null;
   }
-  dlog(`final hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
+  const dayEndIdx = allHours.map(h => h.slice(0, 10)).lastIndexOf(dayUTC);
+  let hours, hiddenBaselineCount = 0;
+  if (dayIdx > 0) {
+    hours = allHours.slice(dayIdx - 1, dayEndIdx + 1); // include hour just before midnight
+    hiddenBaselineCount = 1;
+  } else {
+    hours = allHours.slice(dayIdx, dayEndIdx + 1); // no earlier data available at all
+  }
+  dlog(`day ${dayUTC}: hours to load: ${hours.length} [${hours[0]} .. ${hours[hours.length-1]}]`);
 
   const data = {};
   await Promise.all(hours.map(async h=>{
@@ -230,26 +222,69 @@ async function main(){
       data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline, rank: p.rank };
     }
   }));
-  dlog(`all hour snapshots loaded OK`);
+  dlog(`all hour snapshots loaded OK for ${dayUTC}`);
 
   const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
   dlog(`players.length = ${players.length}`);
   const visibleHours = hiddenBaselineCount > 0 ? hours.slice(hiddenBaselineCount) : hours;
 
-  // Cross-check aid: print raw runeCount at the baseline and last hour for a
-  // couple of known usernames, so totals here can be diff'd against Farmers & Forecast.
-  ['mrsnorch', 'tong'].forEach(name => {
-    const baseHour = hours[0];
-    const lastHour = hours[hours.length - 1];
-    const baseVal = data[baseHour]?.[name]?.runeCount;
-    const lastVal = data[lastHour]?.[name]?.runeCount;
-    if (baseVal !== undefined || lastVal !== undefined) {
-      const diff = (baseVal !== undefined && lastVal !== undefined) ? lastVal - baseVal : null;
-      dlog(`${name}: runeCount@${baseHour}=${baseVal ?? '—'} runeCount@${lastHour}=${lastVal ?? '—'} delta=${diff ?? '—'}`);
-    }
+  return { hours, visibleHours, players, data };
+}
+
+async function main(){
+  dlog(`window.location.href = ${window.location.href}`);
+  dlog(`pako defined: ${typeof pako !== 'undefined'}`);
+
+  const indexUrl = `${HOURLY_DIR}/index.json`;
+  const indexRes = await fetch(indexUrl);
+  dlog(`fetch ${indexUrl} -> ${indexRes.status} ${indexRes.ok ? 'OK' : 'FAIL'}`);
+  if(!indexRes.ok) throw new Error(`failed to load index.json (HTTP ${indexRes.status})`);
+  allHoursGlobal = await indexRes.json();
+  dlog(`allHours.length = ${allHoursGlobal.length}, last 3 = ${JSON.stringify(allHoursGlobal.slice(-3))}`);
+
+  const todayUTC = new Date().toISOString().slice(0, 10); // "2026-08-01"
+  dlog(`todayUTC (browser) = ${todayUTC}`);
+
+  const dayPicker = document.getElementById('dayPicker');
+  dayPicker.value = todayUTC;
+  dayPicker.addEventListener('change', () => {
+    const day = dayPicker.value;
+    if(!day) return;
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('loading').textContent = 'Загрузка часовых снапшотов…';
+    document.getElementById('wrap').style.display = 'none';
+    loadDay(day).then(result => {
+      if(!result){
+        document.getElementById('loading').textContent = 'Нет данных за выбранный день';
+        document.getElementById('wrap').style.display = 'none';
+        return;
+      }
+      render(result.hours, result.visibleHours, result.players, result.data);
+    }).catch(e => {
+      dlog(`ERROR: ${e.message}`, true);
+      document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message;
+    });
   });
 
-  render(hours, visibleHours, players, data);
+  let result = await loadDay(todayUTC);
+  if (!result) {
+    // today's data not published yet — fall back to last 24h rolling window
+    dlog(`fallback: no hours for todayUTC yet, using rolling last-24h window`);
+    const hours = allHoursGlobal.slice(-25);
+    const data = {};
+    await Promise.all(hours.map(async h=>{
+      const snap = await fetchHourSnapshot(h);
+      data[h] = {};
+      for(const [name, p] of Object.entries(snap.players)){
+        data[h][name] = { score: p.score, runeCount: p.runeCount, isOnline: p.isOnline, rank: p.rank };
+      }
+    }));
+    const players = Array.from(new Set(hours.flatMap(h=>Object.keys(data[h])))).sort();
+    const visibleHours = hours.slice(1);
+    result = { hours, visibleHours, players, data };
+  }
+
+  render(result.hours, result.visibleHours, result.players, result.data);
   dlog(`render() completed`);
 }
 
