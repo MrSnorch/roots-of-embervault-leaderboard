@@ -36,6 +36,11 @@
     padding:5px 8px; border-radius:4px; font-family:inherit; font-size:12px;
   }
   input[type=text]{ width:170px; }
+  .day-nav{
+    background:var(--bg); border:1px solid var(--line); color:var(--text);
+    padding:5px 9px; border-radius:4px; font-family:inherit; font-size:12px; cursor:pointer;
+  }
+  .day-nav:hover{ border-color:var(--accent); color:var(--accent); }
   .metric-toggle{ display:flex; gap:2px; background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:2px; }
   .metric-toggle button{
     background:none; border:none; color:var(--dim); padding:4px 10px;
@@ -131,7 +136,9 @@
     <button data-metric="rune">Rune</button>
   </div>
   <div class="sep"></div>
+  <button id="dayPrev" class="day-nav">◀</button>
   <input type="date" id="dayPicker">
+  <button id="dayNext" class="day-nav">▶</button>
   <div class="sep"></div>
   <input type="text" id="watchInput" placeholder="+ добавить в отслеживание" list="playerList" autocomplete="off">
   <datalist id="playerList"></datalist>
@@ -247,9 +254,10 @@ async function main(){
 
   const dayPicker = document.getElementById('dayPicker');
   dayPicker.value = todayUTC;
-  dayPicker.addEventListener('change', () => {
-    const day = dayPicker.value;
+
+  function goToDay(day){
     if(!day) return;
+    dayPicker.value = day;
     document.getElementById('loading').style.display = 'block';
     document.getElementById('loading').textContent = 'Загрузка часовых снапшотов…';
     document.getElementById('wrap').style.display = 'none';
@@ -264,7 +272,17 @@ async function main(){
       dlog(`ERROR: ${e.message}`, true);
       document.getElementById('loading').textContent = 'Ошибка загрузки: ' + e.message;
     });
-  });
+  }
+
+  function shiftDay(delta){
+    const d = new Date(dayPicker.value + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + delta);
+    goToDay(d.toISOString().slice(0, 10));
+  }
+
+  dayPicker.addEventListener('change', () => goToDay(dayPicker.value));
+  document.getElementById('dayPrev').addEventListener('click', () => shiftDay(-1));
+  document.getElementById('dayNext').addEventListener('click', () => shiftDay(1));
 
   let result = await loadDay(todayUTC);
   if (!result) {
