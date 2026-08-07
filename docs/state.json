@@ -130,12 +130,12 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-08-07T13:45:42.943+00:00"
+      "lastActive": "2026-08-07T14:14:03.62+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
       "activeSince": "2026-01-29T22:59:03.159+00:00",
-      "lastActive": "2026-08-07T13:33:14.736+00:00"
+      "lastActive": "2026-08-07T14:03:22.001+00:00"
     },
     "chunibro": {
       "wallet": "0x8004d65ae1470ce83a432e5a5c67204ae03f12f7",
@@ -155,7 +155,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-08-07T13:57:44.205+00:00"
+      "lastActive": "2026-08-07T14:37:19.173+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -300,7 +300,7 @@
     "hollywood": {
       "wallet": "0x53535a52b08919a053603d645c8bc736a9b1fef7",
       "activeSince": "2026-02-27T10:13:18.748+00:00",
-      "lastActive": "2026-08-07T13:02:58.972+00:00"
+      "lastActive": "2026-08-07T14:37:04.073+00:00"
     },
     "bluedragon": {
       "wallet": "0x96eb386c3fbe85f01a7279cd5b7b810575ee2079",
@@ -485,7 +485,7 @@
     "glitterbombz": {
       "wallet": "0xff14d6ec08be0e1df5103051d9be75e867e39b50",
       "activeSince": "2026-02-02T19:08:26.437+00:00",
-      "lastActive": "2026-08-05T18:37:51.745+00:00"
+      "lastActive": "2026-08-07T14:59:36.484+00:00"
     },
     "zuraiz": {
       "wallet": "0xc0cad0ffb88f3f025c0f6024fdb0a11c11a5affe",
@@ -515,7 +515,7 @@
     "rummo": {
       "wallet": "0x94dd0bb5c36cec1425a83cf09c0c6648e24231d4",
       "activeSince": "2026-02-19T05:39:58.126+00:00",
-      "lastActive": "2026-08-07T02:28:31.621+00:00"
+      "lastActive": "2026-08-07T14:35:29.281+00:00"
     },
     "pjlyun": {
       "wallet": "0xe40e973d556d233ee39e3d9ada02f3c16d4f8e70",
@@ -560,7 +560,7 @@
     "drynuts": {
       "wallet": "0x135b235d2a3ef00e3fa9e6199a15e92f27cb03b0",
       "activeSince": "2026-02-02T12:53:42.517+00:00",
-      "lastActive": "2026-08-06T16:03:17.938+00:00"
+      "lastActive": "2026-08-07T14:54:40.05+00:00"
     },
     "eional": {
       "wallet": "0xe1abde4f95efbcea3bc2238b32b14bf9348ecbf7",
@@ -1075,7 +1075,7 @@
     "borsi": {
       "wallet": "0x1ebf0e8ff0a6cdf0288d9f9d7bb4e1abbb00ccd4",
       "activeSince": "2026-01-30T19:39:41.393+00:00",
-      "lastActive": "2026-08-03T09:13:48.833+00:00"
+      "lastActive": "2026-08-07T14:52:52.739+00:00"
     },
     "sambyd": {
       "wallet": "0xc132eb2430236ce43e7398cabccd449244586555",
@@ -1305,7 +1305,7 @@
     "josep": {
       "wallet": "0x1e0295c9eadbefcbda383b8ab99f6556e76cd2eb",
       "activeSince": "2026-01-29T19:48:52.478+00:00",
-      "lastActive": "2026-08-05T20:28:21.626+00:00"
+      "lastActive": "2026-08-07T14:15:41.146+00:00"
     },
     "kalashniikov": {
       "wallet": "0x21a8cfede72184bc5d2af25ba80bfabc70fc2985",
@@ -1615,7 +1615,7 @@
     "shinoiii": {
       "wallet": "0xa6bd14d2861b2261d1fe5b544a5f771ca46c24ae",
       "activeSince": "2026-01-29T22:45:31.354+00:00",
-      "lastActive": "2026-07-25T06:35:16.245+00:00"
+      "lastActive": "2026-08-07T14:45:01.227+00:00"
     },
     "ambrella": {
       "wallet": "0xb5b9d52f9c6010fd9c886aaf7a9e0e72f5f8e74c",
@@ -2445,7 +2445,7 @@
     "noss": {
       "wallet": "0xabf793be9dbc4c6fb90485552dd223d242166984",
       "activeSince": "2026-01-30T16:54:48.866+00:00",
-      "lastActive": "2026-08-06T14:02:59.285+00:00"
+      "lastActive": "2026-08-07T14:56:53.807+00:00"
     },
     "0xcarrot": {
       "wallet": "0x239a8a4c0738bf399e6b821f42509c4b1c1ffabc",
@@ -5270,7 +5270,7 @@
     "lordcyberr": {
       "wallet": "0xeb6c0506f624239daa704c375d0494b14ea81322",
       "activeSince": "2026-01-30T09:16:15.299+00:00",
-      "lastActive": "2026-08-07T13:52:17.563+00:00"
+      "lastActive": "2026-08-07T14:09:44.286+00:00"
     },
     "insanity": {
       "wallet": "0x7073a78803edf6cb772e6813f2af0acca243eba3",
