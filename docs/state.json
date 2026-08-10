@@ -133,7 +133,7 @@
     "web3.d4da": {
       "wallet": "0x733b276d9f3d32c74dddcaa2f6e3245069554215",
       "activeSince": "2026-01-30T03:51:08.267+00:00",
-      "lastActive": "2026-08-10T13:52:16.074+00:00"
+      "lastActive": "2026-08-10T14:46:09.659+00:00"
     },
     "ryosaki": {
       "wallet": "0x68af93b012692f9ebcb90c7fd5c795359034a5a5",
@@ -148,7 +148,7 @@
     "vanyoz": {
       "wallet": "0xf492ac6a052386972f4cc54218d61f4cf2e3b36c",
       "activeSince": "2026-01-29T21:24:26.553+00:00",
-      "lastActive": "2026-08-10T13:30:57.005+00:00"
+      "lastActive": "2026-08-10T14:34:16.897+00:00"
     },
     "sik094": {
       "wallet": "0x7c89f0fddb3b216ebc03a64b26563c0fad5fe14b",
@@ -158,7 +158,7 @@
     "melynik": {
       "wallet": "0x772fd8be8ac7ec0d388dca3df654173346c6887b",
       "activeSince": "2026-01-29T20:37:03.001+00:00",
-      "lastActive": "2026-08-10T13:27:59.297+00:00"
+      "lastActive": "2026-08-10T14:50:19.009+00:00"
     },
     "surka": {
       "wallet": "0xec379a8f3267fd9a444d5b933b57b70ffe550a9d",
@@ -563,7 +563,7 @@
     "drynuts": {
       "wallet": "0x135b235d2a3ef00e3fa9e6199a15e92f27cb03b0",
       "activeSince": "2026-02-02T12:53:42.517+00:00",
-      "lastActive": "2026-08-09T16:00:53.264+00:00"
+      "lastActive": "2026-08-10T14:38:29.865+00:00"
     },
     "eional": {
       "wallet": "0xe1abde4f95efbcea3bc2238b32b14bf9348ecbf7",
@@ -798,7 +798,7 @@
     "ryuseok": {
       "wallet": "0x79bbf3d3137fb6e1834bf5e5e8309f76d87955d0",
       "activeSince": "2026-02-09T15:17:59.428+00:00",
-      "lastActive": "2026-08-10T01:03:52.465+00:00"
+      "lastActive": "2026-08-10T14:30:57.582+00:00"
     },
     "tonton": {
       "wallet": "0x3f303a4bd5b586493eda4c3d03925b64fb4515a9",
@@ -3878,7 +3878,7 @@
     "null": {
       "wallet": "0xec263430867b2f8bd9967ad100681ecb3e1d8740",
       "activeSince": "2026-05-14T13:59:00.935663+00:00",
-      "lastActive": "2026-06-20T14:09:15.424+00:00"
+      "lastActive": "2026-05-19T18:04:01.848+00:00"
     },
     "mija": {
       "wallet": "0x5a4f8d9508ff4659c31c8a016eafe9fd901df944",
